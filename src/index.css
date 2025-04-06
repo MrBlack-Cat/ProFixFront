@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.perspective {
+  perspective: 1200px;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.transform-style {
+  transform-style: preserve-3d;
+}
+
+.glow-border {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, #3b82f6, #60a5fa, #2563eb);
+    z-index: -1;
+    transform: scale(1.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+    border-radius: 1rem;
+    filter: blur(12px);
+  }
+  
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+  @keyframes gradient-x {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 4s ease infinite;
+  }
+  
+a.active {
+    border-bottom: 2px solid #60a5fa;
+    color: #60a5fa;
+  }
+  
