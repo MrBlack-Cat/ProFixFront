@@ -1,4 +1,6 @@
 import { ServiceProvider } from '../../types/category';
+import { Link } from 'react-router-dom';
+
 
 interface Props {
   provider: ServiceProvider;
@@ -21,7 +23,7 @@ const ProviderCard = ({ provider }: Props) => {
         {provider.experienceYears} years experience
       </p>
 
-      {/* Типы услуг (теги) */}
+      {/* Service Type */}
       {provider.serviceTypeNames?.length > 0 && (
   <div className="flex flex-wrap gap-1 mt-2 justify-center">
     {provider.serviceTypeNames.map((type, idx) => (
@@ -36,9 +38,11 @@ const ProviderCard = ({ provider }: Props) => {
 )}
 
 
-      <button className="mt-4 bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">
-        View Profile
-      </button>
+      <Link to={`/service-provider/${provider.id}`}>
+        <button className="mt-3 bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">
+          👁 View Profile
+        </button>
+      </Link>
     </div>
   );
 };

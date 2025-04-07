@@ -6,6 +6,8 @@ import RegisterPage from './pages/Register/RegisterPage';
 import CreateClientProfilePage from './pages/ClientProfile/CreateClientProfilePage';
 import CreateServiceProviderProfilePage from './pages/ServiceProviderProfile/CreateServiceProviderProfilePage';
 import CategoryPage from './pages/CategoryPage';
+import ServiceProviderProfilePage from './pages/ServiceProviderDashboard/ServiceProviderProfilePage';
+import ViewProviderProfilePage from './pages/ViewProviderProfile/ViewProviderProfilePage';
 
 
 
@@ -23,6 +25,10 @@ function App() {
             <Route path="/client-profile/create" element={<CreateClientProfilePage />} />
             <Route path="/serviceprofile/create" element={<CreateServiceProviderProfilePage />} />
             <Route path="/category/:id" element={<CategoryPage />} />
+            <Route path="/service-profile" element={<ServiceProviderProfilePage />} />
+            <Route path="/service-provider/:id" element={<ViewProviderProfilePage />} />
+
+
 
    
           </Routes>
