@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CategoryHeader from '../components/Category/CategoryHeader';
-import ProvidersGrid from '../components/Category/ProvidersGrid';
-import FilterModal from '../components/Category/FilterModal';
-import { Category, ServiceProvider } from '../types/category';
+import CategoryHeader from '../../components/Category/CategoryHeader';
+import ProvidersGrid from '../../components/Category/ProvidersGrid';
+import FilterModal from '../../components/Category/FilterModal';
+import { Category, ServiceProvider } from '../../types/category';
 
 const CategoryPage = () => {
   const { id } = useParams();

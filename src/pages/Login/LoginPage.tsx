@@ -86,10 +86,12 @@ const LoginPage = () => {
         console.log('📦 ServiceProfile response:', data);
 
         if (data.isSuccess && data.data) {
-          navigate('/profile');
+          navigate('/service-profile');
         } else {
           navigate('/serviceprofile/create');
         }
+      } else if (role === 'Admin') {
+        navigate('/admin-profile');
       } else {
         // Error
         navigate('/');

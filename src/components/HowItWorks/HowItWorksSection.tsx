@@ -1,4 +1,4 @@
-import SectionTitle from '../SectionTitle';
+import SectionTitle from '../SectionTitle/SectionTitle';
 import StepCard from './StepCard';
 
 const steps: { step: string; text: string; direction: 'left' | 'right' }[] = [

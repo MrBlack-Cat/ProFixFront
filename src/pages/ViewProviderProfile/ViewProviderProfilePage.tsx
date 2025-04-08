@@ -5,6 +5,7 @@ import InfoTab from '../ViewProviderProfile/components/InfoTab';
 import CertificatesTab from '../ViewProviderProfile/components/CertificatesTab';
 import PostsTab from '../ViewProviderProfile/components/PostsTab';
 import ReviewsTab from '../ViewProviderProfile/components/ReviewsTab';
+import { motion } from 'framer-motion';
 
 const ViewProviderProfilePage = () => {
   const { id } = useParams();
@@ -57,12 +58,17 @@ const ViewProviderProfilePage = () => {
       </div>
 
       {/* Tab content */}
-      <div>
+      <motion.div
+        key={activeTab}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         {activeTab === 'info' && <InfoTab profile={profile} />}
         {activeTab === 'certificates' && profile?.id && <CertificatesTab providerId={profile.id} />}
         {activeTab === 'posts' && profile?.id && <PostsTab providerId={profile.id} />}
         {activeTab === 'reviews' && <ReviewsTab providerId={profile.id} />}
-      </div>
+      </motion.div>
     </div>
   );
 };

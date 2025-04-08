@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import LoginPage from './pages/Login/LoginPage';
-import HomePage from './pages/HomePage';  
+import HomePage from './pages/HomePage/HomePage';  
 import RegisterPage from './pages/Register/RegisterPage';
 import CreateClientProfilePage from './pages/ClientProfile/CreateClientProfilePage';
 import CreateServiceProviderProfilePage from './pages/ServiceProviderProfile/CreateServiceProviderProfilePage';
-import CategoryPage from './pages/CategoryPage';
+import CategoryPage from './pages/Category/CategoryPage';
 import ServiceProviderProfilePage from './pages/ServiceProviderDashboard/ServiceProviderProfilePage';
 import ViewProviderProfilePage from './pages/ViewProviderProfile/ViewProviderProfilePage';
 

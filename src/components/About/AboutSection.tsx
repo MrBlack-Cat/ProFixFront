@@ -1,4 +1,4 @@
-import SectionTitle from '../SectionTitle';
+import SectionTitle from '../SectionTitle/SectionTitle';
 import { motion } from 'framer-motion';
 import aboutImg from '../../assets/about.svg'; // добавь иллюстрацию в папку assets
 

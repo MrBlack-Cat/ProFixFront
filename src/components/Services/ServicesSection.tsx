@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import SectionTitle from '../SectionTitle';
+import SectionTitle from '../SectionTitle/SectionTitle';
 import ServiceCard from './ServiceCard';
 
 interface ServiceType {

@@ -1,5 +1,7 @@
+// с фреймер-анимацией
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../../utils/api';
+import { motion } from 'framer-motion';
 
 interface Certificate {
   id: number;
@@ -13,13 +15,10 @@ const CertificatesTab = ({ providerId }: { providerId: number }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("providerId passed to CertificatesTab", providerId); 
-  
     const fetchCertificates = async () => {
       try {
         const res = await fetchWithAuth(`https://localhost:7164/api/Certificate/by-provider/${providerId}`);
         const json = await res.json();
-        console.log("Certificates Response", json); 
         setCerts(json.data ?? []);
       } catch (error) {
         console.error("Error fetching certificates:", error);
@@ -27,41 +26,42 @@ const CertificatesTab = ({ providerId }: { providerId: number }) => {
         setLoading(false);
       }
     };
-  
+
     if (providerId) fetchCertificates();
   }, [providerId]);
-  
 
   if (loading) return <p>Loading certificates...</p>;
   if (!certs.length) return <p>No certificates available.</p>;
 
   return (
-    <ul className="space-y-3">
-      {certs.map((c) => (
-        <li key={c.id} className="p-4 bg-gray-100 rounded shadow-sm">
-          <div className="flex justify-between items-center">
-            <div>
-              <h4 className="font-semibold">{c.title}</h4>
-              {c.issuedAt && (
-                <p className="text-xs text-gray-500">
-                  Issued: {new Date(c.issuedAt).toLocaleDateString()}
-                </p>
-              )}
-            </div>
-            {c.fileUrl && (
-              <a
-                href={c.fileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-sm"
-              >
-                View PDF
-              </a>
-            )}
-          </div>
-        </li>
-      ))}
-    </ul>
+    <motion.ul className="grid md:grid-cols-2 gap-4">
+  {certs.map((cert, i) => (
+    <motion.li
+      key={cert.id}
+      className="bg-gradient-to-br from-purple-100 to-indigo-100 p-4 rounded-xl shadow-md hover:shadow-xl transition"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: i * 0.1 }}
+    >
+      <div className="flex justify-between items-center">
+        <div>
+          <h4 className="font-semibold text-indigo-800">{cert.title}</h4>
+          <p className="text-xs text-gray-500">📅 {new Date(cert.issuedAt ?? "").toLocaleDateString()}</p>
+        </div>
+        {cert.fileUrl && (
+          <a
+            href={cert.fileUrl}
+            target="_blank"
+            className="text-sm text-blue-600 hover:underline"
+          >
+            📎 View
+          </a>
+        )}
+      </div>
+    </motion.li>
+  ))}
+</motion.ul>
+
   );
 };
 
