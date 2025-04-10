@@ -1,25 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TabsNavigation from './components/TabsNavigation';
 import OverviewTab from './components/OverviewTab';
 import PostsTab from './components/PostsTab';
 import CertificatesTab from './components/CertificatesTab';
 import ReviewsTab from './components/ReviewsTab';
 import SettingsTab from './components/SettingsTab';
+import GuaranteesTab from './components/GuaranteesTab';
+import { fetchWithAuth } from '../../utils/api';
 
-const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Settings'] as const;
-type Tab = typeof TABS[number];
+// 👇 Обновлённый список вкладок
+const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Settings'] as const;
+export type Tab = typeof TABS[number];
 
 const ServiceProviderProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('Overview');
+  const [providerProfile, setProviderProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const res = await fetchWithAuth('https://localhost:7164/api/ServiceProviderProfile/user');
+        const json = await res.json();
+        setProviderProfile(json.data);
+      } catch (err) {
+        console.error('Failed to load provider profile', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const renderTab = () => {
+    if (!providerProfile && !loading) return <p className="text-center text-red-500">Profile not found</p>;
+    if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+
     switch (activeTab) {
-      case 'Overview': return <OverviewTab />;
-      case 'Posts': return <PostsTab />;
-      case 'Certificates': return <CertificatesTab />;
-      case 'Reviews': return <ReviewsTab />;
-      case 'Settings': return <SettingsTab />;
-      default: return null;
+      case 'Overview':
+        return <OverviewTab profile={providerProfile} />;
+      case 'Posts':
+        return <PostsTab providerId={providerProfile.id} />;
+      case 'Certificates':
+        return <CertificatesTab providerId={providerProfile.id} />;
+      case 'Reviews':
+        return <ReviewsTab providerId={providerProfile.id} />;
+      case 'Guarantees':
+        return <GuaranteesTab providerId={providerProfile.id} />;
+      case 'Settings':
+        return <SettingsTab />;
+      default:
+        return null;
     }
   };
 

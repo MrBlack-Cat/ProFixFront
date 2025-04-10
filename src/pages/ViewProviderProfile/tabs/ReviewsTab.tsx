@@ -10,11 +10,11 @@ interface Review {
   clientAvatarUrl?: string;
 }
 
-interface ReviewsTabProps {
+interface Props {
   providerId: number;
 }
 
-const ReviewsTab: React.FC<ReviewsTabProps> = ({ providerId }) => {
+const ReviewsTab: React.FC<Props> = ({ providerId }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

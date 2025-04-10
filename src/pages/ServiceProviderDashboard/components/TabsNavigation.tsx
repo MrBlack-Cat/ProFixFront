@@ -1,6 +1,5 @@
 import React from 'react';
-
-type Tab = 'Overview' | 'Posts' | 'Certificates' | 'Reviews' | 'Settings';
+import { Tab } from '../ServiceProviderProfilePage'; // путь может быть другим, смотри по своему проекту
 
 interface TabsNavigationProps {
   tabs: readonly Tab[];

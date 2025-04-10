@@ -12,7 +12,11 @@ interface Certificate {
   issuedAt: string;
 }
 
-const CertificatesTab: React.FC = () => {
+interface CertificatesTabProps {
+  providerId: number;
+}
+
+const CertificatesTab: React.FC<CertificatesTabProps> = ({ providerId }) => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Certificate | null>(null);
@@ -21,26 +25,19 @@ const CertificatesTab: React.FC = () => {
 
   const fetchCertificates = async () => {
     try {
-      const profileRes = await fetchWithAuth('https://localhost:7164/api/ServiceProviderProfile/user');
-      const profileJson = await profileRes.json();
-      const profileId = profileJson.data?.id;
-  
-      if (!profileId) throw new Error('ServiceProviderProfileId not found');
-  
-      const certRes = await fetchWithAuth(`https://localhost:7164/api/Certificate/by-provider/${profileId}`);
-      const certJson = await certRes.json();
-      setCertificates(certJson.data ?? []);
+      const res = await fetchWithAuth(`https://localhost:7164/api/Certificate/by-provider/${providerId}`);
+      const json = await res.json();
+      setCertificates(json.data ?? []);
     } catch (err) {
       console.error('Failed to fetch certificates:', err);
     } finally {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
-    fetchCertificates();
-  }, []);
+    if (providerId) fetchCertificates();
+  }, [providerId]);
 
   const handleDelete = async (id: number) => {
     const reason = prompt('Enter reason for deletion:');

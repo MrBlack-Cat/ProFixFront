@@ -14,6 +14,6 @@ export interface Category {
     rating?: number;
     gender: string;        
     isApproved: boolean;  
-    serviceTypeNames: string[];
+    serviceTypes: string[];
   }
   

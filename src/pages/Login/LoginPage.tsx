@@ -72,7 +72,7 @@ const LoginPage = () => {
         console.log('📦 ClientProfile response:', data);
 
         if (data.isSuccess && data.data) {
-          navigate('/profile');
+          navigate('/client-profile');
         } else {
           navigate('/client-profile/create');
         }

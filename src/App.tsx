@@ -3,11 +3,12 @@ import Navbar from './components/Navbar/Navbar';
 import LoginPage from './pages/Login/LoginPage';
 import HomePage from './pages/HomePage/HomePage';  
 import RegisterPage from './pages/Register/RegisterPage';
-import CreateClientProfilePage from './pages/ClientProfile/CreateClientProfilePage';
+import CreateClientProfilePage from './pages/ClientProfile/СreateClient/CreateClientProfilePage';
 import CreateServiceProviderProfilePage from './pages/ServiceProviderProfile/CreateServiceProviderProfilePage';
 import CategoryPage from './pages/Category/CategoryPage';
 import ServiceProviderProfilePage from './pages/ServiceProviderDashboard/ServiceProviderProfilePage';
 import ViewProviderProfilePage from './pages/ViewProviderProfile/ViewProviderProfilePage';
+import ClientProfilePage from './pages/ClientProfile/ClientProfilePage/ClientProfilePage';
 
 
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/category/:id" element={<CategoryPage />} />
             <Route path="/service-profile" element={<ServiceProviderProfilePage />} />
             <Route path="/service-provider/:id" element={<ViewProviderProfilePage />} />
+            <Route path="/client-profile/" element={<ClientProfilePage />} />
 
 
 

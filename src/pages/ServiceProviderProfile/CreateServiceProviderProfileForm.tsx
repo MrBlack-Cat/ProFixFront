@@ -55,7 +55,7 @@ const CreateServiceProfileForm = () => {
         throw new Error(result.errors?.[0] || 'Failed to create profile');
       }
 
-      navigate('/profile');
+      navigate('/service-profile');
     } catch (err: any) {
       setError(err.message || 'Something went wrong');
     } finally {
