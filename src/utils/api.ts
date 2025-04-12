@@ -7,7 +7,7 @@ interface DecodedToken {
 }
 
 /**
- * Извлекает данные из accessToken в localStorage (userId, email, role)
+ * Извлекает userId, email и role из accessToken
  */
 export const getDecodedToken = (): DecodedToken | null => {
   const token = localStorage.getItem('accessToken');
@@ -32,20 +32,48 @@ export const getDecodedToken = (): DecodedToken | null => {
   }
 };
 
+export const uploadToCloud = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetchWithAuth(`https://localhost:7164/api/FileUpload/upload-guarantee-file`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  const json = await res.json();
+
+  if (json.isSuccess && json.data?.url) {
+    return json.data.url;
+  } else {
+    console.error("❌ File upload failed:", json);
+    throw new Error("File upload failed");
+  }
+};
+
+
+
 /**
- * Выполняет fetch-запрос с авторизацией. При 401 — пытается обновить токен и повторить.
+ * Делает авторизованный fetch. При 401 — обновляет токен и повторяет запрос.
  */
 export const fetchWithAuth = async (url: string, options: RequestInit = {}): Promise<Response> => {
   let accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
 
   const sendRequest = async () => {
-    return await fetch(url, {
+    const isFormData = options.body instanceof FormData;
+
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${accessToken || ''}`,
+    };
+
+    if (!isFormData) {
+      headers['Content-Type'] = 'application/json';
+    }
+
+    return fetch(url, {
       ...options,
-      headers: {
-        ...(options.headers || {}),
-        Authorization: `Bearer ${accessToken}`,
-      },
+      headers,
     });
   };
 
@@ -67,9 +95,8 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}): Pro
         localStorage.setItem('refreshToken', result.data.refreshToken);
       }
 
-      response = await sendRequest(); // retry original request
+      response = await sendRequest(); // повтор запроса
     } else {
-      // Refresh token failed — logout
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       window.location.href = '/login';

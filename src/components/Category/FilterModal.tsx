@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { ServiceProvider } from '../../types/category';
 
 type Props = {
@@ -11,99 +11,103 @@ type Props = {
 
 const FilterModal = ({ isOpen, onClose, providers, onApply }: Props) => {
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
-//   const [onlyApproved, setOnlyApproved] = useState(false);
+  const [minExperience, setMinExperience] = useState<number | null>(null);
+  const [minAge, setMinAge] = useState<number | null>(null);
+  const [availableServiceTypes, setAvailableServiceTypes] = useState<string[]>([]);
+  const [selectedServiceTypes, setSelectedServiceTypes] = useState<string[]>([]);
+
+  useEffect(() => {
+    const allServiceTypes = new Set<string>();
+    providers.forEach((p) => p.serviceTypes.forEach((type) => allServiceTypes.add(type)));
+    setAvailableServiceTypes(Array.from(allServiceTypes));
+    console.log("💥 All providers:", providers);
+  }, [providers]);
 
   const handleApply = () => {
     let filtered = [...providers];
 
-    // if (onlyApproved) {
-    //   filtered = filtered.filter(p => p.isApproved);
-    // }
-
     if (selectedGender) {
-      filtered = filtered.filter(p => p.gender === selectedGender);
+      filtered = filtered.filter(p => p.genderName === selectedGender);
+    }
+
+    if (minExperience !== null) {
+      filtered = filtered.filter(p => (p.experienceYears ?? 0) >= minExperience);
+    }
+
+    if (minAge !== null) {
+      filtered = filtered.filter(p => (p.age ?? 0) >= minAge);
+    }
+
+    if (selectedServiceTypes.length > 0) {
+      filtered = filtered.filter(p =>
+        selectedServiceTypes.every(type => p.serviceTypes.includes(type))
+      );
     }
 
     onApply(filtered);
+    handleClose();
+  };
+
+  const handleServiceTypeToggle = (type: string) => {
+    setSelectedServiceTypes(prev =>
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    );
+  };
+
+  const handleClose = () => {
+    onClose();
   };
 
   return (
+    
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0">
+      <Dialog as="div" className="relative z-50" onClose={handleClose}>
+        <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95">
+            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-              <Dialog.Title
-                as="h3"
-                className="text-lg font-semibold flex items-center gap-2 text-gray-900">
-                <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v1H3V4zm0 3h14v2H3V7zm0 4h10v2H3v-2z"/></svg>
-                Filter Providers
-              </Dialog.Title>
-                <div className="mt-4 space-y-4">
+                <Dialog.Title className="text-lg font-semibold mb-4 text-gray-900">🔍 Filter Providers</Dialog.Title>
+
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Gender
-                    </label>
-                    <select
-                      value={selectedGender || ''}
-                      onChange={(e) =>
-                        setSelectedGender(
-                          e.target.value === '' ? null : e.target.value
-                        )
-                      }
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label className="block text-sm font-medium text-gray-700">Gender</label>
+                    <select value={selectedGender || ''} onChange={(e) => setSelectedGender(e.target.value || null)} className="w-full mt-1 rounded border-gray-300 shadow-sm">
                       <option value="">All</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
 
-                  {/* <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={onlyApproved}
-                      onChange={() => setOnlyApproved(!onlyApproved)}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                    />
-                    <label className="text-sm text-gray-700">Only approved</label>
-                  </div> */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Min Experience (years)</label>
+                    <input type="number" value={minExperience ?? ''} onChange={(e) => setMinExperience(Number(e.target.value) || null)} className="w-full mt-1 rounded border-gray-300 shadow-sm" />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Min Age</label>
+                    <input type="number" value={minAge ?? ''} onChange={(e) => setMinAge(Number(e.target.value) || null)} className="w-full mt-1 rounded border-gray-300 shadow-sm" />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Service Types</label>
+                    <div className="flex flex-wrap gap-2">
+                      {availableServiceTypes.map((type) => (
+                        <button key={type} type="button" onClick={() => handleServiceTypeToggle(type)} className={`px-3 py-1 border rounded-full text-sm ${selectedServiceTypes.includes(type) ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'}`}>
+                          {type}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-6 flex justify-end gap-2">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                    onClick={onClose}>
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700"
-                    onClick={() => {
-                      handleApply();
-                      onClose();
-                    }}>
-                    Apply
-                  </button>
+                  <button onClick={handleClose} className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cancel</button>
+                  <button onClick={handleApply} className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700">Apply</button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

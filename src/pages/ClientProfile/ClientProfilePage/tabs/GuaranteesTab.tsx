@@ -28,7 +28,10 @@ const GuaranteesTab = () => {
         const res = await fetchWithAuth('https://localhost:7164/api/ClientProfile/user');
         const json = await res.json();
         profileId = json?.data?.id;
-        if (!profileId) throw new Error('ClientProfile not found');
+        console.log("ClientProfile response:", json);
+        console.log("Extracted clientProfileId:", profileId);
+
+        if (profileId === null || profileId === undefined) throw new Error('ClientProfile not found');
         const response = await fetchWithAuth(`https://localhost:7164/api/GuaranteeDocument/by-client/${profileId}`);
         const guaranteesJson = await response.json();
         setGuarantees(guaranteesJson.data || []);
@@ -38,6 +41,9 @@ const GuaranteesTab = () => {
         const res = await fetchWithAuth('https://localhost:7164/api/ServiceProviderProfile/user');
         const json = await res.json();
         profileId = json?.data?.id;
+        console.log("ClientProfile response:", json);
+        console.log("Extracted clientProfileId:", profileId);
+
         if (!profileId) throw new Error('ServiceProviderProfile not found');
         const response = await fetchWithAuth(`https://localhost:7164/api/GuaranteeDocument/by-provider/${profileId}`);
         const guaranteesJson = await response.json();

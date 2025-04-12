@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import TabsNavigation from './components/TabsNavigation';
 import OverviewTab from './components/OverviewTab';
-import PostsTab from './components/PostsTab';
-import CertificatesTab from './components/CertificatesTab';
+import PostsTab from './components/PostTabs/PostsTab';
+import CertificatesTab from './components/CertificateTabs/CertificatesTab';
 import ReviewsTab from './components/ReviewsTab';
-import SettingsTab from './components/SettingsTab';
-import GuaranteesTab from './components/GuaranteesTab';
+import SettingsTab from './components/SettingsTabs/SettingsTab';
+import GuaranteesTab from '../ServiceProviderDashboard/components/GuarenteeTabs/GuaranteesTab';
 import { fetchWithAuth } from '../../utils/api';
 
-// 👇 Обновлённый список вкладок
 const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Settings'] as const;
 export type Tab = typeof TABS[number];
 

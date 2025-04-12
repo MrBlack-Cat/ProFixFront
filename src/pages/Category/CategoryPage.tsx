@@ -40,6 +40,7 @@ const CategoryPage = () => {
   }, [id]);
 
   return (
+    
     <div className="min-h-screen bg-gray-50">
       {category && <CategoryHeader category={category} />}
 

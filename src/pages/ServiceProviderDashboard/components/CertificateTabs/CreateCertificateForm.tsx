@@ -1,33 +1,26 @@
 import React, { useState } from 'react';
-import { fetchWithAuth } from '../../../utils/api';
+import { fetchWithAuth } from '../../../../utils/api';
 
 interface Props {
-  certificate: {
-    id: number;
-    title: string;
-    description: string;
-    fileUrl: string;
-    issuedAt: string;
-  };
   onSuccess: () => void;
 }
 
-const UpdateCertificateForm: React.FC<Props> = ({ certificate, onSuccess }) => {
-  const [title, setTitle] = useState(certificate.title);
-  const [description, setDescription] = useState(certificate.description);
-  const [fileUrl, setFileUrl] = useState(certificate.fileUrl);
-  const [issuedAt, setIssuedAt] = useState(certificate.issuedAt);
+const CreateCertificateForm: React.FC<Props> = ({ onSuccess }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [fileUrl, setFileUrl] = useState('');
+  const [issuedAt, setIssuedAt] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleUpdate = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
-      const res = await fetchWithAuth(`https://localhost:7164/api/Certificate/${certificate.id}`, {
-        method: 'PUT',
+      const res = await fetchWithAuth('https://localhost:7164/api/Certificate', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, description, fileUrl, issuedAt }),
       });
@@ -36,7 +29,7 @@ const UpdateCertificateForm: React.FC<Props> = ({ certificate, onSuccess }) => {
       if (res.ok) {
         onSuccess();
       } else {
-        setError(json.errors?.[0] || 'Failed to update certificate');
+        setError(json.errors?.[0] || 'Failed to create certificate');
       }
     } catch {
       setError('Unexpected error occurred.');
@@ -46,8 +39,8 @@ const UpdateCertificateForm: React.FC<Props> = ({ certificate, onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleUpdate} className="space-y-4">
-      <h2 className="text-xl font-semibold">Update Certificate</h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-xl font-semibold">Add Certificate</h2>
 
       {error && <p className="text-red-500">{error}</p>}
 
@@ -84,12 +77,12 @@ const UpdateCertificateForm: React.FC<Props> = ({ certificate, onSuccess }) => {
       <button
         type="submit"
         disabled={loading}
-        className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
+        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
       >
-        {loading ? 'Updating...' : 'Update'}
+        {loading ? 'Creating...' : 'Create'}
       </button>
     </form>
   );
 };
 
-export default UpdateCertificateForm;
+export default CreateCertificateForm;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CertificateCard from './CertificateCard';
 import CreateCertificateForm from './CreateCertificateForm';
 import UpdateCertificateForm from './UpdateCertificateForm';
-import { fetchWithAuth } from '../../../utils/api';
+import { fetchWithAuth } from '../../../../utils/api';
 
 interface Certificate {
   id: number;

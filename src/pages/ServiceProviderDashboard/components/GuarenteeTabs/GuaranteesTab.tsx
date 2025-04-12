@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { fetchWithAuth } from '../../../utils/api';
+import { fetchWithAuth } from '../../../../utils/api';
 import GuaranteeList from './GuaranteeList';
-import GuaranteeForm from './GuaranteeForm';
+// import GuaranteeForm from './GuaranteeForm';
+import AddGuaranteeModal from './AddGuaranteeModal';
+
 
 interface Guarantee {
   id: number;
@@ -34,10 +36,13 @@ const GuaranteesTab = ({ providerId }: { providerId: number }) => {
 
   return (
     <div className="space-y-6">
-      <GuaranteeForm onCreated={loadGuarantees} />
+      {/* 🟣 Кнопка для открытия модального окна */}
+      <div className="flex justify-end">
+        <AddGuaranteeModal onCreated={loadGuarantees} />
+      </div>
+
+      {/* 🟢 Список гарантий */}
       <GuaranteeList guarantees={guarantees} loading={loading} />
     </div>
   );
-};
-
-export default GuaranteesTab;
+};export default GuaranteesTab;

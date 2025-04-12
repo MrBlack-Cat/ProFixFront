@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchWithAuth } from '../../../utils/api';
+import { fetchWithAuth } from '../../../../utils/api';
 
 interface UpdatePostFormProps {
   post: {

@@ -10,7 +10,7 @@ interface Guarantee {
   expirationDate?: string;
 }
 
-const GuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
+const ServiceGuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
   const formatDate = (date?: string) =>
     date ? new Date(date).toLocaleDateString() : "—";
 
@@ -20,20 +20,17 @@ const GuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
 
   return (
     <div className="relative rounded-xl p-5 bg-white/30 backdrop-blur-lg border border-gray-200 shadow-lg transition hover:scale-[1.02] hover:shadow-xl duration-300">
-      {/* Иконка слева сверху */}
-      <div className="absolute top-3 left-3 bg-indigo-100 text-indigo-600 p-2 rounded-full shadow">
+      {/* Иконка */}
+      <div className="absolute top-3 left-3 bg-green-100 text-green-600 p-2 rounded-full shadow">
         <FaRegFileAlt size={18} />
       </div>
 
-      {/* Заголовок */}
       <h3 className="text-lg font-semibold text-gray-800 mb-1 pl-8">{guarantee.title}</h3>
 
-      {/* Описание */}
       {guarantee.description && (
         <p className="text-sm text-gray-600 mb-3 pl-8">{guarantee.description}</p>
       )}
 
-      {/* Даты */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-500 pl-8">
         <div className="flex items-center gap-2">
           <FaCalendarCheck />
@@ -51,14 +48,13 @@ const GuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
         </div>
       </div>
 
-      {/* Кнопка */}
       {guarantee.fileUrl && (
         <div className="mt-4 pl-8">
           <a
             href={guarantee.fileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-full hover:bg-indigo-700 transition"
+            className="inline-flex items-center px-4 py-1.5 bg-green-600 text-white text-sm font-medium rounded-full hover:bg-green-700 transition"
           >
             <FaFilePdf className="mr-2" />
             View PDF
@@ -69,4 +65,4 @@ const GuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
   );
 };
 
-export default GuaranteeItem;
+export default ServiceGuaranteeItem;

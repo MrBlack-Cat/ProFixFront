@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import AverageRating from '../../../components/Common/AverageRating';
 import ReviewModal from '../components/ReviewModal';
+import { motion } from 'framer-motion';
 
 interface InfoTabProps {
   profile: any;
@@ -37,11 +38,18 @@ const InfoTab = ({ profile }: InfoTabProps) => {
 
   return (
     <div className="flex gap-6 items-center">
-      <img
-        src={profile.avatarUrl || '/default-avatar.png'}
-        alt="Avatar"
-        className="w-32 h-32 rounded-full object-cover"
-      />
+      <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-60 h-60 min-w-[160px] rounded-xl overflow-hidden shadow-lg border border-gray-300"
+        >
+          <img
+            src={profile.avatarUrl || '/default-avatar.png'}
+            alt="Avatar"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
 
       <div>
         <h2 className="text-3xl font-bold mb-1">{profile.name} {profile.surname}</h2>
@@ -52,11 +60,12 @@ const InfoTab = ({ profile }: InfoTabProps) => {
         </div>
 
         <p className="text-gray-600">Gender: {profile.genderName || '—'}</p>
+        <p className="text-gray-600">Age: {profile.age ?? '—'} years</p>
+        <p className="text-gray-600">Experience: {profile.experienceYears ?? '—'} years</p>
+        <p className="text-gray-600">Description: {profile.description || '—'}</p>
         <p className="text-gray-600">Experience: {profile.experienceYears} years</p>
         <p className="text-gray-600">Category: {profile.parentCategoryName || '—'}</p>
-        <p className="text-gray-600">
-          Registered on: {new Date(profile.createdAt).toLocaleDateString()}
-        </p>
+        <p className="text-gray-600">Registered on: {new Date(profile.createdAt).toLocaleDateString()}</p>
 
         {profile.isApprovedByAdmin ? (
           <p className="text-green-600">

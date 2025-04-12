@@ -12,8 +12,9 @@ export interface Category {
     experienceYears: number;
     avatarUrl?: string;
     rating?: number;
-    gender: string;        
+    genderName: string;        
     isApproved: boolean;  
     serviceTypes: string[];
+    age: number;
   }
   
