@@ -2,18 +2,21 @@ import { useEffect, useState } from 'react';
 import AverageRating from '../../../components/Common/AverageRating';
 import ReviewModal from '../components/ReviewModal';
 import { motion } from 'framer-motion';
+import BookingModal from '../components/BookingModal';
 
 interface InfoTabProps {
   profile: any;
   currentClient: {
+    id: number;
     name: string;
     surname: string;
     avatarUrl: string;
   };
 }
 
-const InfoTab = ({ profile }: InfoTabProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const InfoTab = ({ profile, currentClient }: InfoTabProps) => {
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [hasReviewed, setHasReviewed] = useState<boolean>(false);
 
   const checkIfReviewed = async () => {
@@ -37,19 +40,19 @@ const InfoTab = ({ profile }: InfoTabProps) => {
   }, []);
 
   return (
-    <div className="flex gap-6 items-center">
+    <div className="flex gap-6 items-start flex-col md:flex-row">
       <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-60 h-60 min-w-[160px] rounded-xl overflow-hidden shadow-lg border border-gray-300"
-        >
-          <img
-            src={profile.avatarUrl || '/default-avatar.png'}
-            alt="Avatar"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-60 h-60 min-w-[160px] rounded-xl overflow-hidden shadow-lg border border-gray-300"
+      >
+        <img
+          src={profile.avatarUrl || '/default-avatar.png'}
+          alt="Avatar"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
 
       <div>
         <h2 className="text-3xl font-bold mb-1">{profile.name} {profile.surname}</h2>
@@ -60,17 +63,12 @@ const InfoTab = ({ profile }: InfoTabProps) => {
         </div>
 
         <p className="text-gray-600">Gender: {profile.genderName || '—'}</p>
-        <p className="text-gray-600">Age: {profile.age ?? '—'} years</p>
         <p className="text-gray-600">Experience: {profile.experienceYears ?? '—'} years</p>
-        <p className="text-gray-600">Description: {profile.description || '—'}</p>
-        <p className="text-gray-600">Experience: {profile.experienceYears} years</p>
         <p className="text-gray-600">Category: {profile.parentCategoryName || '—'}</p>
         <p className="text-gray-600">Registered on: {new Date(profile.createdAt).toLocaleDateString()}</p>
 
         {profile.isApprovedByAdmin ? (
-          <p className="text-green-600">
-            ✅ Approved on {new Date(profile.approvalDate!).toLocaleDateString()}
-          </p>
+          <p className="text-green-600">✅ Approved on {new Date(profile.approvalDate!).toLocaleDateString()}</p>
         ) : (
           <p className="text-yellow-600">⏳ Awaiting admin approval</p>
         )}
@@ -89,27 +87,43 @@ const InfoTab = ({ profile }: InfoTabProps) => {
           </ul>
         </div>
 
-        {/* Кнопка оставить отзыв */}
-        {!hasReviewed && (
-          <div className="mt-4">
+        <div className="mt-4 flex gap-3 flex-wrap">
+          {/* Отзыв */}
+          {!hasReviewed && (
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsReviewModalOpen(true)}
               className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
             >
               Leave a Review
             </button>
-          </div>
-        )}
+          )}
 
-        {/* Модалка */}
+          {/* Кнопка создания брони */}
+          <button
+            onClick={() => setIsBookingModalOpen(true)}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Book a Service
+          </button>
+        </div>
+
+        {/* Модалка отзыва */}
         <ReviewModal
-          isOpen={isModalOpen}
+          isOpen={isReviewModalOpen}
           onRequestClose={() => {
-            setIsModalOpen(false);
-            checkIfReviewed(); // обновим флаг после закрытия
+            setIsReviewModalOpen(false);
+            checkIfReviewed();
           }}
           providerId={profile.id}
           token={localStorage.getItem('accessToken') || ''}
+        />
+
+        {/* Модалка бронирования */}
+        <BookingModal
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+          providerId={profile.id}
+          clientId={currentClient.id}
         />
       </div>
     </div>

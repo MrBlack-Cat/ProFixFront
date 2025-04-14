@@ -2,8 +2,9 @@ import { useState } from 'react';
 import InfoTab from './tabs/InfoTab';
 import GuaranteesTab from './tabs/GuaranteesTab';
 import SettingsTab from './tabs/SettingsTab';
+import BookingTab from './tabs/BookingTab';
 
-const TABS = ['Info', 'Guarante Documents', 'Settings'];
+const TABS = ['Info', 'Guarante Documents', 'Settings', 'Booking'];
 
 const ClientProfilePage = () => {
   const [activeTab, setActiveTab] = useState<string>('Info');
@@ -16,6 +17,8 @@ const ClientProfilePage = () => {
         return <GuaranteesTab />;
       case 'Settings':
         return <SettingsTab />;
+        case 'Booking':
+          return <BookingTab />;
       default:
         return null;
     }

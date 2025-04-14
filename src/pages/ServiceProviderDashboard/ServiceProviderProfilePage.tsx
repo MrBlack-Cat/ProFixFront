@@ -5,10 +5,12 @@ import PostsTab from './components/PostTabs/PostsTab';
 import CertificatesTab from './components/CertificateTabs/CertificatesTab';
 import ReviewsTab from './components/ReviewsTab';
 import SettingsTab from './components/SettingsTabs/SettingsTab';
-import GuaranteesTab from '../ServiceProviderDashboard/components/GuarenteeTabs/GuaranteesTab';
+import GuaranteesTab from './components/GuarenteeTabs/GuaranteesTab';
+import ServiceBookingTab from './components/ServiceBookingTab';
+import DayScheduleTab from './components/DayScheduleTab';
 import { fetchWithAuth } from '../../utils/api';
 
-const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Settings'] as const;
+const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Booking', 'Day Schedule', 'Settings'] as const;
 export type Tab = typeof TABS[number];
 
 const ServiceProviderProfilePage: React.FC = () => {
@@ -47,6 +49,10 @@ const ServiceProviderProfilePage: React.FC = () => {
         return <ReviewsTab providerId={providerProfile.id} />;
       case 'Guarantees':
         return <GuaranteesTab providerId={providerProfile.id} />;
+      case 'Booking':
+        return <ServiceBookingTab />;
+      case 'Day Schedule':
+        return <DayScheduleTab providerId={providerProfile.id} />;
       case 'Settings':
         return <SettingsTab />;
       default:

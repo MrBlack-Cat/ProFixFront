@@ -14,35 +14,27 @@ const ViewProviderProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [currentClient, setCurrentClient] = useState<any>(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 1. Получить профиль провайдера
         const res = await fetchWithAuth(`https://localhost:7164/api/ServiceProviderProfile/${id}`);
         const json = await res.json();
-        console.log("🔵 Provider profile", json.data);
         setProfile(json.data);
-  
-        // 2. Получить профиль текущего клиента
+
         const clientRes = await fetchWithAuth('https://localhost:7164/api/ClientProfile/user');
         const clientJson = await clientRes.json();
-        console.log("🟢 Client profile", clientJson.data);
-        setCurrentClient(clientJson.data); // ✅ вот тут используем setCurrentClient
-  
+        setCurrentClient(clientJson.data);
       } catch (err) {
         console.error('❌ Failed to load data', err);
       } finally {
         setLoading(false);
       }
     };
-  
+
     if (id) fetchData();
   }, [id]);
-  
-  
 
-  const tabClass = (tab: string) =>
+    const tabClass = (tab: string) =>
     `py-2 px-4 border-b-2 transition font-medium ${
       activeTab === tab
         ? 'border-blue-600 text-blue-600'
@@ -54,22 +46,19 @@ const ViewProviderProfilePage = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
-      <div className="mb-4">
+      <div className="mb-4 flex justify-between items-center">
         <Link to="/category" className="text-blue-600 hover:underline text-sm">
           ← Back to category
         </Link>
       </div>
 
-      {/* Tabs */}
       <div className="border-b border-gray-200 flex space-x-4 mb-6">
         <button onClick={() => setActiveTab('info')} className={tabClass('info')}>Info</button>
         <button onClick={() => setActiveTab('certificates')} className={tabClass('certificates')}>Certificates</button>
         <button onClick={() => setActiveTab('posts')} className={tabClass('posts')}>Posts</button>
         <button onClick={() => setActiveTab('reviews')} className={tabClass('reviews')}>Reviews</button>
-
       </div>
 
-      {/* Tab content */}
       <motion.div
         key={activeTab}
         initial={{ opacity: 0, y: 10 }}
@@ -80,8 +69,8 @@ const ViewProviderProfilePage = () => {
         {activeTab === 'certificates' && profile?.id && <CertificatesTab providerId={profile.id} />}
         {activeTab === 'posts' && profile?.id && <PostsTab providerId={profile.id} />}
         {activeTab === 'reviews' && <ReviewsTab providerId={profile.id} />}
-
       </motion.div>
+
     </div>
   );
 };
