@@ -28,22 +28,21 @@ const ProviderCard = ({ provider }: Props) => {
         <AverageRating providerId={provider.id} />
         </div>
       {/* Service Type */}
-{/* 🛠️ Services */}
-{provider.serviceTypes?.length > 0 && (
-  <div className="mt-3">
-    <h4 className="text-sm font-medium text-gray-700 mb-1">Services:</h4>
-    <div className="flex flex-wrap gap-1 justify-center">
-      {provider.serviceTypes.map((type, idx) => (
-        <span
-          key={idx}
-          className="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-xs"
-        >
-          {type}
-        </span>
-      ))}
-    </div>
-  </div>
-)}
+      {provider.serviceTypes?.length > 0 && (
+        <div className="mt-3">
+          <h4 className="text-sm font-medium text-gray-700 mb-1">Services:</h4>
+          <div className="flex flex-wrap gap-1 justify-center">
+            {provider.serviceTypes.map((type, idx) => (
+              <span
+                key={idx}
+                className="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full text-xs"
+              >
+                {type}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
 
       <Link to={`/service-provider/${provider.id}`}>

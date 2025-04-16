@@ -1,4 +1,3 @@
-// src/components/ViewProviderProfile/components/PostsTab.tsx
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../../utils/api';
 import { motion } from 'framer-motion';

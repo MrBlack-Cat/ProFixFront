@@ -19,7 +19,7 @@ const formatDate = (dateStr?: string) => {
 
 const BookingItem: React.FC<Props> = ({ booking, reload }) => {
   const handleCancel = async () => {
-    console.log("🔁 Попытка отмены брони ID:", booking.id);
+    console.log("🔁 Booking Cancel ID:", booking.id);
     try {
       const res = await fetch(`https://localhost:7164/api/ServiceBooking/${booking.id}/cancel`, {
         method: 'POST',
@@ -30,10 +30,10 @@ const BookingItem: React.FC<Props> = ({ booking, reload }) => {
   
       if (!res.ok) {
         const err = await res.text();
-        console.error("❌ Ошибка отмены:", err);
+        console.error("❌ Cancel Error:", err);
       } else {
-        console.log("✅ Бронирование отменено, обновляем список...");
-        reload(); // эта функция должна делать повторный fetch
+        console.log("✅ Booking Cancelled Reload Page...");
+        reload(); 
       }
     } catch (err) {
       console.error("❌ Cancel Error:", err);
@@ -45,7 +45,7 @@ const BookingItem: React.FC<Props> = ({ booking, reload }) => {
 
   return (
     <li className="border rounded-xl p-4 shadow bg-white grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
-      {/* 1️⃣ Левая — аватар + имя */}
+      {/* Avatar and name */}
       <div className="flex items-start gap-3">
   {booking.serviceProviderAvatarUrl ? (
     <img
@@ -79,7 +79,7 @@ const BookingItem: React.FC<Props> = ({ booking, reload }) => {
 </div>
 
 
-      {/* 2️⃣ Центр — описание, дата, статус */}
+      {/* Data and status */}
       <div className="space-y-1">
         <h4 className="text-lg font-semibold">{booking.description || 'No description'}</h4>
         <BookingStatusBadge status={actualStatus} />
@@ -91,7 +91,7 @@ const BookingItem: React.FC<Props> = ({ booking, reload }) => {
         </p>
       </div>
 
-      {/* 3️⃣ Статусы */}
+      {/* 3️⃣ Status */}
       <div className="text-sm text-gray-600 space-y-1">
         <p className="font-semibold text-gray-700">🗓️ Статусы:</p>
         <ul className="space-y-0.5">
@@ -102,7 +102,7 @@ const BookingItem: React.FC<Props> = ({ booking, reload }) => {
         </ul>
       </div>
 
-      {/* 4️⃣ Кнопка */}
+      {/* 4️⃣ Button */}
       <div className="text-right">
         {booking.status === 'Pending' && (
           <button

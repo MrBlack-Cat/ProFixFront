@@ -5,6 +5,7 @@ interface BookingModalProps {
   providerId: number;
   isOpen: boolean;
   onClose: () => void;
+  clientId: number;
 }
 
 interface BookedSlot {
@@ -22,7 +23,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ providerId, isOpen, onClose
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [bookedSlots, setBookedSlots] = useState<BookedSlot[]>([]);
 
-  // Загружаем занятые часы при выборе даты
+  // Time load
   useEffect(() => {
     const fetchBookedSlots = async () => {
       if (!scheduledDate) return;

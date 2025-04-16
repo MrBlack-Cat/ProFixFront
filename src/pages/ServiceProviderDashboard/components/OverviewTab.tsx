@@ -35,7 +35,6 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
       <h2 className="text-2xl font-semibold mb-4 text-center">👤 Service Provider Overview</h2>
 
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-        {/* Левая часть: Текстовая информация */}
         <div className="flex-1 space-y-2">
           
           <p><strong>Name:</strong> {profile.name} {profile.surname}</p>
@@ -54,7 +53,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
             <AverageRating providerId={profile.id} />
           </div>
 
-          {/* ✅ Статус подтверждения */}
+          {/* ✅ Status */}
           <p>
             <strong>Verification:</strong>{' '}
             {profile.isApprovedByAdmin
@@ -63,7 +62,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
           </p>
         </div>
 
-        {/* Правая часть: Аватар */}
+        {/* Avatar*/}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}

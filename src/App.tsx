@@ -9,6 +9,10 @@ import CategoryPage from './pages/Category/CategoryPage';
 import ServiceProviderProfilePage from './pages/ServiceProviderDashboard/ServiceProviderProfilePage';
 import ViewProviderProfilePage from './pages/ViewProviderProfile/ViewProviderProfilePage';
 import ClientProfilePage from './pages/ClientProfile/ClientProfilePage/ClientProfilePage';
+import ViewClientProfilePage from './pages/ViewClientProfilePage/ViewClientProfilePage';
+import ChatPage from './pages/ChatPage';
+import ChatListPanel from './pages/Messaging/ChatListPanel';
+import ChatDashboard from './pages/Messaging/ChatDashboard';
 
 
 
@@ -29,6 +33,11 @@ function App() {
             <Route path="/service-profile" element={<ServiceProviderProfilePage />} />
             <Route path="/service-provider/:id" element={<ViewProviderProfilePage />} />
             <Route path="/client-profile/" element={<ClientProfilePage />} />
+            <Route path="/clients/:id" element={<ViewClientProfilePage />} />
+            <Route path="/chat/:otherUserId" element={<ChatPage />} />
+            <Route path="/messages" element={<ChatDashboard />} />
+
+
 
 
 

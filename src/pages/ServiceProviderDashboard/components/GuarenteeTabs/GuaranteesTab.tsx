@@ -36,12 +36,10 @@ const GuaranteesTab = ({ providerId }: { providerId: number }) => {
 
   return (
     <div className="space-y-6">
-      {/* 🟣 Кнопка для открытия модального окна */}
       <div className="flex justify-end">
         <AddGuaranteeModal onCreated={loadGuarantees} />
       </div>
 
-      {/* 🟢 Список гарантий */}
       <GuaranteeList guarantees={guarantees} loading={loading} />
     </div>
   );

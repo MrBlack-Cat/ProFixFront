@@ -7,7 +7,7 @@ interface ServiceType {
   
   interface Props {
     categoryId: number | null;
-    selected: number[]; // 🔥 обязательно массив, иначе fallback
+    selected: number[];
     onChange: (ids: number[]) => void;
   }
   

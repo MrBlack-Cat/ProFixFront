@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { fetchWithAuth } from '../../../../utils/api';
 
 interface CreatePostFormProps {
-  onSuccess?: () => void; // Close Modal
+  onSuccess?: () => void;
 }
 
 const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSuccess }) => {

@@ -1,4 +1,3 @@
-// src/components/ServiceProvider/SettingsTab/CategorySelector.tsx
 import { useState, useEffect } from 'react';
 
 interface Category {

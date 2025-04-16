@@ -1,4 +1,3 @@
-// src/pages/ClientProfile/ClientSubmitButton.tsx
 import { motion } from "framer-motion";
 
 interface Props {

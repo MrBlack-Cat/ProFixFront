@@ -60,7 +60,7 @@ const LoginPage = () => {
   : decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
 
-      console.log('🎯 Роль:', role);
+      console.log('Роль:', role);
 
       if (role === 'Client') {
         const res = await fetch('https://localhost:7164/api/ClientProfile/user', {
@@ -69,7 +69,7 @@ const LoginPage = () => {
           },
         });
         const data = await res.json();
-        console.log('📦 ClientProfile response:', data);
+        console.log('ClientProfile response:', data);
 
         if (data.isSuccess && data.data) {
           navigate('/client-profile');
@@ -83,7 +83,7 @@ const LoginPage = () => {
           },
         });
         const data = await res.json();
-        console.log('📦 ServiceProfile response:', data);
+        console.log('ServiceProfile response:', data);
 
         if (data.isSuccess && data.data) {
           navigate('/service-profile');

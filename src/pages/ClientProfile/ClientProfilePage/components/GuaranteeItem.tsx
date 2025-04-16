@@ -20,20 +20,20 @@ const GuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
 
   return (
     <div className="relative rounded-xl p-5 bg-white/30 backdrop-blur-lg border border-gray-200 shadow-lg transition hover:scale-[1.02] hover:shadow-xl duration-300">
-      {/* Иконка слева сверху */}
+      {/* Icon */}
       <div className="absolute top-3 left-3 bg-indigo-100 text-indigo-600 p-2 rounded-full shadow">
         <FaRegFileAlt size={18} />
       </div>
 
-      {/* Заголовок */}
+      {/* Title */}
       <h3 className="text-lg font-semibold text-gray-800 mb-1 pl-8">{guarantee.title}</h3>
 
-      {/* Описание */}
+      {/* Overview */}
       {guarantee.description && (
         <p className="text-sm text-gray-600 mb-3 pl-8">{guarantee.description}</p>
       )}
 
-      {/* Даты */}
+      {/* Date */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-500 pl-8">
         <div className="flex items-center gap-2">
           <FaCalendarCheck />
@@ -51,7 +51,7 @@ const GuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
         </div>
       </div>
 
-      {/* Кнопка */}
+      {/* Button */}
       {guarantee.fileUrl && (
         <div className="mt-4 pl-8">
           <a

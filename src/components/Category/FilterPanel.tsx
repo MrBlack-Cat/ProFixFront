@@ -12,7 +12,6 @@ const FilterPanel = ({ providers, onFilter }: Props) => {
   const [availableCities, setAvailableCities] = useState<string[]>([]);
 
   useEffect(() => {
-    // Получаем уникальные города
     const uniqueCities = Array.from(new Set(providers.map(p => p.city))).sort();
     setAvailableCities(uniqueCities);
   }, [providers]);
@@ -36,7 +35,7 @@ const FilterPanel = ({ providers, onFilter }: Props) => {
     <div className="w-full md:w-1/4 bg-white p-4 rounded-xl shadow-md h-fit">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Filter by</h3>
 
-      {/* Город */}
+      {/* City */}
       <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
       <select
         value={city}
@@ -51,7 +50,7 @@ const FilterPanel = ({ providers, onFilter }: Props) => {
         ))}
       </select>
 
-      {/* Опыт */}
+ 
       <label className="block text-sm font-medium text-gray-700 mb-1">Min Experience</label>
       <select
         value={experience}

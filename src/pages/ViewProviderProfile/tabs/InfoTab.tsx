@@ -1,7 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import {
+  MessageCircle,
+  AlertOctagon,
+  Star,
+  CalendarCheck,
+} from 'lucide-react';
+
 import AverageRating from '../../../components/Common/AverageRating';
 import ReviewModal from '../components/ReviewModal';
-import { motion } from 'framer-motion';
 import BookingModal from '../components/BookingModal';
 
 interface InfoTabProps {
@@ -11,23 +19,23 @@ interface InfoTabProps {
     name: string;
     surname: string;
     avatarUrl: string;
+    userId: number; 
   };
 }
 
-const InfoTab = ({ profile, currentClient }: InfoTabProps) => {
+const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [hasReviewed, setHasReviewed] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const checkIfReviewed = async () => {
     try {
       const token = localStorage.getItem('accessToken');
       const res = await fetch(`https://localhost:7164/api/Review/has-reviewed?providerId=${profile.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       const data = await res.json();
       setHasReviewed(data.hasReviewed);
     } catch (error) {
@@ -54,7 +62,7 @@ const InfoTab = ({ profile, currentClient }: InfoTabProps) => {
         />
       </motion.div>
 
-      <div>
+      <div className="flex-1">
         <h2 className="text-3xl font-bold mb-1">{profile.name} {profile.surname}</h2>
         <p className="text-gray-600">{profile.city} • {profile.age} y.o.</p>
 
@@ -62,18 +70,23 @@ const InfoTab = ({ profile, currentClient }: InfoTabProps) => {
           <AverageRating providerId={profile.id} />
         </div>
 
-        <p className="text-gray-600">Gender: {profile.genderName || '—'}</p>
-        <p className="text-gray-600">Experience: {profile.experienceYears ?? '—'} years</p>
-        <p className="text-gray-600">Category: {profile.parentCategoryName || '—'}</p>
-        <p className="text-gray-600">Registered on: {new Date(profile.createdAt).toLocaleDateString()}</p>
+        <div className="text-gray-600 mt-2 space-y-1">
+          <p>Gender: <span className="font-medium">{profile.genderName || '—'}</span></p>
+          <p>Experience: <span className="font-medium">{profile.experienceYears ?? '—'} years</span></p>
+          <p>Category: <span className="font-medium">{profile.parentCategoryName || '—'}</span></p>
+          <p>Registered on: <span className="font-medium">{new Date(profile.createdAt).toLocaleDateString()}</span></p>
 
-        {profile.isApprovedByAdmin ? (
-          <p className="text-green-600">✅ Approved on {new Date(profile.approvalDate!).toLocaleDateString()}</p>
-        ) : (
-          <p className="text-yellow-600">⏳ Awaiting admin approval</p>
-        )}
+          {profile.isApprovedByAdmin ? (
+            <p className="text-green-600">
+              ✅ Approved on {new Date(profile.approvalDate!).toLocaleDateString()}
+            </p>
+          ) : (
+            <p className="text-yellow-600">⏳ Awaiting admin approval</p>
+          )}
+        </div>
 
-        <div className="mt-3">
+        {/* Services */}
+        <div className="mt-4">
           <h4 className="font-semibold">Services:</h4>
           <ul className="flex gap-2 flex-wrap mt-1">
             {profile.serviceTypes?.map((s: string, i: number) => (
@@ -87,27 +100,40 @@ const InfoTab = ({ profile, currentClient }: InfoTabProps) => {
           </ul>
         </div>
 
-        <div className="mt-4 flex gap-3 flex-wrap">
-          {/* Отзыв */}
+        {/* Action Buttons */}
+        <div className="mt-5 flex flex-wrap gap-3">
           {!hasReviewed && (
             <button
               onClick={() => setIsReviewModalOpen(true)}
-              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow"
             >
-              Leave a Review
+              <Star size={18} /> Leave a Review
             </button>
           )}
 
-          {/* Кнопка создания брони */}
           <button
             onClick={() => setIsBookingModalOpen(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
           >
-            Book a Service
+            <CalendarCheck size={18} /> Book a Service
+          </button>
+
+          <button
+            onClick={() => navigate(`/chat/${profile.userId}`)}
+            className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow"
+          >
+            <MessageCircle size={18} /> Send Message
+          </button>
+
+          <button
+            onClick={() => navigate(`/complaint/new?providerId=${profile.id}`)}
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow"
+          >
+            <AlertOctagon size={18} /> Complaint
           </button>
         </div>
 
-        {/* Модалка отзыва */}
+        {/* Modals */}
         <ReviewModal
           isOpen={isReviewModalOpen}
           onRequestClose={() => {
@@ -118,7 +144,6 @@ const InfoTab = ({ profile, currentClient }: InfoTabProps) => {
           token={localStorage.getItem('accessToken') || ''}
         />
 
-        {/* Модалка бронирования */}
         <BookingModal
           isOpen={isBookingModalOpen}
           onClose={() => setIsBookingModalOpen(false)}

@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import InfoTab from './tabs/InfoTab';
 import GuaranteesTab from './tabs/GuaranteesTab';
 import SettingsTab from './tabs/SettingsTab';
 import BookingTab from './tabs/BookingTab';
 
-const TABS = ['Info', 'Guarante Documents', 'Settings', 'Booking'];
+const TABS = ['Info', 'Guarante Documents', 'Settings', 'Booking'] as const;
+type Tab = typeof TABS[number];
 
 const ClientProfilePage = () => {
-  const [activeTab, setActiveTab] = useState<string>('Info');
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState<Tab>('Info');
+
+  // При инициализации проверим tab из URL
+  useEffect(() => {
+    if (tabParam && TABS.includes(tabParam as Tab)) {
+      setActiveTab(tabParam as Tab);
+    }
+  }, [tabParam]);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -17,8 +28,8 @@ const ClientProfilePage = () => {
         return <GuaranteesTab />;
       case 'Settings':
         return <SettingsTab />;
-        case 'Booking':
-          return <BookingTab />;
+      case 'Booking':
+        return <BookingTab />;
       default:
         return null;
     }

@@ -22,7 +22,6 @@ const ServiceBookingTab = () => {
       const bookingArray = Array.isArray(json) ? json : json.data ?? [];
       console.log('📦 Provider Booking API response:', bookingArray);
 
-      // Сортировка: новые сверху
       const sorted = [...bookingArray].sort(
         (a, b) => new Date(b.scheduledDate).getTime() - new Date(a.scheduledDate).getTime()
       );

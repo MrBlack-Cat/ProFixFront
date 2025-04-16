@@ -60,6 +60,11 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}): Pro
   let accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
 
+  console.log("⚙️ fetchWithAuth вызван →", url);
+  console.log("🔐 accessToken →", accessToken);
+  console.log("🔁 refreshToken →", refreshToken);
+  console.log("📦 options →", options);
+
   const sendRequest = async () => {
     const isFormData = options.body instanceof FormData;
 

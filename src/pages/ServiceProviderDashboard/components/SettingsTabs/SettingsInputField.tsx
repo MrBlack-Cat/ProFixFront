@@ -1,4 +1,3 @@
-// src/components/ServiceProvider/SettingsTab/SettingsInputField.tsx
 import React from 'react';
 
 interface Props {

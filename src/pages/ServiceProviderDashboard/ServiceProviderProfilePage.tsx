@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import TabsNavigation from './components/TabsNavigation';
 import OverviewTab from './components/OverviewTab';
 import PostsTab from './components/PostTabs/PostsTab';
@@ -10,11 +11,23 @@ import ServiceBookingTab from './components/ServiceBookingTab';
 import DayScheduleTab from './components/DayScheduleTab';
 import { fetchWithAuth } from '../../utils/api';
 
-const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Booking', 'Day Schedule', 'Settings'] as const;
+const TABS = [
+  'Overview',
+  'Posts',
+  'Certificates',
+  'Reviews',
+  'Guarantees',
+  'Booking',
+  'Day Schedule',
+  'Settings'
+] as const;
+
 export type Tab = typeof TABS[number];
 
 const ServiceProviderProfilePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('Overview');
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get('tab') as Tab | null;
+  const [activeTab, setActiveTab] = useState<Tab>(initialTab && TABS.includes(initialTab) ? initialTab : 'Overview');
   const [providerProfile, setProviderProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -61,7 +74,7 @@ const ServiceProviderProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="mt-16 p-6 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-4 text-center text-gray-800">
         Welcome to your space, Service Hero! 🛠️
       </h1>

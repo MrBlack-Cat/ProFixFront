@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab } from '../ServiceProviderProfilePage'; // путь может быть другим, смотри по своему проекту
+import { Tab } from '../ServiceProviderProfilePage'; 
 
 interface TabsNavigationProps {
   tabs: readonly Tab[];

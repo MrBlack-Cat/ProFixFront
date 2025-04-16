@@ -31,9 +31,9 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
 
       if (!res.ok) {
         const err = await res.text();
-        console.error("❌ Ошибка завершения:", err);
+        console.error("❌ Success error:", err);
       } else {
-        console.log("✅ Бронирование завершено");
+        console.log("✅ Booking Successfly");
         reload();
       }
     } catch (err) {
@@ -52,9 +52,9 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
   
       if (!res.ok) {
         const err = await res.text();
-        console.error("❌ Ошибка одобрения:", err);
+        console.error("❌ Approve Error:", err);
       } else {
-        console.log("✅ Одобрено");
+        console.log("✅ Approved");
         reload();
       }
     } catch (err) {
@@ -73,9 +73,9 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
   
       if (!res.ok) {
         const err = await res.text();
-        console.error("❌ Ошибка отклонения:", err);
+        console.error("❌ Cancel Error:", err);
       } else {
-        console.log("❌ Отклонено");
+        console.log("❌ Cancelled");
         reload();
       }
     } catch (err) {
@@ -113,7 +113,6 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
 
 
 
-      {/* 2️⃣ Данные бронирования */}
       <div className="space-y-1">
         <h4 className="text-lg font-semibold">{booking.description || 'No description'}</h4>
         <ServiceBookingStatusBadge status={actualStatus} />
@@ -125,7 +124,7 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         </p>
       </div>
 
-      {/* 3️⃣ Статусы */}
+      {/* 3️⃣ Status */}
       <div className="text-sm text-gray-600 space-y-1">
         <p className="font-semibold text-gray-700">🗓️ Статусы:</p>
         <ul className="space-y-0.5">
@@ -136,7 +135,6 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         </ul>
       </div>
 
-     {/* 4️⃣ Действия */}
      <div className="text-right space-y-1">
   {['pending'].includes(booking.status?.toLowerCase() || '') && (
     <>

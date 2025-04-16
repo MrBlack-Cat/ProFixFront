@@ -118,7 +118,6 @@ const SettingsForm = () => {
       <select name="genderId" value={formData.genderId} onChange={handleSelectChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
         <option value={1}>Male</option>
         <option value={2}>Female</option>
-        {/* <option value={3}>Other</option> */}
       </select>
 
       <CategorySelector

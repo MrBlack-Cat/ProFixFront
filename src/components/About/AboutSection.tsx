@@ -1,6 +1,6 @@
 import SectionTitle from '../SectionTitle/SectionTitle';
 import { motion } from 'framer-motion';
-import aboutImg from '../../assets/about.svg'; // добавь иллюстрацию в папку assets
+import aboutImg from '../../assets/about.svg';
 
 const AboutSection = () => {
   return (
@@ -8,9 +8,9 @@ const AboutSection = () => {
       id="about"
       className="py-48 bg-gradient-to-b from-white to-blue-50"
       style={{
-        backgroundImage: 'url(/assets/back8.avif', // Указан путь к изображению
-        backgroundSize: 'cover', // Для покрытия всей секции
-        backgroundPosition: 'center', // Центрирование изображения
+        backgroundImage: 'url(/assets/back8.avif',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
