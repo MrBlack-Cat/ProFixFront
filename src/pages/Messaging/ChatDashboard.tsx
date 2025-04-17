@@ -43,7 +43,6 @@ const ChatDashboard = () => {
 
   return (
     <div className="fixed inset-3 mt-8 grid grid-cols-1 md:grid-cols-3">
-      {/* Левая колонка — список чатов */}
       <div className="bg-white rounded-lg shadow-md p-4 md:col-span-1 overflow-y-auto h-[90vh]">
         <h2 className="text-xl font-semibold mb-2 text-center">💬 Мои чаты</h2>
         <ul className="space-y-2">
@@ -64,7 +63,6 @@ const ChatDashboard = () => {
         </ul>
       </div>
 
-      {/* Правая колонка — окно чата */}
       <div className="md:col-span-2 h-[90vh]">
         {selectedUserId && currentUserId ? (
           <ChatThread

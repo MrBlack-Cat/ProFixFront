@@ -1,4 +1,3 @@
-// с фреймер-анимацией
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../../utils/api';
 import { motion } from 'framer-motion';

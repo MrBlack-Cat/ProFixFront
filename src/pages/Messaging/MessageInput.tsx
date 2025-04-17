@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import { fetchWithAuth } from '../../utils/api';
-import { getDecodedToken } from '../../utils/auth'; // ← добавь
+import { getDecodedToken } from '../../utils/auth'; 
 
 interface Props {
   receiverUserId: number;
@@ -23,11 +23,11 @@ const MessageInput: React.FC<Props> = ({ receiverUserId, onSend }) => {
 
       const json = await res.json();
 
-      const senderUserId = getDecodedToken()?.userId;; // ← берём userId из токена
+      const senderUserId = getDecodedToken()?.userId;; // ←  userId tokender
 
       onSend({
         ...json.data,
-        senderUserId, // 👈 ОБЯЗАТЕЛЬНО
+        senderUserId,
         createdAt: new Date().toISOString(),
       });
 

@@ -47,13 +47,11 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
           <p><strong>Description:</strong> {profile.description || '—'}</p>
           <p><strong>Created At:</strong> {profile.createdAt ? dayjs(profile.createdAt).format('YYYY-MM-DD') : '—'}</p>
 
-          {/* ⭐ Rating */}
           <div className="flex items-center gap-2">
             <strong>Rating:</strong>
             <AverageRating providerId={profile.id} />
           </div>
 
-          {/* ✅ Status */}
           <p>
             <strong>Verification:</strong>{' '}
             {profile.isApprovedByAdmin
@@ -62,7 +60,6 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
           </p>
         </div>
 
-        {/* Avatar*/}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}

@@ -18,7 +18,6 @@ const PublicClientInfoCard: React.FC<Props> = ({ client }) => {
       transition={{ duration: 0.6 }}
       className="bg-gradient-to-br from-white via-slate-50 to-gray-100 border border-gray-200 rounded-2xl shadow-2xl p-8 max-w-md mx-auto text-center"
     >
-      {/* Аватар */}
       {client.avatarUrl && (
         <img
           src={client.avatarUrl}
@@ -27,7 +26,6 @@ const PublicClientInfoCard: React.FC<Props> = ({ client }) => {
         />
       )}
 
-      {/* Имя и город */}
       <h2 className="text-2xl font-bold text-gray-800 mb-1">
         {client.name} {client.surname}
       </h2>
@@ -38,7 +36,6 @@ const PublicClientInfoCard: React.FC<Props> = ({ client }) => {
         </p>
       )}
 
-      {/* Контакт */}
       {client.otherContactLinks ? (
         <div className="text-sm text-gray-700 mb-4 flex justify-center items-center gap-1">
           <Phone size={16} /> <span className="font-medium">{client.otherContactLinks}</span>
@@ -47,7 +44,6 @@ const PublicClientInfoCard: React.FC<Props> = ({ client }) => {
         <div className="text-sm italic text-gray-400 mb-4">📵 Hidden Contacts</div>
       )}
 
-      {/* Кнопки */}
       <div className="flex justify-center gap-4 mt-4 flex-wrap">
           <button
             onClick={() => navigate(`/chat/${client.userId}`)}

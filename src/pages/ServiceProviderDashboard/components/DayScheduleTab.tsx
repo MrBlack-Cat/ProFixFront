@@ -73,7 +73,6 @@ const DayScheduleTab: React.FC = () => {
         />
       </div>
 
-      {/* 📋 Status Filtr */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           🔎 Status Filtr:
@@ -83,23 +82,21 @@ const DayScheduleTab: React.FC = () => {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="border border-gray-300 rounded px-3 py-1 shadow-sm text-sm"
         >
-          <option value="all">Все</option>
-          <option value="Approved">✅ Approved</option>
-          <option value="Pending">⏳ Pending</option>
-          <option value="Rejected">❌ Rejected</option>
-          <option value="Cancelled">🚫 Cancelled</option>
-          <option value="InProgress">🔄 In Progress</option>
-          <option value="Completed">🏁 Completed</option>
+          <option value="all">All</option>
+          <option value="Approved">Approved</option>
+          <option value="Pending">Pending</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="InProgress">In Progress</option>
+          <option value="Completed">Completed</option>
         </select>
       </div>
 
-      {/* 📌Bookings */}
       <div className="mt-6">
         <h3 className="text-lg font-semibold mb-2">📌Booking for Selected Date</h3>
         <ExactSlotTimeline slots={filteredSlots} />
       </div>
 
-      {/* 🎯 Interactive */}
       <div className="mt-6">
         <h3 className="text-lg font-semibold mb-2">🎯 Interactive Booking Grid </h3>
         <Legend />
@@ -107,7 +104,6 @@ const DayScheduleTab: React.FC = () => {
           slots={filteredSlots}
           onSelect={(start, end) => {
             console.log('Selected:', start, end);
-            // Можно отправить API-запрос здесь
           }}
         />
       </div>

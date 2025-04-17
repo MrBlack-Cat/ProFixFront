@@ -93,7 +93,7 @@ const NotificationBell = () => {
         console.log('Неизвестный тип уведомления');
     }
 
-    // удаляем все уведомления этого типа от этого отправителя
+    // Tip ve user uzre hamisini silirik
     setNotifications((prev) =>
       prev.filter(
         (n) =>

@@ -124,14 +124,13 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         </p>
       </div>
 
-      {/* 3️⃣ Status */}
       <div className="text-sm text-gray-600 space-y-1">
         <p className="font-semibold text-gray-700">🗓️ Статусы:</p>
         <ul className="space-y-0.5">
-          <li>✅ Approved: {formatDate(booking.confirmationDate)}</li>
-          <li>❌ Rejected: {formatDate(booking.rejectedDate)}</li>
-          <li>🚫 Cancelled: {formatDate(booking.cancelledDate)}</li>
-          <li>🏁 Completed: {formatDate(booking.completionDate)}</li>
+          <li>Approved: {formatDate(booking.confirmationDate)}</li>
+          <li>Rejected: {formatDate(booking.rejectedDate)}</li>
+          <li>Cancelled: {formatDate(booking.cancelledDate)}</li>
+          <li>Completed: {formatDate(booking.completionDate)}</li>
         </ul>
       </div>
 

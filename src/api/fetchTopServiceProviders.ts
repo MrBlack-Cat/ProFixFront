@@ -7,5 +7,5 @@ export const fetchTopServiceProviders = async (): Promise<ServiceProviderTopDto[
   }
 
   const data = await res.json();
-  return data.data; // потому что приходит { data: [...] }
+  return data.data; 
 };

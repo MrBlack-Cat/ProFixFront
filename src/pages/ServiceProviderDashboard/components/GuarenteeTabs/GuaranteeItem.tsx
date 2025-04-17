@@ -21,7 +21,6 @@ const ServiceGuaranteeItem = ({ guarantee }: { guarantee: Guarantee }) => {
   return (
     
     <div className="relative rounded-xl p-5 bg-white/30 backdrop-blur-lg border border-gray-200 shadow-lg transition hover:scale-[1.02] hover:shadow-xl duration-300">
-      {/* Icon */}
       <div className="absolute top-3 left-3 bg-green-100 text-green-600 p-2 rounded-full shadow">
         <FaRegFileAlt size={18} />
       </div>

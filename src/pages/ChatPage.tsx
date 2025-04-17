@@ -24,7 +24,7 @@ const ChatPage = () => {
       logout();
     }
 
-    // Загрузка имени собеседника
+    // Kim
     if (otherUserId) {
       fetchWithAuth(`https://localhost:7164/api/ClientProfile/by-user/${otherUserId}`)
         .then((res) => res.json())
@@ -32,12 +32,12 @@ const ChatPage = () => {
           if (json?.data?.name) {
             setOtherUserName(`${json.data.name} ${json.data.surname || ''}`);
           } else {
-            setOtherUserName('Пользователь');
+            setOtherUserName('User');
           }
         })
         .catch((err) => {
           console.error('❌ Ошибка загрузки имени пользователя:', err);
-          setOtherUserName('Пользователь');
+          setOtherUserName('User');
         });
     }
 
@@ -53,7 +53,7 @@ const ChatPage = () => {
       <ChatThread
   currentUserId={currentUserId}
   otherUserId={parseInt(otherUserId)}
-  otherUserName={otherUserName} // 👈 обязательно добавь это!
+  otherUserName={otherUserName} 
 />
 
     </div>

@@ -13,7 +13,6 @@ const ClientProfilePage = () => {
   const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState<Tab>('Info');
 
-  // При инициализации проверим tab из URL
   useEffect(() => {
     if (tabParam && TABS.includes(tabParam as Tab)) {
       setActiveTab(tabParam as Tab);

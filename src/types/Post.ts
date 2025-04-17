@@ -5,7 +5,7 @@ export interface PostDto {
     imageUrl?: string;
     createdAt: string;
     serviceProviderProfileId: number;
-    likesCount: number; // 👈 добавляем
-    hasLiked?: boolean; // 👈 добавляем
+    likesCount: number; 
+    hasLiked?: boolean; 
   }
   

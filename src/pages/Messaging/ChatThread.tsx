@@ -53,12 +53,10 @@ const ChatThread: React.FC<ChatThreadProps> = ({
 
   return (
     <div className="flex flex-col h-full">
-      {/* Верхняя панель */}
       <div className="px-6 py-4 bg-white shadow-md">
         <h2 className="text-xl font-semibold text-gray-800">💬 {otherUserName}</h2>
       </div>
 
-      {/* Сообщения (скроллируемый блок) */}
       <div className="flex-1 overflow-y-auto px-4 py-4  bg-slate-100 space-y-3" style={{ height: 'calc(100vh - 150px)' }}>
         {loading ? (
           <p className="text-gray-500">Загрузка сообщений...</p>
@@ -74,7 +72,6 @@ const ChatThread: React.FC<ChatThreadProps> = ({
         <div ref={bottomRef} />
       </div>
 
-      {/* Ввод */}
       <div className="border-t px-4 py-3 bg-white">
         <MessageInput receiverUserId={otherUserId} onSend={handleNewMessage} />
       </div>

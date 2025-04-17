@@ -86,7 +86,7 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
 
           {profile.isApprovedByAdmin ? (
             <p className="text-green-600">
-              ✅ Approved on {new Date(profile.approvalDate!).toLocaleDateString()}
+              Approved on {new Date(profile.approvalDate!).toLocaleDateString()}
             </p>
           ) : (
             <p className="text-yellow-600">⏳ Awaiting admin approval</p>
@@ -108,7 +108,6 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
           </ul>
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-5 flex flex-wrap gap-3">
   <button
     onClick={() => {
@@ -152,7 +151,7 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
   <button
   onClick={() => {
       if (!isAuthenticated) return navigate('/login');
-      setIsComplaintOpen(true);   // ✅ Просто открываем жалобу!
+      setIsComplaintOpen(true);   
     }}
     className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
       isAuthenticated ? "bg-red-600 hover:bg-red-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"

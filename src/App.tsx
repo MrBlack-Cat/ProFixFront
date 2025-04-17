@@ -11,7 +11,6 @@ import ViewProviderProfilePage from './pages/ViewProviderProfile/ViewProviderPro
 import ClientProfilePage from './pages/ClientProfile/ClientProfilePage/ClientProfilePage';
 import ViewClientProfilePage from './pages/ViewClientProfilePage/ViewClientProfilePage';
 import ChatPage from './pages/ChatPage';
-// import ChatListPanel from './pages/Messaging/ChatListPanel';
 import ChatDashboard from './pages/Messaging/ChatDashboard';
 
 

@@ -100,7 +100,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}): Pro
         localStorage.setItem('refreshToken', result.data.refreshToken);
       }
 
-      response = await sendRequest(); // повтор запроса
+      response = await sendRequest(); //tekrar
     } else {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
