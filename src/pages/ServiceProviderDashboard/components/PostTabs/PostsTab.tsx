@@ -25,6 +25,8 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
+
+  
   const fetchPosts = async () => {
     try {
       const res = await fetchWithAuth(`https://localhost:7164/api/Post/GetPostsByProvider/${providerId}`);

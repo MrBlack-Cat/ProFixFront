@@ -16,7 +16,6 @@ const NotificationBell = () => {
   const loadNotifications = async () => {
     try {
       const res = await fetchWithAuth('https://localhost:7164/api/Notification/unread');
-      
       const json = await res.json();
       if (Array.isArray(json.data)) {
         setNotifications(json.data);
@@ -30,13 +29,11 @@ const NotificationBell = () => {
 
   useEffect(() => {
     if (!isLoggedIn) return;
-
     loadNotifications();
     const interval = setInterval(() => loadNotifications(), 30000);
     return () => clearInterval(interval);
   }, [isLoggedIn]);
 
-  // 🧠 Закрытие при клике вне блока
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (bellRef.current && !bellRef.current.contains(event.target as Node)) {
@@ -49,42 +46,65 @@ const NotificationBell = () => {
 
   if (!isLoggedIn) return null;
 
+  const getIconForType = (typeId: number) => {
+    switch (typeId) {
+      case 1: return '💬'; // NewMessage
+      case 2: return '⭐'; // NewReview
+      case 3: return '❤️'; // LikePost
+      case 4: return '📄'; // NewGuarantee
+      case 5: return '📅'; // NewBooking
+      default: return '🔔';
+    }
+  };
+
   const handleNotificationClick = async (notification: Notification) => {
     try {
-      await fetchWithAuth(
-        `https://localhost:7164/api/Notification/mark-all-from-user/${notification.createdBy}`,
-        { method: 'PUT' }
-      );
+      const endpoint =
+        notification.typeId === 1
+          ? `mark-all-from-user/${notification.createdBy}`
+          : notification.typeId === 5
+            ? `mark-all-booking-from-user/${notification.createdBy}`
+            : `${notification.id}/mark-as-read`;
+
+      await fetchWithAuth(`https://localhost:7164/api/Notification/${endpoint}`, {
+        method: 'PUT',
+      });
     } catch (err) {
       console.error("❌ Ошибка при отметке как прочитанное:", err);
     }
-  
-    console.log("👆 Clicked notification:", notification);
-  
+
     switch (notification.typeId) {
-      case 1: // NewMessage
-        navigate(`/messages`);
+      case 1:
+        navigate('/messages');
         break;
       case 2:
-        navigate(`/profile/reviews`);
+        navigate('/profile/reviews');
         break;
       case 3:
-        navigate(`/posts`);
+        navigate('/posts');
         break;
       case 4:
-        navigate(`/guarantees`);
+        navigate('/guarantees');
+        break;
+      case 5:
+        navigate('/service-profile?tab=Booking');
         break;
       default:
         console.log('Неизвестный тип уведомления');
     }
-  
-    // Удаляем все уведомления от отправителя
+
+    // удаляем все уведомления этого типа от этого отправителя
     setNotifications((prev) =>
-      prev.filter((n) => n.createdBy !== notification.createdBy)
+      prev.filter(
+        (n) =>
+          !(
+            n.createdBy === notification.createdBy &&
+            n.typeId === notification.typeId
+          )
+      )
     );
     setDropdownOpen(false);
   };
-  
 
   return (
     <div className="relative" ref={bellRef}>
@@ -105,8 +125,11 @@ const NotificationBell = () => {
               onClick={() => handleNotificationClick(n)}
               className="cursor-pointer text-sm p-2 border-b border-gray-200 hover:bg-gray-100 rounded transition"
             >
-              📨 {n.message}
-              <div className="text-xs text-gray-400">{new Date(n.createdAt).toLocaleString()}</div>
+              <span className="mr-1">{getIconForType(n.typeId)}</span>
+              {n.message}
+              <div className="text-xs text-gray-400">
+                {new Date(n.createdAt).toLocaleString()}
+              </div>
             </div>
           ))}
         </div>

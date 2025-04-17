@@ -11,25 +11,22 @@ import ServiceBookingTab from './components/ServiceBookingTab';
 import DayScheduleTab from './components/DayScheduleTab';
 import { fetchWithAuth } from '../../utils/api';
 
-const TABS = [
-  'Overview',
-  'Posts',
-  'Certificates',
-  'Reviews',
-  'Guarantees',
-  'Booking',
-  'Day Schedule',
-  'Settings'
-] as const;
-
+const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Booking', 'Day Schedule', 'Settings'] as const;
 export type Tab = typeof TABS[number];
 
 const ServiceProviderProfilePage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const initialTab = searchParams.get('tab') as Tab | null;
-  const [activeTab, setActiveTab] = useState<Tab>(initialTab && TABS.includes(initialTab) ? initialTab : 'Overview');
+  const queryTab = searchParams.get('tab') as Tab | null;
+
+  const [activeTab, setActiveTab] = useState<Tab>('Overview');
   const [providerProfile, setProviderProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (queryTab && TABS.includes(queryTab)) {
+      setActiveTab(queryTab);
+    }
+  }, [queryTab]);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -52,24 +49,15 @@ const ServiceProviderProfilePage: React.FC = () => {
     if (loading) return <p className="text-center text-gray-500">Loading...</p>;
 
     switch (activeTab) {
-      case 'Overview':
-        return <OverviewTab profile={providerProfile} />;
-      case 'Posts':
-        return <PostsTab providerId={providerProfile.id} />;
-      case 'Certificates':
-        return <CertificatesTab providerId={providerProfile.id} />;
-      case 'Reviews':
-        return <ReviewsTab providerId={providerProfile.id} />;
-      case 'Guarantees':
-        return <GuaranteesTab providerId={providerProfile.id} />;
-      case 'Booking':
-        return <ServiceBookingTab />;
-      case 'Day Schedule':
-        return <DayScheduleTab providerId={providerProfile.id} />;
-      case 'Settings':
-        return <SettingsTab />;
-      default:
-        return null;
+      case 'Overview': return <OverviewTab profile={providerProfile} />;
+      case 'Posts': return <PostsTab providerId={providerProfile.id} />;
+      case 'Certificates': return <CertificatesTab providerId={providerProfile.id} />;
+      case 'Reviews': return <ReviewsTab providerId={providerProfile.id} />;
+      case 'Guarantees': return <GuaranteesTab providerId={providerProfile.id} />;
+      case 'Booking': return <ServiceBookingTab />;
+      case 'Day Schedule': return <DayScheduleTab providerId={providerProfile.id} />;
+      case 'Settings': return <SettingsTab />;
+      default: return null;
     }
   };
 
@@ -79,9 +67,7 @@ const ServiceProviderProfilePage: React.FC = () => {
         Welcome to your space, Service Hero! 🛠️
       </h1>
       <TabsNavigation tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="mt-6">
-        {renderTab()}
-      </div>
+      <div className="mt-6">{renderTab()}</div>
     </div>
   );
 };

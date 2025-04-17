@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../../utils/api';
 import { motion } from 'framer-motion';
+import PostItem from '../components/PostItem';
+import { PostDto } from '../../../types/Post';
 
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-  imageUrl?: string;
-  createdAt: string;
-}
+
+// interface Post {
+//   id: number;
+//   title: string;
+//   content: string;
+//   imageUrl?: string;
+//   createdAt: string;
+// }
 
 const PostsTab = ({ providerId }: { providerId: number }) => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  // const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState<PostDto[]>([]);
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -35,27 +40,14 @@ const PostsTab = ({ providerId }: { providerId: number }) => {
 
   return (
     <motion.div
-  className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
->
-  {posts.map((post, index) => (
-    <motion.div
-      key={post.id}
-      className="p-5 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-transform"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-    >
-      <h3 className="text-lg font-bold text-indigo-600">{post.title}</h3>
-      <p className="text-xs text-gray-400">{new Date(post.createdAt).toLocaleDateString()}</p>
-      <p className="mt-2 text-gray-700">{post.content}</p>
-      {post.imageUrl && post.imageUrl !== "string" && (
-        <img src={post.imageUrl} className="mt-3 w-full rounded-lg shadow" />
-      )}
-    </motion.div>
-  ))}
-</motion.div>
+    className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+  >
+    {posts.map((post) => (
+      <PostItem key={post.id} post={post} />
+    ))}
+  </motion.div>
 
   );
 };
