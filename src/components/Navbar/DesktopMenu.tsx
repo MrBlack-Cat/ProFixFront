@@ -8,19 +8,19 @@ const DesktopMenu = () => (
       transition={{ delay: 0.3, duration: 0.5 }}
     >
       <a
-        href="#about"
+        href="/about"
         className="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-105"
       >
         About
       </a>
       <a
-        href="#services"
+        href="/services"
         className="text-white hover:text-yellow-300 transition-all duration-300 hover:scale-105"
       >
         Services
       </a>
       <a
-        href="#contact"
+        href="/contact"
         className="text-white hover:text-yellow-300 transition-all duration-0.3 hover:scale-105"
       >
         Contact

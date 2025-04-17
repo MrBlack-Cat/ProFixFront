@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
+import { ClientProfile } from '../../../../types/ClientProfile';
 
-interface ClientProfile {
-  name: string;
-  surname: string;
-  city?: string;
-  avatarUrl?: string;
-  about?: string;
-  otherContactLinks?: string;
-}
+
+
 
 const InfoTab = () => {
   const [profile, setProfile] = useState<ClientProfile | null>(null);
@@ -18,16 +13,14 @@ const InfoTab = () => {
       try {
         const token = localStorage.getItem('accessToken');
         const res = await fetch('https://localhost:7164/api/ClientProfile/user', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
-        if (data.isSuccess) {
+        if (data.isSuccess && data.data) {
           setProfile(data.data);
         }
       } catch (error) {
-        console.error('Failed to load profile:', error);
+        console.error('❌ Failed to load profile:', error);
       } finally {
         setLoading(false);
       }
@@ -45,20 +38,24 @@ const InfoTab = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center space-x-4">
-        {profile.avatarUrl && (
+        {profile.avatarUrl ? (
           <img
             src={profile.avatarUrl}
             alt="Avatar"
             className="w-24 h-24 rounded-full object-cover border-2 border-blue-500"
           />
+        ) : (
+          <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
+            No Avatar
+          </div>
         )}
         <div>
-          <h2 className="text-xl font-bold">
+          <h2 className="text-2xl font-bold">
             {profile.name} {profile.surname}
           </h2>
-          <p className="text-gray-600">{profile.city}</p>
+          <p className="text-gray-500">{profile.city || 'City not specified'}</p>
         </div>
       </div>
 
@@ -73,6 +70,12 @@ const InfoTab = () => {
         <div>
           <h3 className="text-lg font-semibold text-blue-600">Contact Links</h3>
           <p className="text-blue-700">{profile.otherContactLinks}</p>
+        </div>
+      )}
+
+      {profile.createdAt && (
+        <div className="text-sm text-gray-400">
+          Registered: {new Date(profile.createdAt).toLocaleDateString()}
         </div>
       )}
     </div>

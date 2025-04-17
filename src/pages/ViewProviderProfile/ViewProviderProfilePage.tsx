@@ -65,7 +65,7 @@ const ViewProviderProfilePage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {activeTab === 'info' && currentClient && (<InfoTab profile={profile} currentClient={currentClient} />)}
+        {activeTab === 'info' && (<InfoTab profile={profile} currentClient={currentClient} />)}
         {activeTab === 'certificates' && profile?.id && <CertificatesTab providerId={profile.id} />}
         {activeTab === 'posts' && profile?.id && <PostsTab providerId={profile.id} />}
         {activeTab === 'reviews' && <ReviewsTab providerId={profile.id} />}

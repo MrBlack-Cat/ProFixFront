@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import ComplaintModal from '../components/ComplaintModal';
+
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -20,13 +22,15 @@ interface InfoTabProps {
     surname: string;
     avatarUrl: string;
     userId: number; 
-  };
+  }| null;
 }
 
 const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [hasReviewed, setHasReviewed] = useState<boolean>(false);
+  const [isComplaintOpen, setIsComplaintOpen] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -42,6 +46,10 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
       console.error('❌ Error checking review status:', error);
     }
   };
+
+  const token = localStorage.getItem('accessToken');
+  const isAuthenticated = !!token;
+  
 
   useEffect(() => {
     checkIfReviewed();
@@ -102,36 +110,64 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
 
         {/* Action Buttons */}
         <div className="mt-5 flex flex-wrap gap-3">
-          {!hasReviewed && (
-            <button
-              onClick={() => setIsReviewModalOpen(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow"
-            >
-              <Star size={18} /> Leave a Review
-            </button>
-          )}
+  <button
+    onClick={() => {
+      if (!isAuthenticated) return navigate('/login');
+      if (!hasReviewed) setIsReviewModalOpen(true);
+    }}
+    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
+      isAuthenticated ? "bg-indigo-600 hover:bg-indigo-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
+    }`}
+    disabled={!isAuthenticated}
+  >
+    <Star size={18} /> Leave a Review
+  </button>
 
-          <button
-            onClick={() => setIsBookingModalOpen(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
-          >
-            <CalendarCheck size={18} /> Book a Service
-          </button>
+  <button
+    onClick={() => {
+      if (!isAuthenticated) return navigate('/login');
+      setIsBookingModalOpen(true);
+    }}
+    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
+      isAuthenticated ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
+    }`}
+    disabled={!isAuthenticated}
+  >
+    <CalendarCheck size={18} /> Book a Service
+  </button>
 
-          <button
-            onClick={() => navigate(`/chat/${profile.userId}`)}
-            className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow"
-          >
-            <MessageCircle size={18} /> Send Message
-          </button>
+  <button
+    onClick={() => {
+      if (!isAuthenticated) return navigate('/login');
+      navigate(`/chat/${profile.userId}`);
+    }}
+    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
+      isAuthenticated ? "bg-teal-600 hover:bg-teal-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
+    }`}
+    disabled={!isAuthenticated}
+  >
+    <MessageCircle size={18} /> Send Message
+  </button>
 
-          <button
-            onClick={() => navigate(`/complaint/new?providerId=${profile.id}`)}
-            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow"
-          >
-            <AlertOctagon size={18} /> Complaint
-          </button>
-        </div>
+  <button
+  onClick={() => {
+      if (!isAuthenticated) return navigate('/login');
+      setIsComplaintOpen(true);   // ✅ Просто открываем жалобу!
+    }}
+    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
+      isAuthenticated ? "bg-red-600 hover:bg-red-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
+    }`}
+    disabled={!isAuthenticated}
+  >
+    <AlertOctagon size={18} /> Complaint
+  </button>
+
+
+
+
+
+</div>
+
 
         {/* Modals */}
         <ReviewModal
@@ -148,8 +184,17 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
           isOpen={isBookingModalOpen}
           onClose={() => setIsBookingModalOpen(false)}
           providerId={profile.id}
-          clientId={currentClient.id}
+          clientId={currentClient?.id ?? 0}
         />
+
+        <ComplaintModal
+          isOpen={isComplaintOpen}
+          onClose={() => setIsComplaintOpen(false)}
+          toUserId={profile.userId}
+        />
+
+
+
       </div>
     </div>
   );
