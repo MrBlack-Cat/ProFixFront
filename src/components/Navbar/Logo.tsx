@@ -1,15 +1,15 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
-const Logo = () => (
+const Logo = () => {
+  return (
     <motion.div
-      className="text-2xl font-bold text-white animate-pulse"
-      initial={{ scale: 0.5 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
+      whileHover={{ scale: 1.1 }}
+      transition={{ type: 'spring', stiffness: 300 }}
+      className="cursor-pointer text-2xl font-bold text-cyan-400"
     >
       ProFix
     </motion.div>
   );
-  
-  export default Logo;
-  
+};
+
+export default Logo;

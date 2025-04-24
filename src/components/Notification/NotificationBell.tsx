@@ -23,7 +23,7 @@ const NotificationBell = () => {
         setNotifications([]);
       }
     } catch (err) {
-      console.error('❌ Ошибка при загрузке уведомлений:', err);
+      console.error('❌ Notification load error:', err);
     }
   };
 
@@ -90,7 +90,7 @@ const NotificationBell = () => {
         navigate('/service-profile?tab=Booking');
         break;
       default:
-        console.log('Неизвестный тип уведомления');
+        console.log('Unnamed type error');
     }
 
     // Tip ve user uzre hamisini silirik

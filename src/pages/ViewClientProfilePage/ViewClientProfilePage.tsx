@@ -25,14 +25,17 @@ const ViewClientProfilePage: React.FC = () => {
     if (id) loadClient();
   }, [id]);
 
-  if (loading) return <p className="text-gray-500">Loadting...</p>;
-  if (!client) return <p className="text-red-500">Client not found.</p>;
+  if (loading) return <p className="text-white/60 text-center mt-12">Loading client profile...</p>;
+  if (!client) return <p className="text-red-400 text-center mt-12">Client not found.</p>;
 
   return (
-    <div className="py-28  max-w-xl mx-auto">
-      <PublicClientInfoCard client={client} />
+    <div className="min-h-screen bg-gradient-to-br from-[#336074] via-[#285563] to-[#2c5364] text-white py-28 px-4">
+      <div className="max-w-xl mx-auto">
+        <PublicClientInfoCard client={client} />
+      </div>
     </div>
   );
+  
 };
 
 export default ViewClientProfilePage;

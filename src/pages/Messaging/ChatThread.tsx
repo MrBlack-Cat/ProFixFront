@@ -17,23 +17,18 @@ interface ChatThreadProps {
   otherUserName: string;
 }
 
-const ChatThread: React.FC<ChatThreadProps> = ({
-  otherUserId,
-  currentUserId,
-  otherUserName,
-}) => {
+const ChatThread: React.FC<ChatThreadProps> = ({ otherUserId, currentUserId, otherUserName }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const loadMessages = async () => {
     try {
-      const url = `https://localhost:7164/api/Message/between?otherUserId=${otherUserId}`;
-      const res = await fetchWithAuth(url);
+      const res = await fetchWithAuth(`https://localhost:7164/api/Message/between?otherUserId=${otherUserId}`);
       const json = await res.json();
       setMessages(json.data || []);
     } catch (err) {
-      console.error('❌ Ошибка загрузки сообщений:', err);
+      console.error('❌ Message load error:', err);
     } finally {
       setLoading(false);
     }
@@ -52,14 +47,17 @@ const ChatThread: React.FC<ChatThreadProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="px-6 py-4 bg-white shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800">💬 {otherUserName}</h2>
+    <div className="flex mt-2 flex-col h-full rounded-2xl overflow-hidden border border-white/20 shadow-xl">
+      <div className="px-6 py-4 bg-white/10 backdrop-blur-lg border-b border-white/50 shadow rounded-t-2xl">
+      <h2 className="text-xl font-semibold text-white">💬 {otherUserName}</h2>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4  bg-slate-100 space-y-3" style={{ height: 'calc(100vh - 150px)' }}>
+      <div
+        className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl"
+        style={{ height: 'calc(100vh - 150px)' }}
+      >
         {loading ? (
-          <p className="text-gray-500">Загрузка сообщений...</p>
+          <p className="text-white/70">Loading Messages...</p>
         ) : (
           messages.map((msg, index) => (
             <MessageBubble
@@ -72,7 +70,7 @@ const ChatThread: React.FC<ChatThreadProps> = ({
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t px-4 py-3 bg-white">
+      <div className="px-4 py-3 border-t border-white/20 bg-white/10 backdrop-blur-lg">
         <MessageInput receiverUserId={otherUserId} onSend={handleNewMessage} />
       </div>
     </div>

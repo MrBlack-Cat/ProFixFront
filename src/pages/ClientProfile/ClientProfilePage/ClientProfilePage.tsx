@@ -35,31 +35,33 @@ const ClientProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <h1 className="text-3xl font-bold mb-4 text-blue-700">My Account</h1>
+    <section className="relative py-16 px-4 bg-gradient-to-tr from-[#283e51] to-[#4b79a1] min-h-screen overflow-hidden">
+      {/* Альбомный слой (если хочешь атмосферу) */}
+      {/* <div className="absolute inset-6 bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div> */}
 
-        {/* Tabs */}
-        <div className="flex space-x-4 border-b pb-2 mb-4">
-          {TABS.map((tab) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 rounded-t-md text-sm font-medium ${
-                activeTab === tab
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
+      <div className="relative z-10 max-w-6xl mx-auto p-6">
+        {/* Навигация вкладок */}
+        <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-4 shadow-2xl mb-8">
+          <div className="flex justify-center gap-4 border-b border-white/30 pb-3">
+            {TABS.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 text-sm md:text-base font-semibold rounded-lg transition-all ${
+                  activeTab === tab
+                    ? 'bg-indigo-600 text-white shadow'
+                    : 'text-white/90 hover:bg-white/30'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6">{renderTabContent()}</div>
         </div>
-
-        {/* Content */}
-        <div className="mt-4">{renderTabContent()}</div>
       </div>
-    </div>
+    </section>
   );
 };
 

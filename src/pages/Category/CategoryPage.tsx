@@ -32,7 +32,7 @@ const CategoryPage = () => {
         setProviders(providerData?.data || []);
         setFilteredProviders(providerData?.data || []);
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('❌ Error loading data:', error);
       }
     };
 
@@ -40,32 +40,33 @@ const CategoryPage = () => {
   }, [id]);
 
   return (
-    
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-tr from-[#e1f5f2] via-[#f5f7fa] to-[#d0d7e8] px-4 md:px-10 py-10">
+      {/* Заголовок категории */}
       {category && <CategoryHeader category={category} />}
 
-      <div className="flex justify-end px-4 md:px-10 mt-4">
+      {/* Кнопка фильтра */}
+      <div className="flex justify-end mt-6">
         <button
           onClick={() => setIsFilterOpen(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+          className="bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white px-5 py-2 rounded-xl shadow-lg transition-all duration-300"
         >
-          Filter
+          🔍 Filter
         </button>
       </div>
 
+      {/* Модалка фильтра */}
       <FilterModal
-  isOpen={isFilterOpen}
-  onClose={() => setIsFilterOpen(false)}
-  providers={providers}
-  onApply={(filtered) => {
-    setFilteredProviders(filtered);
-    setIsFilterOpen(false);
-  }}
-/>
+        isOpen={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        providers={providers}
+        onApply={(filtered) => {
+          setFilteredProviders(filtered);
+          setIsFilterOpen(false);
+        }}
+      />
 
-
-
-      <div className="px-4 md:px-10 mt-6 pb-10">
+      {/* Сетка провайдеров */}
+      <div className="mt-10">
         <ProvidersGrid providers={filteredProviders} />
       </div>
     </div>

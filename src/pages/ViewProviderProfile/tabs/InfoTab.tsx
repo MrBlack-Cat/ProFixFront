@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ComplaintModal from '../components/ComplaintModal';
-
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import {
-  MessageCircle,
-  AlertOctagon,
-  Star,
-  CalendarCheck,
-} from 'lucide-react';
-
+import { MessageCircle, AlertOctagon, Star, CalendarCheck } from 'lucide-react';
 import AverageRating from '../../../components/Common/AverageRating';
 import ReviewModal from '../components/ReviewModal';
 import BookingModal from '../components/BookingModal';
+// import ActionButton from '../components/ActionButton';
+
 
 interface InfoTabProps {
   profile: any;
@@ -21,8 +16,8 @@ interface InfoTabProps {
     name: string;
     surname: string;
     avatarUrl: string;
-    userId: number; 
-  }| null;
+    userId: number;
+  } | null;
 }
 
 const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
@@ -31,12 +26,12 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
   const [hasReviewed, setHasReviewed] = useState<boolean>(false);
   const [isComplaintOpen, setIsComplaintOpen] = useState(false);
 
-
   const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken');
+  const isAuthenticated = !!token;
 
   const checkIfReviewed = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
       const res = await fetch(`https://localhost:7164/api/Review/has-reviewed?providerId=${profile.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -47,21 +42,19 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
     }
   };
 
-  const token = localStorage.getItem('accessToken');
-  const isAuthenticated = !!token;
-  
-
   useEffect(() => {
     checkIfReviewed();
   }, []);
 
   return (
-    <div className="flex gap-6 items-start flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row gap-8">
+
+      {/* Левая часть — Аватар */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-60 h-60 min-w-[160px] rounded-xl overflow-hidden shadow-lg border border-gray-300"
+        className="w-64 h-64 min-w-[160px] rounded-3xl overflow-hidden shadow-2xl bg-white/20 backdrop-blur-lg border border-white/30"
       >
         <img
           src={profile.avatarUrl || '/default-avatar.png'}
@@ -70,105 +63,98 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
         />
       </motion.div>
 
-      <div className="flex-1">
-        <h2 className="text-3xl font-bold mb-1">{profile.name} {profile.surname}</h2>
-        <p className="text-gray-600">{profile.city} • {profile.age} y.o.</p>
+      {/* Правая часть */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex-1 bg-white/20 backdrop-blur-md rounded-3xl p-8 border border-white/30 shadow-lg"
+      >
+        <h2 className="text-3xl font-bold text-gray-900 mb-1">{profile.name} {profile.surname}</h2>
+        <p className="text-gray-700">{profile.city} • {profile.age} y.o.</p>
 
-        <div className="mt-2">
+        <div className="mt-3">
           <AverageRating providerId={profile.id} />
         </div>
 
-        <div className="text-gray-600 mt-2 space-y-1">
-          <p>Gender: <span className="font-medium">{profile.genderName || '—'}</span></p>
-          <p>Experience: <span className="font-medium">{profile.experienceYears ?? '—'} years</span></p>
-          <p>Category: <span className="font-medium">{profile.parentCategoryName || '—'}</span></p>
-          <p>Registered on: <span className="font-medium">{new Date(profile.createdAt).toLocaleDateString()}</span></p>
+        <div className="text-gray-700 mt-4 space-y-1 text-sm">
+          <p><span className="font-semibold">Gender:</span> {profile.genderName || '—'}</p>
+          <p><span className="font-semibold">Experience:</span> {profile.experienceYears ?? '—'} years</p>
+          <p><span className="font-semibold">Category:</span> {profile.parentCategoryName || '—'}</p>
+          <p><span className="font-semibold">Registered:</span> {new Date(profile.createdAt).toLocaleDateString()}</p>
 
           {profile.isApprovedByAdmin ? (
-            <p className="text-green-600">
-              Approved on {new Date(profile.approvalDate!).toLocaleDateString()}
-            </p>
+            <p className="text-green-900 font-semibold">✅ Approved</p>
           ) : (
-            <p className="text-yellow-600">⏳ Awaiting admin approval</p>
+            <p className="text-yellow-600 font-semibold">⏳ Awaiting admin approval</p>
           )}
         </div>
 
         {/* Services */}
-        <div className="mt-4">
-          <h4 className="font-semibold">Services:</h4>
-          <ul className="flex gap-2 flex-wrap mt-1">
+        <div className="mt-6">
+          <h4 className="font-semibold text-gray-800 mb-2">Services</h4>
+          <div className="flex flex-wrap gap-2">
             {profile.serviceTypes?.map((s: string, i: number) => (
-              <li
+              <span
                 key={i}
-                className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm"
+                className="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs shadow-sm"
               >
                 {s}
-              </li>
+              </span>
             ))}
-          </ul>
+          </div>
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-3">
-  <button
-    onClick={() => {
-      if (!isAuthenticated) return navigate('/login');
-      if (!hasReviewed) setIsReviewModalOpen(true);
-    }}
-    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
-      isAuthenticated ? "bg-indigo-600 hover:bg-indigo-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
-    }`}
-    disabled={!isAuthenticated}
-  >
-    <Star size={18} /> Leave a Review
-  </button>
+        {/* Кнопки действий */}
+        <div className="mt-6 flex flex-wrap gap-4">
 
-  <button
-    onClick={() => {
-      if (!isAuthenticated) return navigate('/login');
-      setIsBookingModalOpen(true);
-    }}
-    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
-      isAuthenticated ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
-    }`}
-    disabled={!isAuthenticated}
-  >
-    <CalendarCheck size={18} /> Book a Service
-  </button>
+          <ActionButton
+            onClick={() => {
+              if (!isAuthenticated) return navigate('/login');
+              if (!hasReviewed) setIsReviewModalOpen(true);
+            }}
+            disabled={!isAuthenticated}
+            text="Leave Review"
+            icon={<Star size={18} />}
+            color="bg-indigo-600 hover:bg-indigo-700"
+          />
 
-  <button
-    onClick={() => {
-      if (!isAuthenticated) return navigate('/login');
-      navigate(`/chat/${profile.userId}`);
-    }}
-    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
-      isAuthenticated ? "bg-teal-600 hover:bg-teal-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
-    }`}
-    disabled={!isAuthenticated}
-  >
-    <MessageCircle size={18} /> Send Message
-  </button>
+          <ActionButton
+            onClick={() => {
+              if (!isAuthenticated) return navigate('/login');
+              setIsBookingModalOpen(true);
+            }}
+            disabled={!isAuthenticated}
+            text="Book Service"
+            icon={<CalendarCheck size={18} />}
+            color="bg-blue-600 hover:bg-blue-700"
+          />
 
-  <button
-  onClick={() => {
-      if (!isAuthenticated) return navigate('/login');
-      setIsComplaintOpen(true);   
-    }}
-    className={`flex items-center gap-2 px-4 py-2 rounded shadow transition ${
-      isAuthenticated ? "bg-red-600 hover:bg-red-700 text-white" : "bg-gray-400 cursor-not-allowed text-gray-100"
-    }`}
-    disabled={!isAuthenticated}
-  >
-    <AlertOctagon size={18} /> Complaint
-  </button>
+          <ActionButton
+            onClick={() => {
+              if (!isAuthenticated) return navigate('/login');
+              navigate(`/chat/${profile.userId}`);
+            }}
+            disabled={!isAuthenticated}
+            text="Send Message"
+            icon={<MessageCircle size={18} />}
+            color="bg-teal-600 hover:bg-teal-700"
+          />
 
+          <ActionButton
+            onClick={() => {
+              if (!isAuthenticated) return navigate('/login');
+              setIsComplaintOpen(true);
+            }}
+            disabled={!isAuthenticated}
+            text="Complaint"
+            icon={<AlertOctagon size={18} />}
+            color="bg-red-600 hover:bg-red-700"
+          />
 
+        </div>
 
-
-
-</div>
-
-
-        {/* Modals */}
+        {/* Модалки */}
         <ReviewModal
           isOpen={isReviewModalOpen}
           onRequestClose={() => {
@@ -192,11 +178,35 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
           toUserId={profile.userId}
         />
 
-
-
-      </div>
+      </motion.div>
     </div>
   );
 };
+
+// Кнопка действия
+const ActionButton = ({
+  onClick,
+  disabled,
+  text,
+  icon,
+  color,
+}: {
+  onClick: () => void;
+  disabled: boolean;
+  text: string;
+  icon: React.ReactNode;
+  color: string;
+}) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-md text-white text-sm transition ${color} ${
+      disabled ? 'opacity-50 cursor-not-allowed' : ''
+    }`}
+  >
+    {icon}
+    {text}
+  </button>
+);
 
 export default InfoTab;

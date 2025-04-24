@@ -7,6 +7,9 @@ module.exports = {
         'gradient-x': 'gradient-x 4s ease infinite',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
         'neon-blur': 'neonBlur 1.5s ease-in-out infinite',
+        'slowpulse': 'slowpulse 0.5s ease-in-out infinite',
+        'sparks': 'sparks 15s linear infinite',
+
       },
       keyframes: {
         fadeInUp: {
@@ -25,11 +28,16 @@ module.exports = {
           '0%, 100%': { filter: 'blur(2px)' },
           '50%': { filter: 'blur(6px)' },
         },
+        sparks: {
+          '0%': { backgroundPosition: '0% 0%' },
+          '100%': { backgroundPosition: '100% 100%' },
+        },
       },
     },
   },
   
   plugins: [
-    require('@tailwindcss/line-clamp'), 
+    require('@tailwindcss/line-clamp'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 };

@@ -44,7 +44,6 @@ const CreateClientProfileForm = ({ onSubmit, loading }: Props) => {
     if (!formData.name) newErrors.name = 'Name is required';
     if (!formData.surname) newErrors.surname = 'Surname is required';
     if (!formData.city) newErrors.city = 'City is required';
-    if (!formData.avatar) newErrors.avatar = 'Avatar image is required';
   
     setErrors(newErrors);
   
@@ -88,7 +87,6 @@ const CreateClientProfileForm = ({ onSubmit, loading }: Props) => {
         id="avatar"
         accept="image/*"
         onChange={handleChange}
-        required
       />
       {errors.avatar && <p className="text-red-500">{errors.avatar}</p>}
     </div>

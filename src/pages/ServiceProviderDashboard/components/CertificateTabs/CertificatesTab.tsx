@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import CertificateCard from './CertificateCard';
-import CreateCertificateForm from './CreateCertificateForm';
-import UpdateCertificateForm from './UpdateCertificateForm';
+import { Certificate } from '../../../../types/Certificate';
 import { fetchWithAuth } from '../../../../utils/api';
 
-interface Certificate {
-  id: number;
-  title: string;
-  description: string;
-  fileUrl: string;
-  issuedAt: string;
-}
-
-interface CertificatesTabProps {
+interface Props {
   providerId: number;
+  onCreateClick: () => void;
+  onEdit: (certificate: Certificate) => void;
 }
 
-const CertificatesTab: React.FC<CertificatesTabProps> = ({ providerId }) => {
+const CertificatesTab: React.FC<Props> = ({ providerId, onCreateClick, onEdit }) => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selected, setSelected] = useState<Certificate | null>(null);
-  const [showCreate, setShowCreate] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
 
   const fetchCertificates = async () => {
     try {
       const res = await fetchWithAuth(`https://localhost:7164/api/Certificate/by-provider/${providerId}`);
       const json = await res.json();
+      console.log('📦 Response JSON:', json);
       setCertificates(json.data ?? []);
     } catch (err) {
-      console.error('Failed to fetch certificates:', err);
+      console.error('❌ Failed to fetch certificates:', err);
     } finally {
       setLoading(false);
     }
@@ -52,7 +43,7 @@ const CertificatesTab: React.FC<CertificatesTabProps> = ({ providerId }) => {
       alert(json.data || 'Deleted!');
       fetchCertificates();
     } else {
-      alert(json.errors?.[0] || 'Error deleting');
+      alert(json.errors?.[0] || 'Delete failed');
     }
   };
 
@@ -60,8 +51,8 @@ const CertificatesTab: React.FC<CertificatesTabProps> = ({ providerId }) => {
     <div className="p-4">
       <div className="flex justify-end mb-4">
         <button
-          onClick={() => setShowCreate(true)}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          onClick={onCreateClick}
+          className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
         >
           ➕ Add Certificate
         </button>
@@ -70,63 +61,17 @@ const CertificatesTab: React.FC<CertificatesTabProps> = ({ providerId }) => {
       {loading ? (
         <div>Loading...</div>
       ) : certificates.length === 0 ? (
-        <div className="text-gray-500 text-center">No certificates yet.</div>
+        <div className="text-center text-gray-500">No certificates yet.</div>
       ) : (
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {certificates.map((cert) => (
+          {certificates.map(cert => (
             <CertificateCard
               key={cert.id}
               certificate={cert}
-              onEdit={() => {
-                setSelected(cert);
-                setShowEdit(true);
-              }}
+              onEdit={() => onEdit(cert)}
               onDelete={() => handleDelete(cert.id)}
             />
           ))}
-        </div>
-      )}
-
-      {showCreate && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded w-full max-w-lg relative">
-            <button
-              className="absolute top-2 right-3 text-gray-500 hover:text-black"
-              onClick={() => setShowCreate(false)}
-            >
-              ✖
-            </button>
-            <CreateCertificateForm
-              onSuccess={() => {
-                setShowCreate(false);
-                fetchCertificates();
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {showEdit && selected && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded w-full max-w-lg relative">
-            <button
-              className="absolute top-2 right-3 text-gray-500 hover:text-black"
-              onClick={() => {
-                setShowEdit(false);
-                setSelected(null);
-              }}
-            >
-              ✖
-            </button>
-            <UpdateCertificateForm
-              certificate={selected}
-              onSuccess={() => {
-                setShowEdit(false);
-                setSelected(null);
-                fetchCertificates();
-              }}
-            />
-          </div>
         </div>
       )}
     </div>

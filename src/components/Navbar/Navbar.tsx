@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react'; 
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 import Logo from './Logo';
 import DesktopMenu from './DesktopMenu';
 import AccountMenu from './AccountMenu';
@@ -8,49 +8,90 @@ import MobileMenu from './MobileMenu';
 import NotificationBell from '../Notification/NotificationBell';
 import { useNavigate } from 'react-router-dom';
 
+interface NavbarProps {
+  isScrolled: boolean;
+}
+
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false); 
-  const [accountMenuOpen, setAccountMenuOpen] = useState(false); 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Вычисляем финальное состояние для показа полного Navbar
+  const showFullNavbar = !isScrolled || isHovered;
 
   return (
     <motion.nav
-      className="fixed w-full top-0 z-50 py-2 px-6 bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 shadow-xl"
-      initial={{ opacity: 0, y: -100 }}
+      className={`fixed top-[1%] z-50 rounded-3xl overflow-visible shadow-lg backdrop-blur-md border border-cyan-400/20 bg-black/20`}
+      initial={{ opacity: 0, y: -80 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      whileHover={{ backgroundColor: 'rgba(0,0,0,0.3)' }} // <<< ДОБАВЛЕНО!
+      transition={{ duration: 0.5 }}
+      style={{
+        left: '5%',
+        right: showFullNavbar ? '5%' : '75%',
+        height: showFullNavbar ? '60px' : '50px',
+        transition: 'all 0.4s ease',
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* LEFT: Logo + DesktopMenu */}
-        <div className="flex items-center space-x-6">
+
+      <div className="relative w-full h-full flex items-center justify-between px-8 rounded-3xl">
+
+        {/* Левая часть */}
+        <div className="flex items-center space-x-6 z-10">
           <button onClick={() => navigate('/')} className="focus:outline-none">
             <Logo />
           </button>
-          <DesktopMenu />
+
+          {/* Плавное исчезновение DesktopMenu */}
+          <AnimatePresence>
+            {showFullNavbar && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+              >
+                <DesktopMenu selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* RIGHT: Account + Bell + MobileMenuToggle */}
-        <div className="flex items-center space-x-4">
+        {/* Правая часть */}
+        <div className="flex items-center space-x-6 z-10">
+          <NotificationBell />
           <AccountMenu
             accountMenuOpen={accountMenuOpen}
             setAccountMenuOpen={setAccountMenuOpen}
           />
-          <NotificationBell />
-
-          {/* MobileMenuToggle */}
           <motion.div className="md:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-            <button onClick={() => setMenuOpen(!menuOpen)}>
+            <button onClick={() => setMenuOpen(!menuOpen)} className="text-cyan-400">
               {menuOpen ? (
-                <X className="text-white w-8 h-8" />
+                <X className="w-8 h-8" />
               ) : (
-                <Menu className="text-white w-8 h-8" />
+                <Menu className="w-8 h-8" />
               )}
             </button>
           </motion.div>
         </div>
-      </div>
 
-      <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        {/* Mobile Menu */}
+        <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      </div>
     </motion.nav>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import { fetchWithAuth } from '../../utils/api';
-import { getDecodedToken } from '../../utils/auth'; 
+import { getDecodedToken } from '../../utils/auth';
 
 interface Props {
   receiverUserId: number;
@@ -20,17 +20,14 @@ const MessageInput: React.FC<Props> = ({ receiverUserId, onSend }) => {
         method: 'POST',
         body: JSON.stringify({ receiverUserId, content }),
       });
-
       const json = await res.json();
-
-      const senderUserId = getDecodedToken()?.userId;; // ←  userId tokender
+      const senderUserId = getDecodedToken()?.userId;
 
       onSend({
         ...json.data,
         senderUserId,
         createdAt: new Date().toISOString(),
       });
-
       setContent('');
     } catch (err) {
       console.error('❌ Ошибка при отправке сообщения:', err);
@@ -38,21 +35,23 @@ const MessageInput: React.FC<Props> = ({ receiverUserId, onSend }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center rounded-lg gap-3 mt-1 pt-2 border-t border-gray-200 bg-slate-100 px-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center gap-3 p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md"
+    >
       <input
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="flex-1 rounded-full  mb-2 px-8 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="flex-1 rounded-full bg-white/10 text-white px-6 py-2 placeholder-white/60 border border-white/30 focus:outline-none"
         placeholder="Your Message..."
       />
       <button
         type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow transition"
+        className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg"
       >
         <Send size={18} />
       </button>
     </form>
-
   );
 };
 

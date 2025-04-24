@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { jwtDecode } from 'jwt-decode';
+import { User } from 'lucide-react'; // Для аватарки
 
 interface AccountMenuProps {
   accountMenuOpen: boolean;
@@ -65,69 +66,76 @@ const AccountMenu = ({ accountMenuOpen, setAccountMenuOpen }: AccountMenuProps) 
   };
 
   return (
-    <motion.div
-      className="relative"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5 }}
-      ref={menuRef}
-    >
-      <button
+    <div className="relative" ref={menuRef}>
+      {/* Иконка пользователя */}
+      <motion.button
         onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-        className="text-white m-1 text-lg px-2 py-1 bg-transparent border-2 border-white rounded-md hover:bg-white hover:text-blue-700 transition-all duration-300"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center text-white shadow-lg transition-all duration-300"
       >
-        My Account
-      </button>
+        <User size={20} />
+      </motion.button>
 
-      {accountMenuOpen && (
-        <motion.div
-          className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg w-48 p-4 space-y-2 z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {isLoggedIn ? (
-            <>
-              <button
-                onClick={handleProfileRedirect}
-                className="block w-full text-left text-blue-600 hover:text-blue-800"
-              >
-                My ProFix
-              </button>
-              <button
-                onClick={() => {
-                  if (role === 'Client') {
-                    window.location.href = '/client-profile?tab=Settings';
-                  } else if (role === 'ServiceProvider') {
-                    window.location.href = '/service-profile?tab=Settings';
-                  } else {
-                    window.location.href = '/profile';
-                  }
-                }}
-                className="w-full text-left text-blue-600 hover:text-blue-800"
-              >
-                Settings
-              </button>
-              <button
-                onClick={handleLogout}
-                className="w-full text-left text-red-600 hover:text-red-800"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <a href="/login" className="block text-blue-600 hover:text-blue-800">
-                Login
-              </a>
-              <a href="/register" className="block text-blue-600 hover:text-blue-800">
-                Register
-              </a>
-            </>
-          )}
-        </motion.div>
-      )}
-    </motion.div>
+      {/* Меню */}
+      <AnimatePresence>
+        {accountMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+            className="absolute right-0 mt-4 w-48 bg-white/80 backdrop-blur-md rounded-xl shadow-xl p-4 flex flex-col space-y-2 z-50"
+          >
+            {isLoggedIn ? (
+              <>
+                <button
+                  onClick={handleProfileRedirect}
+                  className="text-left text-sm text-blue-700 hover:text-blue-900 transition"
+                >
+                  My Profile
+                </button>
+                <button
+                  onClick={() => (window.location.href = '/messages')}
+                  className="text-left text-sm text-blue-700 hover:text-blue-900 transition"
+                >
+                  Messages
+                </button>
+                <button
+                  onClick={() => {
+                    if (role === 'Client') {
+                      window.location.href = '/client-profile?tab=Settings';
+                    } else if (role === 'ServiceProvider') {
+                      window.location.href = '/service-profile?tab=Settings';
+                    } else {
+                      window.location.href = '/profile';
+                    }
+                  }}
+                  className="text-left text-sm text-blue-700 hover:text-blue-900 transition"
+                >
+                  Settings
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="text-left text-sm text-red-500 hover:text-red-700 transition"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <a href="/login" className="text-sm text-blue-700 hover:text-blue-900 transition">
+                  Login
+                </a>
+                <a href="/register" className="text-sm text-blue-700 hover:text-blue-900 transition">
+                  Register
+                </a>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

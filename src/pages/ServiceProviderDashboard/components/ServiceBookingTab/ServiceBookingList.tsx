@@ -1,10 +1,10 @@
 import { Booking } from '../../../../types/Booking';
 import ServiceBookingItem from './ServiceBookingItem';
 
-type Props = {
+interface Props {
   bookings: Booking[];
   reload: () => void;
-};
+}
 
 const ServiceBookingList: React.FC<Props> = ({ bookings, reload }) => {
   const sorted = [...bookings].sort(
@@ -12,7 +12,7 @@ const ServiceBookingList: React.FC<Props> = ({ bookings, reload }) => {
   );
 
   return (
-    <ul className="space-y-4">
+    <ul className="space-y-6">
       {sorted.map((booking) => (
         <ServiceBookingItem key={booking.id} booking={booking} reload={reload} />
       ))}

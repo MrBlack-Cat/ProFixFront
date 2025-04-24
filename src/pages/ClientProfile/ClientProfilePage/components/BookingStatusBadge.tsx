@@ -15,7 +15,7 @@ type Props = {
 
 const BookingStatusBadge: React.FC<Props> = ({ status }) => {
   return (
-    <span className={`inline-block px-2 py-1 rounded-full text-xs font-semibold mt-2 ${statusColors[status]}`}>
+    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${statusColors[status]}`}>
       {status}
     </span>
   );

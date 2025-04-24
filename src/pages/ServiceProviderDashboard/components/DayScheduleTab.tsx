@@ -24,28 +24,32 @@ const Legend = () => (
 const DayScheduleTab: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [bookedSlots, setBookedSlots] = useState<BookedSlotDto[]>([]);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const loadSlots = async () => {
-      try {
-        const res = await fetchWithAuth('https://localhost:7164/api/ServiceBooking/provider');
-        const json = await res.json();
+  const loadSlots = async () => {
+    try {
+      setLoading(true);
+      const res = await fetchWithAuth('https://localhost:7164/api/ServiceBooking/provider');
+      const json = await res.json();
 
-        if (json?.data) {
-          const filteredByDate = json.data.filter((s: BookedSlotDto) =>
-            dayjs(s.scheduledDate).isSame(selectedDate, 'day')
-          );
-          setBookedSlots(filteredByDate);
-        } else {
-          setBookedSlots([]);
-        }
-      } catch (err) {
-        console.error('❌ Booking Load Error:', err);
+      if (json?.data) {
+        const filtered = json.data.filter((s: BookedSlotDto) =>
+          dayjs(s.scheduledDate).isSame(selectedDate, 'day')
+        );
+        setBookedSlots(filtered);
+      } else {
         setBookedSlots([]);
       }
-    };
+    } catch (err) {
+      console.error('❌ Error loading bookings:', err);
+      setBookedSlots([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadSlots();
   }, [selectedDate]);
 
@@ -54,33 +58,31 @@ const DayScheduleTab: React.FC = () => {
     : bookedSlots.filter((slot) => slot.status === statusFilter);
 
   return (
-    <div className="relative p-4 space-y-6">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+    <div className="relative bg-blue-100 p-6 rounded-2xl shadow-lg space-y-8">
+      {/* Дата выбора */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-gray-700">
           📅 Select Date:
         </label>
         <DatePicker
           selected={selectedDate.toDate()}
-          onChange={(date: Date | null) => {
-            if (date) {
-              setSelectedDate(dayjs(date));
-            }
-          }}
+          onChange={(date) => date && setSelectedDate(dayjs(date))}
           dateFormat="dd-MM-yyyy"
-          className="border border-gray-300 rounded px-3 py-1 shadow-sm"
+          className="border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:ring focus:ring-blue-300"
           showPopperArrow={false}
           placeholderText="Select Date"
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          🔎 Status Filtr:
+      {/* Фильтр по статусу */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-gray-700">
+          🔎 Status Filter:
         </label>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-1 shadow-sm text-sm"
+          className="border border-gray-300 rounded-md px-4 py-2 shadow-sm text-sm focus:ring focus:ring-blue-300"
         >
           <option value="all">All</option>
           <option value="Approved">Approved</option>
@@ -92,18 +94,25 @@ const DayScheduleTab: React.FC = () => {
         </select>
       </div>
 
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-2">📌Booking for Selected Date</h3>
-        <ExactSlotTimeline slots={filteredSlots} />
+      {/* Timeline бронирований */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-bold text-gray-800">Bookings for Selected Date</h3>
+        {loading ? (
+          <p className="text-blue-500 text-center">Loading bookings... ⏳</p>
+        ) : (
+          <ExactSlotTimeline slots={filteredSlots} />
+        )}
       </div>
 
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-2">🎯 Interactive Booking Grid </h3>
+      {/* Интерактивная сетка бронирования */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-bold text-gray-800">Interactive Booking Grid</h3>
         <Legend />
         <InteractiveBookingGrid
           slots={filteredSlots}
           onSelect={(start, end) => {
-            console.log('Selected:', start, end);
+            console.log('🆕 Selected slot:', start, '→', end);
+            // Здесь можно будет открыть модалку "Создать бронирование"
           }}
         />
       </div>

@@ -88,7 +88,7 @@
 //         />
 //         <input
 //           type="file"
-//           accept="application/pdf"
+//              accept="image/*,application/pdf"
 //           onChange={(e) => setFile(e.target.files?.[0] || null)}
 //           className="border rounded px-3 py-2 col-span-1 md:col-span-2"
 //         />

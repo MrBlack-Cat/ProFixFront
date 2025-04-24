@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -7,49 +5,34 @@ interface Props {
   icon: string;
   category: string;
   serviceTypes: string[];
+  index: number;
 }
 
-const ServiceCard = ({ id, icon, category, serviceTypes }: Props) => {
-  const [flipped, setFlipped] = useState(false);
+const ServiceCard = ({ id, icon, category, serviceTypes, index }: Props) => {
   const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/category/${id}`); 
-  };
+  const isEven = index % 2 === 0;
 
   return (
-    <motion.div
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
-      onClick={handleClick}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="perspective cursor-pointer w-full"
+    <div
+      onClick={() => navigate(`/category/${id}`)}
+      className={`cursor-pointer flex rounded-2xl overflow-hidden shadow-xl hover:scale-105 transition-transform duration-500 
+      ${isEven ? 'bg-white/30' : 'bg-white/20'} backdrop-blur-md h-32`}
     >
-      <div
-        className={`relative w-full h-64 bg-white rounded-xl shadow-md transition-transform duration-700 transform-style preserve-3d ${
-          flipped ? 'rotate-y-180' : ''
-        }`}
-      >
-        {/* Front */}
-        <div className="absolute inset-0 p-4 backface-hidden flex flex-col justify-between">
-          <div className="text-3xl">{icon}</div>
-          <h3 className="text-lg font-semibold text-gray-800 mt-2">{category}</h3>
-          <ul className="text-sm text-gray-600 mt-4 space-y-1">
-            {serviceTypes.slice(0, 4).map((type, idx) => (
-              <li key={idx}>• {type}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Back */}
-        <div className="absolute inset-0 backface-hidden rotate-y-180 flex items-center justify-center bg-blue-600 text-white rounded-xl">
-          <p className="text-center font-semibold text-sm">Explore {category} 🚀</p>
-        </div>
+      {/* Левая часть */}
+      <div className="w-2/5 flex flex-col justify-center items-center bg-white/30 p-4">
+        <div className="text-3xl mb-2">{icon}</div>
+        <div className="text-md font-bold text-[#122E34] text-center">{category}</div>
       </div>
-    </motion.div>
+
+      {/* Правая часть */}
+      <div className="w-3/5 flex flex-col justify-center p-4 bg-white/10">
+        <ul className="text-sm text-[#0A7075] space-y-1">
+          {serviceTypes.slice(0, 4).map((type, idx) => (
+            <li key={idx}>• {type}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 

@@ -11,22 +11,9 @@ const ServiceBookingTab = () => {
     setLoading(true);
     try {
       const res = await fetchWithAuth('https://localhost:7164/api/ServiceBooking/provider');
-
-      if (!res.ok) {
-        const errText = await res.text();
-        console.error('❌ Service Booking fetch failed:', errText);
-        throw new Error(`HTTP ${res.status}`);
-      }
-
+      if (!res.ok) throw new Error('HTTP Error');
       const json = await res.json();
-      const bookingArray = Array.isArray(json) ? json : json.data ?? [];
-      console.log('📦 Provider Booking API response:', bookingArray);
-
-      const sorted = [...bookingArray].sort(
-        (a, b) => new Date(b.scheduledDate).getTime() - new Date(a.scheduledDate).getTime()
-      );
-
-      setBookings(sorted);
+      setBookings(Array.isArray(json) ? json : json.data ?? []);
     } catch (error) {
       console.error('❌ Failed to fetch service bookings:', error);
     } finally {
@@ -39,12 +26,12 @@ const ServiceBookingTab = () => {
   }, []);
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold">Service Bookings</h2>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-center text-cyan-800">📆 Service Bookings</h2>
       {loading ? (
-        <p className="text-gray-500">⏳ Loading bookings...</p>
+        <p className="text-center text-gray-500">Loading bookings... ⏳</p>
       ) : bookings.length === 0 ? (
-        <p className="text-red-500">⚠️ No service bookings found.</p>
+        <p className="text-center text-red-500">No bookings found ❌</p>
       ) : (
         <ServiceBookingList bookings={bookings} reload={loadBookings} />
       )}

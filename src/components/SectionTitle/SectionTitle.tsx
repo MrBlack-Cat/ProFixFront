@@ -30,19 +30,19 @@ const SectionTitle = ({ title, subtitle }: SectionTitleProps) => {
   return (
     <motion.div
       ref={ref}
-      className="text-center mb-16"
+      className="text-center mb-2"
       initial={{ opacity: 0, y: 50, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       viewport={{ once: false, amount: 0.5 }}
     >
       <motion.h2
-        className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-wide"
+        className="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-wide"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
       >
-        <span className="border-r-2 border-blue-500 pr-1 animate-pulse">{displayedTitle}</span>
+        <span className="border-r-2 border-blue-700 pr-1 animate-pulse">{displayedTitle}</span>
       </motion.h2>
 
       {subtitle && (

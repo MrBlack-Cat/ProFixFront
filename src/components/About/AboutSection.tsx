@@ -1,55 +1,43 @@
-import SectionTitle from '../SectionTitle/SectionTitle';
 import { motion } from 'framer-motion';
-import aboutImg from '../../assets/about.svg';
+// import aboutImg from '../../assets/about-image.png'; // можно поставить свою картинку
 
 const AboutSection = () => {
   return (
-    <section
-      id="about"
-      className="py-48 bg-gradient-to-b from-white to-blue-50"
-      style={{
-        backgroundImage: 'url(/assets/back8.avif',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        {/* Text Content */}
+    <section id="about" className="relative py-32 bg-gradient-to-bl from-[#bea6c2] to-[#6cbcc7] flex items-center justify-center overflow-hidden">
+      {/* Альбомный слой */}
+      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
+
+      {/* Контент */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center gap-16 min-h-[500px]">
+        
+        {/* Левая часть (Картинка) */}
+        <div className="relative flex justify-center items-center h-[400px] w-full overflow-hidden">
+          <motion.img
+            // src={aboutImg}
+            alt="About ProFix"
+            initial={{ opacity: 0, x: -80, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="w-full max-w-md h-auto rounded-2xl shadow-2xl object-cover"
+          />
+        </div>
+
+        {/* Правая часть (Текст) */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: false, amount: 0.9 }}
+          initial={{ opacity: 0, x: 80, scale: 0.95 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="flex flex-col justify-center h-full"
         >
-          <SectionTitle title="What is ProFix?" />
-          <p className="text-gray-700 text-lg md:text-xl leading-relaxed mt-4">
-            <span className="font-semibold text-blue-600">ProFix</span> is a friendly freelance platform that brings together talented professionals and awesome clients.
-            Whether you need design, development, or content creation — we're here to make work feel fun, flexible, and productive.
+          <h2 className="text-4xl md:text-5xl font-bold text-[#122E34] leading-tight mb-6">
+            What is ProFix?
+          </h2>
+          <p className="text-lg md:text-xl text-[#57707A] leading-relaxed">
+            <span className="text-[#0C969C] font-bold">ProFix</span> is a platform designed to connect clients with talented service providers. 
+            We simplify the service discovery process, streamline bookings, and ensure top-quality work through a professional and trusted network.
           </p>
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="#services"
-            className="inline-block mt-8 px-6 py-3 bg-blue-600 text-white rounded-xl text-lg hover:bg-blue-700 transition"
-          >
-            Explore Services
-          </motion.a>
         </motion.div>
 
-        {/* Illustration */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          viewport={{ once: false, amount: 0.5 }}
-          className="flex justify-center"
-        >
-          <img
-            src={aboutImg}
-            alt="Team working illustration"
-            className="w-full max-w-md drop-shadow-2xl rounded-xl"
-          />
-        </motion.div>
       </div>
     </section>
   );

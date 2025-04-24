@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../../../utils/api';
 import GuaranteeList from './GuaranteeList';
-// import GuaranteeForm from './GuaranteeForm';
-import AddGuaranteeModal from './AddGuaranteeModal';
-
 
 interface Guarantee {
   id: number;
@@ -11,9 +8,18 @@ interface Guarantee {
   description?: string;
   fileUrl?: string;
   createdAt: string;
+  issueDate?: string;
+  expirationDate?: string;
 }
 
-const GuaranteesTab = ({ providerId }: { providerId: number }) => {
+interface Props {
+  providerId: number;
+  onEdit: (g: Guarantee) => void;
+  onCreateClick: () => void;
+  onDelete?: (id: number) => void; // optional if you plan to support deletion later
+}
+
+const GuaranteesTab: React.FC<Props> = ({ providerId, onEdit, onCreateClick, onDelete }) => {
   const [guarantees, setGuarantees] = useState<Guarantee[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +30,7 @@ const GuaranteesTab = ({ providerId }: { providerId: number }) => {
       const json = await res.json();
       setGuarantees(json.data || []);
     } catch (error) {
-      console.error("Failed to load guarantees:", error);
+      console.error('Failed to load guarantees:', error);
     } finally {
       setLoading(false);
     }
@@ -37,10 +43,22 @@ const GuaranteesTab = ({ providerId }: { providerId: number }) => {
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <AddGuaranteeModal onCreated={loadGuarantees} />
+        <button
+          onClick={onCreateClick}
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
+        >
+          ➕ Add Guarantee
+        </button>
       </div>
 
-      <GuaranteeList guarantees={guarantees} loading={loading} />
+      <GuaranteeList
+        guarantees={guarantees}
+        loading={loading}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
     </div>
   );
-};export default GuaranteesTab;
+};
+
+export default GuaranteesTab;

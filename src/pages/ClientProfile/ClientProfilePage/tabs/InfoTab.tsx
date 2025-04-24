@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ClientProfile } from '../../../../types/ClientProfile';
 
-
-
-
 const InfoTab = () => {
   const [profile, setProfile] = useState<ClientProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,21 +27,21 @@ const InfoTab = () => {
   }, []);
 
   if (loading) {
-    return <p className="text-gray-500">Loading...</p>;
+    return <p className="text-gray-400">Loading...</p>;
   }
 
   if (!profile) {
-    return <p className="text-red-500">Profile not found.</p>;
+    return <p className="text-red-400">Profile not found.</p>;
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center space-x-4">
+    <div className="p-6 bg-white/50 backdrop-blur-md rounded-2xl shadow-md space-y-12">
+      <div className="flex items-center space-x-6">
         {profile.avatarUrl ? (
           <img
             src={profile.avatarUrl}
             alt="Avatar"
-            className="w-24 h-24 rounded-full object-cover border-2 border-blue-500"
+            className="w-24 h-24 rounded-full object-cover border-4 border-indigo-500"
           />
         ) : (
           <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
@@ -52,30 +49,30 @@ const InfoTab = () => {
           </div>
         )}
         <div>
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-3xl font-bold text-indigo-800">
             {profile.name} {profile.surname}
           </h2>
-          <p className="text-gray-500">{profile.city || 'City not specified'}</p>
+          <p className="text-gray-600">{profile.city || 'City not specified'}</p>
         </div>
       </div>
 
       {profile.about && (
         <div>
-          <h3 className="text-lg font-semibold text-blue-600">About</h3>
+          <h3 className="text-xl font-semibold text-indigo-700 mb-2">About</h3>
           <p className="text-gray-800">{profile.about}</p>
         </div>
       )}
 
       {profile.otherContactLinks && (
         <div>
-          <h3 className="text-lg font-semibold text-blue-600">Contact Links</h3>
-          <p className="text-blue-700">{profile.otherContactLinks}</p>
+          <h3 className="text-xl font-semibold text-indigo-700 mb-2">Contact Links</h3>
+          <p className="text-indigo-600">{profile.otherContactLinks}</p>
         </div>
       )}
 
       {profile.createdAt && (
-        <div className="text-sm text-gray-400">
-          Registered: {new Date(profile.createdAt).toLocaleDateString()}
+        <div className="text-sm text-gray-500">
+          Registered on: {new Date(profile.createdAt).toLocaleDateString()}
         </div>
       )}
     </div>

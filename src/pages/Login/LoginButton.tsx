@@ -1,13 +1,18 @@
 import { motion } from 'framer-motion';
 
-const LoginButton = () => (
+interface Props {
+  loading: boolean;
+}
+
+const LoginButton = ({ loading }: Props) => (
   <motion.button
     type="submit"
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
-    className="w-full p-3 bg-blue-600 text-white rounded-xl text-lg hover:bg-blue-700 transition-all duration-300"
+    disabled={loading}
+    className="w-full py-3 bg-gradient-to-r from-purple-500 to-emerald-900 text-white rounded-lg font-semibold text-lg hover:shadow-lg transition-all"
   >
-    Login
+    {loading ? 'Logging in...' : 'Login'}
   </motion.button>
 );
 

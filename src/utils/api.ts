@@ -7,7 +7,7 @@ interface DecodedToken {
 }
 
 /**
- * Извлекает userId, email и role из accessToken
+ * userId, email и role accessTokenden alinmasi
  */
 export const getDecodedToken = (): DecodedToken | null => {
   const token = localStorage.getItem('accessToken');
@@ -53,9 +53,7 @@ export const uploadToCloud = async (file: File): Promise<string> => {
 
 
 
-/**
- * Делает авторизованный fetch. При 401 — обновляет токен и повторяет запрос.
- */
+
 export const fetchWithAuth = async (url: string, options: RequestInit = {}): Promise<Response> => {
   let accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');

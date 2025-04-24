@@ -27,7 +27,7 @@ const ComplaintModal = ({ isOpen, onClose, toUserId }: ComplaintModalProps) => {
         const json = await res.json();
         setComplaintTypes(json.data);
       } catch (err) {
-        console.error('❌ Ошибка загрузки типов жалоб', err);
+        console.error('❌ Error loading complaint types', err);
       }
     };
 
@@ -38,7 +38,7 @@ const ComplaintModal = ({ isOpen, onClose, toUserId }: ComplaintModalProps) => {
 
   const handleSubmit = async () => {
     if (!selectedTypeId || !description.trim()) {
-      alert('Пожалуйста, выберите тип жалобы и напишите описание.');
+      alert('Please select the complaint type and write a description.');
       return;
     }
 
@@ -59,7 +59,7 @@ const ComplaintModal = ({ isOpen, onClose, toUserId }: ComplaintModalProps) => {
         onClose();
       }, 2000);
     } catch (err) {
-      console.error('❌ Ошибка отправки жалобы', err);
+      console.error('❌ Error sending complaint', err);
     } finally {
       setLoading(false);
     }

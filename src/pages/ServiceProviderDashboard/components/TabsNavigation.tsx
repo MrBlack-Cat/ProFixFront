@@ -9,13 +9,17 @@ interface TabsNavigationProps {
 
 const TabsNavigation: React.FC<TabsNavigationProps> = ({ tabs, activeTab, setActiveTab }) => {
   return (
-    <div className="flex flex-wrap gap-3 justify-center border-b pb-2">
+    <div className="relative flex flex-wrap justify-center gap-3 border-b border-gray-500 pb-2">
       {tabs.map((tab) => (
         <button
           key={tab}
           onClick={() => setActiveTab(tab)}
-          className={`px-4 py-2 rounded-full transition-all duration-300 
-            ${activeTab === tab ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          className={`relative px-4 py-2 text-sm md:text-base font-semibold transition-all duration-300
+            ${activeTab === tab 
+              ? 'text-cyan-700 after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-cyan-700 after:rounded-full'
+              : 'text-gray-600 hover:text-cyan-900'
+            }
+          `}
         >
           {tab}
         </button>

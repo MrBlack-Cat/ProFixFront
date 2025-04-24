@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* --- АНИМАЦИИ --- */
+/* --- Animation --- */
 .perspective {
   perspective: 1200px;
 }
@@ -38,26 +38,76 @@
   opacity: 1;
 }
 
-/* --- ГРАДИЕНТНАЯ АНИМАЦИЯ --- */
+/* --- Gradient --- */
 .animate-gradient-x {
   background-size: 200% 200%;
   animation: gradient-x 4s ease infinite;
 }
 
-/* --- АКТИВНАЯ ССЫЛКА --- */
+/* --- Active --- */
 a.active {
   border-bottom: 2px solid #60a5fa;
   color: #60a5fa;
 }
 
-/* --- КАСТОМНЫЙ SCROLLBAR --- */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+/* Кастомный красивый скроллбар */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 116, 139, 0.5); /* gray-500 */
-  border-radius: 8px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
+
+::-webkit-scrollbar-track {
   background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #70bac4, #bea6c2); /* красивый переход cyan -> blue */
+  border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #70bac4, #bea6c2);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+@keyframes meteor {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-500px) translateY(500px);
+    opacity: 0;
+  }
+}
+
+.meteor {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 80px;
+  background: linear-gradient(45deg, white, cyan, transparent);
+  opacity: 0.6;
+  border-radius: 50px;
+}
+
+.animate-meteor1 {
+  animation: meteor 6s linear infinite;
+  animation-delay: 0s;
+}
+
+.animate-meteor2 {
+  animation: meteor 8s linear infinite;
+  animation-delay: 2s;
+}
+
+.animate-meteor3 {
+  animation: meteor 10s linear infinite;
+  animation-delay: 4s;
 }

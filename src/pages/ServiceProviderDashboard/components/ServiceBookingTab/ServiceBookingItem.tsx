@@ -2,13 +2,13 @@ import { Booking, BookingStatus } from '../../../../types/Booking';
 import ServiceBookingStatusBadge from './ServiceBookingStatusBadge';
 import { Link } from 'react-router-dom';
 
-type Props = {
+interface Props {
   booking: Booking;
   reload: () => void;
-};
+}
 
 const formatDate = (dateStr?: string) => {
-  if (!dateStr) return '-';
+  if (!dateStr) return '—';
   const date = new Date(dateStr);
   return date.toLocaleDateString('en-GB', {
     day: '2-digit',
@@ -20,9 +20,9 @@ const formatDate = (dateStr?: string) => {
 const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
   const actualStatus: BookingStatus = booking.isCompleted ? 'Completed' : booking.status;
 
-  const handleComplete = async () => {
+  const handleAction = async (action: 'approve' | 'reject' | 'complete') => {
     try {
-      const res = await fetch(`https://localhost:7164/api/ServiceBooking/${booking.id}/complete`, {
+      const res = await fetch(`https://localhost:7164/api/ServiceBooking/${booking.id}/${action}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -30,102 +30,58 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
       });
 
       if (!res.ok) {
-        const err = await res.text();
-        console.error("❌ Success error:", err);
+        const error = await res.text();
+        console.error(`❌ ${action} error:`, error);
       } else {
-        console.log("✅ Booking Successfly");
+        console.log(`✅ ${action} success`);
         reload();
       }
     } catch (err) {
-      console.error("❌ Complete Error:", err);
+      console.error(`❌ ${action} request error:`, err);
     }
   };
-
-  const handleApprove = async () => {
-    try {
-      const res = await fetch(`https://localhost:7164/api/ServiceBooking/${booking.id}/approve`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
-  
-      if (!res.ok) {
-        const err = await res.text();
-        console.error("❌ Approve Error:", err);
-      } else {
-        console.log("✅ Approved");
-        reload();
-      }
-    } catch (err) {
-      console.error("❌ Approve Error:", err);
-    }
-  };
-  
-  const handleReject = async () => {
-    try {
-      const res = await fetch(`https://localhost:7164/api/ServiceBooking/${booking.id}/reject`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
-  
-      if (!res.ok) {
-        const err = await res.text();
-        console.error("❌ Cancel Error:", err);
-      } else {
-        console.log("❌ Cancelled");
-        reload();
-      }
-    } catch (err) {
-      console.error("❌ Reject Error:", err);
-    }
-  };
-  
 
   return (
-    <li className="border rounded-xl p-4 shadow bg-white grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
-        <div className="flex items-start gap-3">
+    <li className="border rounded-2xl p-6 bg-white/30 backdrop-blur-md shadow-lg hover:shadow-xl transition duration-300 grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
+      
+      {/* Клиент */}
+      <div className="flex items-center gap-4">
         {booking.clientAvatarUrl ? (
-            <img
+          <img
             src={booking.clientAvatarUrl}
             alt="Client Avatar"
-            className="w-12 h-12 rounded-full object-cover shrink-0"
-            />
+            className="w-12 h-12 rounded-full object-cover"
+          />
         ) : (
-            <div className="w-12 h-12 rounded-full bg-gray-300 shrink-0" />
+          <div className="w-12 h-12 rounded-full bg-gray-300" />
         )}
-
         <div className="text-sm">
-            {booking.clientProfileId ? (
+          {booking.clientProfileId ? (
             <Link
-                to={`/client-profile/${booking.clientProfileId}`}
-                className="text-indigo-600 hover:underline"
+              to={`/clients/${booking.clientProfileId}`}
+              className="text-cyan-700 hover:underline font-semibold"
             >
-                {booking.clientName || 'Unknown Client'}
+              {booking.clientName || 'Unknown Client'}
             </Link>
-            ) : (
-            <span className="text-gray-400">{booking.clientName || 'Unknown Client'}</span>
-            )}
+          ) : (
+            <span className="text-gray-500">{booking.clientName || 'Unknown Client'}</span>
+          )}
         </div>
-        </div>
-
-
-
-      <div className="space-y-1">
-        <h4 className="text-lg font-semibold">{booking.description || 'No description'}</h4>
-        <ServiceBookingStatusBadge status={actualStatus} />
-        <p className="text-sm text-gray-600">
-          📅 {formatDate(booking.scheduledDate)} ⏱ {booking.startTime.slice(0, 5)}–{booking.endTime.slice(0, 5)}
-        </p>
-        <p className="text-xs text-gray-400">
-          📌 Created at: {formatDate(booking.createdAt)}
-        </p>
       </div>
 
-      <div className="text-sm text-gray-600 space-y-1">
-        <p className="font-semibold text-gray-700">🗓️ Статусы:</p>
+      {/* Описание и даты */}
+      <div className="space-y-2">
+        <h4 className="text-lg font-bold text-cyan-800">{booking.description || 'No description'}</h4>
+        <ServiceBookingStatusBadge status={actualStatus} />
+        <p className="text-sm text-gray-700">
+          📅 {formatDate(booking.scheduledDate)} ⏱ {booking.startTime.slice(0, 5)}–{booking.endTime.slice(0, 5)}
+        </p>
+        <p className="text-xs text-gray-500">📌 Created: {formatDate(booking.createdAt)}</p>
+      </div>
+
+      {/* Статус истории */}
+      <div className="text-xs text-gray-700 space-y-1">
+        <p className="font-semibold text-blue-900">🗓️ Status History:</p>
         <ul className="space-y-0.5">
           <li>Approved: {formatDate(booking.confirmationDate)}</li>
           <li>Rejected: {formatDate(booking.rejectedDate)}</li>
@@ -134,38 +90,37 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         </ul>
       </div>
 
-     <div className="text-right space-y-1">
-  {['pending'].includes(booking.status?.toLowerCase() || '') && (
-    <>
-      <button
-        type="button"
-        onClick={handleApprove}
-        className="block text-sm text-blue-600 hover:underline"
-      >
-        Approve
-      </button>
-      <button
-        type="button"
-        onClick={handleReject}
-        className="block text-sm text-red-600 hover:underline"
-      >
-        Reject
-      </button>
-    </>
-  )}
+      {/* Кнопки действий */}
+      <div className="text-right space-y-2 text-sm">
+        {['pending'].includes(booking.status?.toLowerCase() || '') && (
+          <>
+            <button
+              type="button"
+              onClick={() => handleAction('approve')}
+              className="block text-blue-600 hover:underline"
+            >
+              Approve
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAction('reject')}
+              className="block text-red-600 hover:underline"
+            >
+              Reject
+            </button>
+          </>
+        )}
 
-  {['approved', 'inprogress'].includes(booking.status?.toLowerCase() || '') && !booking.isCompleted && (
-    <button
-      type="button"
-      onClick={handleComplete}
-      className="block text-sm text-green-600 hover:underline"
-    >
-      Mark as Completed
-    </button>
-  )}
-</div>
-
-
+        {['approved', 'inprogress'].includes(booking.status?.toLowerCase() || '') && !booking.isCompleted && (
+          <button
+            type="button"
+            onClick={() => handleAction('complete')}
+            className="block text-green-600 hover:underline"
+          >
+            Mark as Completed
+          </button>
+        )}
+      </div>
 
     </li>
   );

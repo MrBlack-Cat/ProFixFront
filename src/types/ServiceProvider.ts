@@ -8,5 +8,7 @@ export interface ServiceProviderTopDto {
     avatarUrl?: string;
     averageRating: number;
     parentCategoryName?: string;
+    createdByUserId: number;
+    createdByUserName: string;
   }
   

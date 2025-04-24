@@ -1,15 +1,35 @@
+import { motion } from 'framer-motion';
 import CreateServiceProfileForm from './CreateServiceProviderProfileForm';
 
 const CreateServiceProfilePage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white rounded-lg shadow-md p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold text-center text-blue-700 mb-6">
-          Create Service Provider Profile
-        </h1>
+    <section
+      className="relative h-screen  flex items-center justify-center bg-cover bg-center overflow-hidden"
+      style={{
+        backgroundImage: "url('/assets/regback5.jpg')",
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-purple-900 to-pink-900 opacity-30" />
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+        className="relative z-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-10 w-[700px] shadow-2xl"
+        >
+        <motion.h1
+          className="text-4xl sm:text-3xl font-extrabold text-center bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2 tracking-widest drop-shadow-1xl"
+          initial={{ opacity: 0, scale: 0.8, rotateX: 90 }}
+          animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+          transition={{ delay: 0.3, duration: 1 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          Create Your Service Profile
+        </motion.h1>
+
         <CreateServiceProfileForm />
-      </div>
-    </div>
+      </motion.div>
+    </section>
   );
 };
 

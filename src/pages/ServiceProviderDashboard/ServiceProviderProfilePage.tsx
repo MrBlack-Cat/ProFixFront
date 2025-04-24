@@ -3,15 +3,25 @@ import { useSearchParams } from 'react-router-dom';
 import TabsNavigation from './components/TabsNavigation';
 import OverviewTab from './components/OverviewTab';
 import PostsTab from './components/PostTabs/PostsTab';
-import CertificatesTab from './components/CertificateTabs/CertificatesTab';
 import ReviewsTab from './components/ReviewsTab';
 import SettingsTab from './components/SettingsTabs/SettingsTab';
-import GuaranteesTab from './components/GuarenteeTabs/GuaranteesTab';
 import ServiceBookingTab from './components/ServiceBookingTab';
 import DayScheduleTab from './components/DayScheduleTab';
 import { fetchWithAuth } from '../../utils/api';
+import CertificatePage from './components/CertificateTabs/CertificatePage';
+import GuaranteePage from './components/GuarenteeTabs/GuaranteePage';
 
-const TABS = ['Overview', 'Posts', 'Certificates', 'Reviews', 'Guarantees', 'Booking', 'Day Schedule', 'Settings'] as const;
+
+const TABS = [
+  'Overview', 
+  'Posts', 
+  'Certificates', 
+  'Reviews', 
+  'Guarantees', 
+  'Booking', 
+  'Day Schedule', 
+  'Settings'
+] as const;
 export type Tab = typeof TABS[number];
 
 const ServiceProviderProfilePage: React.FC = () => {
@@ -51,9 +61,9 @@ const ServiceProviderProfilePage: React.FC = () => {
     switch (activeTab) {
       case 'Overview': return <OverviewTab profile={providerProfile} />;
       case 'Posts': return <PostsTab providerId={providerProfile.id} />;
-      case 'Certificates': return <CertificatesTab providerId={providerProfile.id} />;
+      case 'Certificates': return <CertificatePage providerId={providerProfile.id} />;
       case 'Reviews': return <ReviewsTab providerId={providerProfile.id} />;
-      case 'Guarantees': return <GuaranteesTab providerId={providerProfile.id} />;
+      case 'Guarantees': return <GuaranteePage providerId={providerProfile.id} />;
       case 'Booking': return <ServiceBookingTab />;
       case 'Day Schedule': return <DayScheduleTab providerId={providerProfile.id} />;
       case 'Settings': return <SettingsTab />;
@@ -62,13 +72,20 @@ const ServiceProviderProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="mt-16 p-6 max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4 text-center text-gray-800">
-        Welcome to your space, Service Hero! 🛠️
-      </h1>
-      <TabsNavigation tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="mt-6">{renderTab()}</div>
-    </div>
+    <section className="relative py-16 px-4 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] min-h-screen overflow-hidden">
+      {/* Альбомный слой */}
+      {/* <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div> */}
+
+      {/* Контент */}
+      <div className="relative z-10 max-w-7xl mx-auto p-6">
+
+
+        <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-4 shadow-2xl">
+          <TabsNavigation tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <div className="mt-4 mb-4">{renderTab()}</div>
+        </div>
+      </div>
+    </section>
   );
 };
 

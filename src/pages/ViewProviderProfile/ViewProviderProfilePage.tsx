@@ -34,43 +34,57 @@ const ViewProviderProfilePage = () => {
     if (id) fetchData();
   }, [id]);
 
-    const tabClass = (tab: string) =>
-    `py-2 px-4 border-b-2 transition font-medium ${
+  const tabClass = (tab: string) =>
+    `py-2 px-4 transition font-semibold rounded-t-lg ${
       activeTab === tab
-        ? 'border-blue-600 text-blue-600'
-        : 'border-transparent text-gray-500 hover:text-blue-600'
+        ? 'bg-white/30 backdrop-blur-md text-blue-700 shadow-md'
+        : 'text-gray-600 hover:text-blue-600 hover:bg-white/20'
     }`;
 
-  if (loading) return <div className="text-center mt-10">Loading profile...</div>;
-  if (!profile) return <div className="text-center text-red-500 mt-10">Profile not found</div>;
+  if (loading) return <div className="text-center mt-10 text-blue-600 text-lg animate-pulse">Loading profile...</div>;
+  if (!profile) return <div className="text-center text-red-500 mt-10 text-lg">Profile not found</div>;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6 ">
-      <div className="mb-4 flex justify-between items-center">
-        <Link to="/category" className="text-blue-600 hover:underline text-sm">
-          ← Back to category
-        </Link>
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('/assets/regback4.jpg')`, // путь к твоему фоновому изображению
+      }}
+    >
+      <div className="max-w-6xl mx-auto px-6 py-10">
+
+        <div className="mb-6 mt-8">
+          <Link to="/category" className="text-blue-600 hover:underline text-sm">
+            ← Back to Categories
+          </Link>
+        </div>
+
+        <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl shadow-xl p-6">
+
+          {/* Tabs */}
+          <div className="flex space-x-4 mb-8 border-b border-gray-200 pb-2">
+            <button onClick={() => setActiveTab('info')} className={tabClass('info')}>Info</button>
+            <button onClick={() => setActiveTab('certificates')} className={tabClass('certificates')}>Certificates</button>
+            <button onClick={() => setActiveTab('posts')} className={tabClass('posts')}>Posts</button>
+            <button onClick={() => setActiveTab('reviews')} className={tabClass('reviews')}>Reviews</button>
+          </div>
+
+          {/* Tab content */}
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="min-h-[300px]"
+          >
+            {activeTab === 'info' && <InfoTab profile={profile} currentClient={currentClient} />}
+            {activeTab === 'certificates' && profile?.id && <CertificatesTab providerId={profile.id} />}
+            {activeTab === 'posts' && profile?.id && <PostsTab providerId={profile.id} />}
+            {activeTab === 'reviews' && <ReviewsTab providerId={profile.id} />}
+          </motion.div>
+
+        </div>
       </div>
-
-      <div className="border-b border-gray-200 flex space-x-4 mb-6">
-        <button onClick={() => setActiveTab('info')} className={tabClass('info')}>Info</button>
-        <button onClick={() => setActiveTab('certificates')} className={tabClass('certificates')}>Certificates</button>
-        <button onClick={() => setActiveTab('posts')} className={tabClass('posts')}>Posts</button>
-        <button onClick={() => setActiveTab('reviews')} className={tabClass('reviews')}>Reviews</button>
-      </div>
-
-      <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        {activeTab === 'info' && (<InfoTab profile={profile} currentClient={currentClient} />)}
-        {activeTab === 'certificates' && profile?.id && <CertificatesTab providerId={profile.id} />}
-        {activeTab === 'posts' && profile?.id && <PostsTab providerId={profile.id} />}
-        {activeTab === 'reviews' && <ReviewsTab providerId={profile.id} />}
-      </motion.div>
-
     </div>
   );
 };

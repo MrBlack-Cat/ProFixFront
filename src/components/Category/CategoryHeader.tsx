@@ -1,4 +1,5 @@
 import { Category } from '../../types/category';
+import { motion } from 'framer-motion';
 
 interface Props {
   category: Category;
@@ -6,14 +7,19 @@ interface Props {
 
 const CategoryHeader = ({ category }: Props) => {
   return (
-    <div className="text-center bg-white p-6 rounded-xl shadow-md">
-      <div className="text-5xl mb-2">{category.icon}</div>
-      <h1 className="text-3xl font-bold text-gray-800">{category.name}</h1>
-      <p className="text-sm text-gray-500 mt-2">
-        Browse top-rated professionals in <span className="font-semibold">{category.name}</span> category.  
-        Select your service and get started today!
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="text-center bg-white/40 backdrop-blur-lg border border-white/30 p-8 rounded-3xl shadow-2xl"
+    >
+      <div className="text-6xl mb-4">{category.icon}</div>
+      <h1 className="text-3xl md:text-4xl font-bold text-[#122E34]">{category.name}</h1>
+      <p className="text-sm md:text-base text-gray-700 mt-3">
+        Browse top-rated professionals in the{' '}
+        <span className="font-semibold text-cyan-700">{category.name}</span> category. Select your service and get started today!
       </p>
-    </div>
+    </motion.div>
   );
 };
 

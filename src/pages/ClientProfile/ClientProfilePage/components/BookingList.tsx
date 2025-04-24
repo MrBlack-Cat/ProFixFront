@@ -7,7 +7,9 @@ type Props = {
 };
 
 const BookingList: React.FC<Props> = ({ bookings, reload }) => {
-  const sorted = [...bookings].sort((a, b) => new Date(b.scheduledDate).getTime() - new Date(a.scheduledDate).getTime());
+  const sorted = [...bookings].sort(
+    (a, b) => new Date(b.scheduledDate).getTime() - new Date(a.scheduledDate).getTime()
+  );
 
   return (
     <ul className="space-y-4">

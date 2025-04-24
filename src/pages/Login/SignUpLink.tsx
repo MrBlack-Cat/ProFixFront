@@ -7,9 +7,9 @@ const SignUpLink = () => (
     transition={{ delay: 0.8, duration: 0.5 }}
     className="mt-4 text-center"
   >
-    <p className="text-gray-600">
+    <p className="text-white">
       Don't have an account?{' '}
-      <a href="#register" className="text-blue-600 hover:text-blue-800 transition">
+      <a href="/register" className="text-black hover:text-blue-200 transition">
         Sign up here
       </a>
     </p>

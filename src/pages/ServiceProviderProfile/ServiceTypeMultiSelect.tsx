@@ -43,16 +43,19 @@ const ServiceTypeMultiSelect = ({ categoryId, categoryName, selectedIds, onChang
   };
 
   return (
-    <div>
-      <h3 className="text-lg font-semibold mb-2">{categoryName}</h3>
-      <label className="text-gray-700 font-medium">Select Service Types</label>
-      <div className="flex flex-wrap gap-2 mt-2">
+    <div className="mb-6">
+      <h3 className="text-lg font-semibold mb-2 text-white">{categoryName}</h3>
+      <div className="flex flex-wrap gap-2">
         {types.map((type) => (
           <button
             key={type.id}
             type="button"
-            className={`px-3 py-1 border rounded ${selectedIds.includes(type.id) ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
             onClick={() => handleSelect(type.id)}
+            className={`px-4 py-2 rounded-full transition-all ${
+              selectedIds.includes(type.id)
+                ? 'bg-gradient-to-r from-pink-500 to-purple-700 text-white'
+                : 'bg-white/20 text-white border border-white/30'
+            } hover:scale-105`}
           >
             {type.name}
           </button>

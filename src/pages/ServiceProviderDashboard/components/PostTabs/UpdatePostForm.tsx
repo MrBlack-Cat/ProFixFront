@@ -14,10 +14,34 @@ interface UpdatePostFormProps {
 const UpdatePostForm: React.FC<UpdatePostFormProps> = ({ post, onSuccess }) => {
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content || '');
-  const [imageUrl, setImageUrl] = useState(post.imageUrl || '');
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  const handleFileUpload = async (): Promise<string | null> => {
+    if (!file) return post.imageUrl || null;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      setUploading(true);
+      const res = await fetchWithAuth('https://localhost:7164/api/FileUpload/upload-post-image', {
+        method: 'POST',
+        body: formData,
+      });
+      const json = await res.json();
+      return json?.data?.url || post.imageUrl || null;
+    } catch (err) {
+      console.error('❌ Upload failed:', err);
+      setError('❌ File upload failed.');
+      return post.imageUrl || null;
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,67 +49,70 @@ const UpdatePostForm: React.FC<UpdatePostFormProps> = ({ post, onSuccess }) => {
     setSuccess(null);
 
     if (!title.trim() || !content.trim()) {
-      setError('Please fill in both title and content.');
+      setError('⚠️ Please fill in both title and content.');
       return;
     }
 
     try {
       setLoading(true);
+      const finalImageUrl = await handleFileUpload();
 
       const response = await fetchWithAuth('https://localhost:7164/api/Post/Update', {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           postDto: {
             id: post.id,
             title,
             content,
-            imageUrl,
+            imageUrl: finalImageUrl,
           },
         }),
       });
 
       const json = await response.json();
-
       if (response.ok) {
-        setSuccess('✅ Post updated successfully!');
-        if (onSuccess) onSuccess();
+        setSuccess('✅ Post updated!');
+        onSuccess?.();
       } else {
-        setError(json?.errors?.[0] || 'Update failed 😢');
+        setError(json?.errors?.[0] || 'Something went wrong ❌');
       }
     } catch {
-      setError('Unexpected error during update.');
+      setError('Unexpected error occurred.');
     } finally {
       setLoading(false);
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0] || null;
+    setFile(selected);
+  };
+
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-2xl">
-      <h2 className="text-2xl font-bold mb-4 text-center text-indigo-600">✏️ Edit Post</h2>
+    <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-xl animate-fade-in-up">
+      <h2 className="text-2xl font-bold mb-4 text-center text-cyan-800">✏️ Edit Post</h2>
 
-      {success && <div className="text-green-600 mb-4 text-center">{success}</div>}
-      {error && <div className="text-red-600 mb-4 text-center">{error}</div>}
+      {success && <p className="text-green-600 text-center mb-2">{success}</p>}
+      {error && <p className="text-red-600 text-center mb-2">{error}</p>}
 
-      <form onSubmit={handleUpdate} className="space-y-4">
+      <form onSubmit={handleUpdate} className="space-y-5">
         <div>
-          <label className="block font-medium mb-1">Title</label>
+          <label className="block font-medium mb-1 text-gray-700">Title</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:outline-none"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter updated title"
+            placeholder="Update title..."
           />
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Content</label>
+          <label className="block font-medium mb-1 text-gray-700">Content</label>
           <textarea
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
-            rows={4}
+            rows={5}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:outline-none"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Update your thoughts..."
@@ -93,22 +120,21 @@ const UpdatePostForm: React.FC<UpdatePostFormProps> = ({ post, onSuccess }) => {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Image URL</label>
+          <label className="block font-medium mb-1 text-gray-700">Upload Image</label>
           <input
-            type="text"
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="https://example.com/image.jpg"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-cyan-100 file:text-cyan-800 hover:file:bg-cyan-200"
           />
         </div>
 
         <button
           type="submit"
-          disabled={loading}
-          className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300 disabled:opacity-50"
+          disabled={loading || uploading}
+          className="w-full bg-cyan-700 text-white py-3 rounded-lg hover:bg-cyan-800 transition-all disabled:opacity-50"
         >
-          {loading ? 'Updating...' : 'Update Post 🚀'}
+          {loading ? 'Updating...' : uploading ? 'Uploading Image...' : '💾 Update Post'}
         </button>
       </form>
     </div>

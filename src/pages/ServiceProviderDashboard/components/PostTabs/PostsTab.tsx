@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from './PostCard';
-import CreatePostForm from './CreatePostForm';
-import UpdatePostForm from './UpdatePostForm';
+import CreatePostModal from './CreatePostModal';
+import UpdatePostModal from './UpdatePostModal';
 import { fetchWithAuth } from '../../../../utils/api';
 
 interface Post {
@@ -10,6 +10,7 @@ interface Post {
   content?: string;
   imageUrl?: string;
   createdAt: string;
+  likesCount: number;
 }
 
 interface PostsTabProps {
@@ -25,8 +26,6 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-
-  
   const fetchPosts = async () => {
     try {
       const res = await fetchWithAuth(`https://localhost:7164/api/Post/GetPostsByProvider/${providerId}`);
@@ -34,7 +33,7 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
       setPosts(Array.isArray(json) ? json : json.data ?? []);
     } catch (err) {
       console.error('Error fetching posts:', err);
-      setError('Could not load posts 😢');
+      setError('❌ Could not load posts.');
     } finally {
       setLoading(false);
     }
@@ -66,20 +65,22 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
     }
   };
 
-  if (loading) return <div className="text-center text-blue-600">Loading posts... 📦</div>;
-  if (error) return <div className="text-center text-red-500">{error}</div>;
+  if (loading) return <div className="text-center text-blue-600 mt-6">📦 Loading posts...</div>;
+  if (error) return <div className="text-center text-red-500 mt-6">{error}</div>;
 
   return (
     <>
+      {/* Кнопка добавления */}
       <div className="flex justify-end px-4 mt-2">
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
+          className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
         >
           ➕ Add Post
         </button>
       </div>
 
+      {/* Список постов */}
       {posts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
           {posts.map((post) => (
@@ -92,46 +93,24 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
           ))}
         </div>
       ) : (
-        <div className="text-center text-gray-500 mt-6">No posts yet 💤</div>
+        <div className="text-center text-gray-500 mt-6">🛌 No posts yet</div>
       )}
 
-      {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl animate-fade-in-up">
-            <button
-              onClick={() => setShowCreateModal(false)}
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl"
-            >
-              ✖
-            </button>
-            <CreatePostForm
-              onSuccess={() => {
-                setShowCreateModal(false);
-                fetchPosts();
-              }}
-            />
-          </div>
-        </div>
-      )}
+      {/* Модалка создания */}
+      <CreatePostModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onSuccess={fetchPosts}
+      />
 
-      {showEditModal && selectedPost && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl animate-fade-in-up">
-            <button
-              onClick={() => setShowEditModal(false)}
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-xl"
-            >
-              ✖
-            </button>
-            <UpdatePostForm
-              post={selectedPost}
-              onSuccess={() => {
-                setShowEditModal(false);
-                fetchPosts();
-              }}
-            />
-          </div>
-        </div>
+      {/* Модалка редактирования */}
+      {selectedPost && (
+        <UpdatePostModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          post={selectedPost}
+          onSuccess={fetchPosts}
+        />
       )}
     </>
   );

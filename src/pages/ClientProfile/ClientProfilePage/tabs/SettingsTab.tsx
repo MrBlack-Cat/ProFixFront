@@ -62,8 +62,8 @@ const SettingsTab = () => {
 
       const data = await res.json();
       if (data.isSuccess && data.data) {
-        setAvatarUrl(data.data.url); 
-        alert('✅ Avatar uploaded!');
+        setAvatarUrl(data.data.url);
+        alert('✅ Avatar uploaded successfully!');
       } else {
         alert('❌ Failed to upload avatar');
       }
@@ -101,65 +101,82 @@ const SettingsTab = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (!profile) return <p>Profile not found.</p>;
+  if (loading) return <p className="text-gray-500">Loading profile...</p>;
+  if (!profile) return <p className="text-red-500">Profile not found.</p>;
 
   return (
-    <div className="space-y-6">
-
+    <div className="p-8 bg-white/50 backdrop-blur-md rounded-2xl shadow-lg space-y-10">
       {/* Avatar Upload */}
-      <div className="space-y-2">
-        {avatarUrl && (
-          <img src={avatarUrl} alt="Avatar" className="w-24 h-24 rounded-full object-cover border-2 border-blue-500" />
+      <div className="flex flex-col items-center space-y-4">
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            className="w-28 h-28 rounded-full object-cover border-4 border-indigo-500 shadow-md"
+          />
+        ) : (
+          <div className="w-28 h-28 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
+            No Avatar
+          </div>
         )}
-        <input type="file" accept="image/*" onChange={handleAvatarUpload} disabled={uploading} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleAvatarUpload}
+          disabled={uploading}
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+        />
       </div>
 
-      {/* Other Fields */}
-      <div className="space-y-4">
+      {/* Profile Form */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <input
           type="text"
           placeholder="Name"
-          className="w-full p-2 border rounded"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all"
         />
         <input
           type="text"
           placeholder="Surname"
-          className="w-full p-2 border rounded"
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all"
         />
         <input
           type="text"
           placeholder="City"
-          className="w-full p-2 border rounded"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-        />
-        <textarea
-          placeholder="About you"
-          className="w-full p-2 border rounded"
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all"
         />
         <input
           type="text"
-          placeholder="Other contact links"
-          className="w-full p-2 border rounded"
+          placeholder="Other Contact Links"
           value={otherContactLinks}
           onChange={(e) => setOtherContactLinks(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+        />
+        <textarea
+          placeholder="About you"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-all md:col-span-2"
+          rows={4}
         />
       </div>
 
-      <button
-        onClick={handleSave}
-        disabled={saving}
-        className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded disabled:opacity-50"
-      >
-        {saving ? 'Saving...' : 'Save'}
-      </button>
+      {/* Save Button */}
+      <div className="flex justify-center">
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+        >
+          {saving ? 'Saving...' : 'Save Changes'}
+        </button>
+      </div>
     </div>
   );
 };

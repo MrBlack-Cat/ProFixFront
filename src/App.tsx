@@ -12,16 +12,18 @@ import ClientProfilePage from './pages/ClientProfile/ClientProfilePage/ClientPro
 import ViewClientProfilePage from './pages/ViewClientProfilePage/ViewClientProfilePage';
 import ChatPage from './pages/ChatPage';
 import ChatDashboard from './pages/Messaging/ChatDashboard';
+import MessagesPage from './pages/Messaging/MessagesPage';
+
 
 
 
 
 function App() {
   return (
+    
     <Router>
-      <div className="min-h-screen bg-white text-gray-800 scroll-smooth">
+      <div className="min-h-screen bg-sky-100 text-gray-800 scroll-smooth">
         <Navbar /> 
-        
           <Routes> 
             <Route path="/" element={<HomePage />} /> 
             <Route path="/login" element={<LoginPage />} /> 
@@ -34,7 +36,7 @@ function App() {
             <Route path="/client-profile/" element={<ClientProfilePage />} />
             <Route path="/clients/:id" element={<ViewClientProfilePage />} />
             <Route path="/chat/:otherUserId" element={<ChatPage />} />
-            <Route path="/messages" element={<ChatDashboard />} />
+            <Route path="/messages" element={<MessagesPage />} />
 
 
 

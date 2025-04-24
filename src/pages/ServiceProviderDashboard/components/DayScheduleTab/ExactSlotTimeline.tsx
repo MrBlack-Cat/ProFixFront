@@ -49,7 +49,7 @@ const ExactSlotTimeline: React.FC<ExactSlotTimelineProps> = ({ slots }) => {
   };
 
   if (!slots || slots.length === 0) {
-    return <p className="text-sm text-gray-400">Нет бронирований на этот день</p>;
+    return <p className="text-sm text-gray-400">No bookings for this day</p>;
   }
 
   return (

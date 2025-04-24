@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import RegisterInput from './RegisterInput';
 import RoleSelect from './RoleSelect';
 import RegisterButton from './RegisterButton';
+import { motion } from 'framer-motion';
 
 const RegisterForm = () => {
   const [userName, setUserName] = useState('');
@@ -31,7 +32,6 @@ const RegisterForm = () => {
         const errorMsg = result.errors?.[0] || 'Registration failed';
         throw new Error(errorMsg);
       }
-      
 
       navigate('/login');
     } catch (err: unknown) {
@@ -42,30 +42,61 @@ const RegisterForm = () => {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleRegister}>
-      {error && <div className="text-red-500 text-center">{error}</div>}
+    <motion.form
+      onSubmit={handleRegister}
+      className="space-y-6"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+      }}
+    >
+      {error && (
+        <motion.div
+          className="text-red-400 text-center font-semibold"
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+        >
+          {error}
+        </motion.div>
+      )}
 
-      <RegisterInput
-        type="text"
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        placeholder="Username"
-      />
-      <RegisterInput
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <RegisterInput
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <RoleSelect value={roleId} onChange={(e) => setRoleId(Number(e.target.value))} />
-      <RegisterButton loading={loading} />
-    </form>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <RegisterInput
+          type="text"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          placeholder="Username"
+        />
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <RegisterInput
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <RegisterInput
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <RoleSelect value={roleId} onChange={(e) => setRoleId(Number(e.target.value))} />
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <RegisterButton loading={loading} />
+      </motion.div>
+    </motion.form>
   );
 };
 

@@ -7,5 +7,7 @@ export interface PostDto {
     serviceProviderProfileId: number;
     likesCount: number; 
     hasLiked?: boolean; 
+    createdByUserId: number;
+    createdByUserName: string;
   }
   
