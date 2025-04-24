@@ -66,9 +66,9 @@ const LoginPage = () => {
         });
         const data = await res.json();
         navigate(data.isSuccess && data.data ? '/service-profile' : '/serviceprofile/create');
-      } else if (role === 'Admin') {
-        navigate('/admin-profile');
-      } else {
+        } else if (role === 'Admin') {
+          navigate('/admin/admin-dashboard');
+        } else {
         navigate('/');
       }
     } catch (err: unknown) {

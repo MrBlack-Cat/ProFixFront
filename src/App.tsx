@@ -14,6 +14,17 @@ import ChatPage from './pages/ChatPage';
 import ChatDashboard from './pages/Messaging/ChatDashboard';
 import MessagesPage from './pages/Messaging/MessagesPage';
 
+import "./index.css";
+
+
+import AdminLayout from "./pages/Admin/AdminLayout";
+import Dashboard from "./pages/Admin/Dashboard";
+import Users from "./pages/Admin/Users";
+import Providers from "./pages/Admin/Providers";
+import Posts from "./pages/Admin/Posts";
+import Reviews from "./pages/Admin/Reviews";
+import Settings from "./pages/Admin/Settings";
+
 
 
 
@@ -41,7 +52,17 @@ function App() {
 
 
 
-
+            //Admin routes 
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="admin-dashboard" element={<Dashboard />} />
+            <Route path="users" element={<Users />} />
+            <Route path="providers" element={<Providers />} />
+            <Route path="posts" element={<Posts />} />
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="*" element={<div className="text-center mt-10">404 - Page Not Found</div>} />
+          </Route>   
+          
    
           </Routes>
       </div>

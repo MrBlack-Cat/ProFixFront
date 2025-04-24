@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaTools, FaChevronDown } from 'react-icons/fa';
 import { FC } from 'react'; // 👈 добавляем FC (FunctionComponent)
+import { FaCogs } from 'react-icons/fa';
 
 interface RoleOption {
   id: number;
@@ -10,6 +11,7 @@ interface RoleOption {
 }
 
 const roles: RoleOption[] = [
+  { id: 1, label: 'Admin', icon: <FaCogs /> },
   { id: 2, label: 'Client', icon: <FaUser /> },
   { id: 3, label: 'Service Provider', icon: <FaTools /> },
 ];
