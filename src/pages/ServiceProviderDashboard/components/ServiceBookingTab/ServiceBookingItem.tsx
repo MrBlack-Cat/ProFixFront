@@ -44,7 +44,7 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
   return (
     <li className="border rounded-2xl p-6 bg-white/30 backdrop-blur-md shadow-lg hover:shadow-xl transition duration-300 grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
       
-      {/* Клиент */}
+      {/* cleint */}
       <div className="flex items-center gap-4">
         {booking.clientAvatarUrl ? (
           <img
@@ -69,7 +69,7 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         </div>
       </div>
 
-      {/* Описание и даты */}
+      {/* description date */}
       <div className="space-y-2">
         <h4 className="text-lg font-bold text-cyan-800">{booking.description || 'No description'}</h4>
         <ServiceBookingStatusBadge status={actualStatus} />
@@ -79,7 +79,7 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         <p className="text-xs text-gray-500">📌 Created: {formatDate(booking.createdAt)}</p>
       </div>
 
-      {/* Статус истории */}
+      {/* Status */}
       <div className="text-xs text-gray-700 space-y-1">
         <p className="font-semibold text-blue-900">🗓️ Status History:</p>
         <ul className="space-y-0.5">
@@ -90,7 +90,6 @@ const ServiceBookingItem: React.FC<Props> = ({ booking, reload }) => {
         </ul>
       </div>
 
-      {/* Кнопки действий */}
       <div className="text-right space-y-2 text-sm">
         {['pending'].includes(booking.status?.toLowerCase() || '') && (
           <>

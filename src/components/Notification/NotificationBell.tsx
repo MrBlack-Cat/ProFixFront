@@ -70,7 +70,7 @@ const NotificationBell = () => {
         method: 'PUT',
       });
     } catch (err) {
-      console.error("❌ Ошибка при отметке как прочитанное:", err);
+      console.error("Error while marking as read:", err);
     }
 
     switch (notification.typeId) {

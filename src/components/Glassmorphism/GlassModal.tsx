@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 interface GlassModalProps {
   isOpen: boolean;
@@ -27,9 +28,9 @@ const GlassModal: React.FC<GlassModalProps> = ({ isOpen, onClose, children }) =>
 
   if (!isOpen) return null;
 
-  return (
+  return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex justify-center items-center"
+      className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-sm flex items-center justify-center px-4"
       onClick={onClose}
     >
       <div
@@ -42,10 +43,10 @@ const GlassModal: React.FC<GlassModalProps> = ({ isOpen, onClose, children }) =>
         >
           ✖
         </button>
-
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

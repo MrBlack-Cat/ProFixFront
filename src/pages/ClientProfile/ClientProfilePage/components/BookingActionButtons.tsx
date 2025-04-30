@@ -7,7 +7,7 @@ type Props = {
 
 const BookingActionButtons: React.FC<Props> = ({ booking, reload }) => {
   const handleAction = async (action: string) => {
-    await fetch(`/api/ServiceBooking/${booking.id}/${action}`, {
+    await fetch(`https://localhost:7164/api/ServiceBooking/${booking.id}/${action}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });

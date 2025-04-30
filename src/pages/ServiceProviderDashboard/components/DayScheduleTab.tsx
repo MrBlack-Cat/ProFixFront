@@ -59,7 +59,7 @@ const DayScheduleTab: React.FC = () => {
 
   return (
     <div className="relative bg-blue-100 p-6 rounded-2xl shadow-lg space-y-8">
-      {/* Дата выбора */}
+      {/* Date */}
       <div className="space-y-2">
         <label className="text-sm font-semibold text-gray-700">
           📅 Select Date:
@@ -74,7 +74,7 @@ const DayScheduleTab: React.FC = () => {
         />
       </div>
 
-      {/* Фильтр по статусу */}
+      {/* Filtr*/}
       <div className="space-y-2">
         <label className="text-sm font-semibold text-gray-700">
           🔎 Status Filter:
@@ -94,7 +94,7 @@ const DayScheduleTab: React.FC = () => {
         </select>
       </div>
 
-      {/* Timeline бронирований */}
+      {/* Timeline */}
       <div className="space-y-4">
         <h3 className="text-lg font-bold text-gray-800">Bookings for Selected Date</h3>
         {loading ? (
@@ -104,7 +104,7 @@ const DayScheduleTab: React.FC = () => {
         )}
       </div>
 
-      {/* Интерактивная сетка бронирования */}
+      {/* Booking grid */}
       <div className="space-y-4">
         <h3 className="text-lg font-bold text-gray-800">Interactive Booking Grid</h3>
         <Legend />
@@ -112,7 +112,7 @@ const DayScheduleTab: React.FC = () => {
           slots={filteredSlots}
           onSelect={(start, end) => {
             console.log('🆕 Selected slot:', start, '→', end);
-            // Здесь можно будет открыть модалку "Создать бронирование"
+            // Bron yaratmaq ucun gelecekde"
           }}
         />
       </div>

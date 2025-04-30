@@ -10,5 +10,11 @@ export interface ServiceProviderTopDto {
     parentCategoryName?: string;
     createdByUserId: number;
     createdByUserName: string;
+    genderName?: string;
+    approvalDate?: string;
+    parentCategoryId?: number;
+    serviceTypeIds: number[];
+    serviceTypes: string[];
+    rating?: number;
   }
   

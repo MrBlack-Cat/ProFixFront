@@ -53,7 +53,7 @@ const TestimonialsSection = () => {
               transition={{ duration: 0.8, delay: index * 0.2 }}
               className="relative bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8 pt-16 flex flex-col items-center text-center overflow-visible"
             >
-              {/* Плавающий аватар */}
+              {/* avatar */}
               <div className="absolute -top-24 w-60 h-60">
                 <motion.img
                     src={testimonial.avatarUrl || "/assets/default-avatar.png"}
@@ -65,7 +65,7 @@ const TestimonialsSection = () => {
                 </div>
 
 
-              {/* Контент */}
+              {/* kontent */}
               <h3 className="text-lg font-bold text-[#122E34] mt-10">{testimonial.name}</h3>
               <p className="text-gray-700 mt-3 text-sm leading-relaxed">
                 {testimonial.feedback}

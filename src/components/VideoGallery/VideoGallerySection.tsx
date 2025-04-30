@@ -46,7 +46,7 @@ const VideoGallerySection = () => {
               className="relative group rounded-xl overflow-hidden shadow-lg p-[3px] bg-gradient-to-br from-cyan-400/30 to-purple-500/30 hover:from-pink-500 hover:to-indigo-500 transition-all duration-500"
             >
               <div className="relative overflow-hidden rounded-xl">
-                {/* Видео */}
+                {/* Video */}
                 <video
                   src={video.src}
                   autoPlay
@@ -56,7 +56,7 @@ const VideoGallerySection = () => {
                   className="w-full h-full object-cover aspect-[16/9] sm:aspect-[4/5] md:aspect-[16/9] rounded-xl"
                 />
 
-                {/* Затемнение + текст */}
+                {/* Text */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-black/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-in-out p-6 rounded-xl">
                   <h3 className="text-white text-lg md:text-xl font-bold translate-y-4 group-hover:translate-y-0 transition-all duration-500">
                     {video.title}

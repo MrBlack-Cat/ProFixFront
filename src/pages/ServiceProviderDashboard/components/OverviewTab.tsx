@@ -28,15 +28,15 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
   return (
     <div className="relative bg-white/60 backdrop-blur-md border border-white/30 rounded-3xl p-6 max-w-4xl mx-auto shadow-lg text-gray-800">
 
-      {/* Имя и фамилия */}
+      {/* name*/}
       <h2 className="text-2xl md:text-3xl font-bold text-center text-[#122E34] mb-8">
         {profile.name} {profile.surname}
       </h2>
 
-      {/* Контент */}
+      {/* kontent */}
       <div className="flex flex-col md:flex-row gap-8 items-center">
 
-        {/* Левая часть */}
+        {/* Left */}
         <div className="flex-1 flex flex-col gap-2 text-sm">
 
           <div><span className="font-semibold text-gray-700">City:</span> {profile.city || '—'}</div>
@@ -59,14 +59,14 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
             </div>
           )}
 
-          {/* Описание */}
+          {/* description */}
           {profile.description && (
             <div className="mt-4 text-gray-700">
               <span className="font-semibold">About:</span> {profile.description}
             </div>
           )}
 
-          {/* Дата регистрации */}
+          {/* Date */}
           <div className="flex flex-wrap items-center gap-4 mt-4 text-xs text-gray-700">
             <span>Joined: {dayjs(profile.createdAt).format('YYYY-MM-DD')}</span>
             <span>
@@ -80,15 +80,10 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
 
         </div>
 
-        {/* Правая часть: Аватар + Рейтинг */}
+        {/* Right avatar raiting */}
         <div className="flex flex-col items-center gap-3">
 
-          {/* Рейтинг */}
-          <div className="flex items-center gap-2 text-cyan-700 text-sm font-semibold mb-2">
-            <AverageRating providerId={profile.id} />
-          </div>
-
-          {/* Аватар */}
+          {/* Avatar */}
           <div className="w-72 h-72 min-w-[120px] rounded-2xl overflow-hidden border border-gray-300 shadow-md">
             <img
               src={profile.avatarUrl || '/default-avatar.png'}
@@ -96,6 +91,13 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ profile }) => {
               className="w-full h-full object-cover"
             />
           </div>
+
+          {/* Reyting */}
+          <div className="flex items-center gap-2 text-cyan-700 text-sm font-semibold mb-2">
+            <AverageRating providerId={profile.id} />
+          </div>
+
+          
 
         </div>
 

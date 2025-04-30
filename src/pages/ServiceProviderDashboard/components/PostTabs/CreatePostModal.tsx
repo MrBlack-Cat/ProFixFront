@@ -26,7 +26,6 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClose, onSu
           ×
         </button>
 
-        {/* Передаём onSuccess внутрь */}
         <CreatePostForm
           onSuccess={() => {
             onSuccess?.();

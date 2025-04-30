@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaTools, FaChevronDown } from 'react-icons/fa';
-import { FC } from 'react'; // 👈 добавляем FC (FunctionComponent)
+import { FC } from 'react'; 
 
 interface RoleOption {
   id: number;
   label: string;
-  icon: React.ReactNode;  // ✅ вместо JSX.Element (ReactNode правильнее для компонентов!)
+  icon: React.ReactNode;  
 }
 
 const roles: RoleOption[] = [

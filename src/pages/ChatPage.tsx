@@ -11,7 +11,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      console.warn("🚫 Пользователь не авторизован. Перенаправляем на login.");
+      console.warn("User is not authorized. Redirecting to login.");
       logout();
       return;
     }
@@ -20,7 +20,7 @@ const ChatPage = () => {
     if (decoded?.userId && !isNaN(decoded.userId)) {
       setCurrentUserId(decoded.userId);
     } else {
-      console.error("❌ Ошибка: userId невалиден");
+      console.error("Error: userId is invalid");
       logout();
     }
 
@@ -36,7 +36,7 @@ const ChatPage = () => {
           }
         })
         .catch((err) => {
-          console.error('❌ Ошибка загрузки имени пользователя:', err);
+          console.error('Error loading username:', err);
           setOtherUserName('User');
         });
     }
@@ -44,7 +44,7 @@ const ChatPage = () => {
   }, [otherUserId]);
 
   if (!currentUserId || !otherUserId) {
-    return <div className="p-6 text-center text-gray-500">Загрузка чата...</div>;
+    return <div className="p-6 text-center text-gray-500">Loading chat...</div>;
   }
 
   return (

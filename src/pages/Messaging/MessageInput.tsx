@@ -30,7 +30,7 @@ const MessageInput: React.FC<Props> = ({ receiverUserId, onSend }) => {
       });
       setContent('');
     } catch (err) {
-      console.error('❌ Ошибка при отправке сообщения:', err);
+      console.error('Error sending message:', err);
     }
   };
 

@@ -50,7 +50,7 @@ a.active {
   color: #60a5fa;
 }
 
-/* Кастомный красивый скроллбар */
+/* scroll */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -61,7 +61,7 @@ a.active {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #70bac4, #bea6c2); /* красивый переход cyan -> blue */
+  background: linear-gradient(to bottom, #70bac4, #bea6c2);
   border-radius: 5px;
 }
 

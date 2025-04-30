@@ -64,7 +64,7 @@ const ExactSlotTimeline: React.FC<ExactSlotTimelineProps> = ({ slots }) => {
             onMouseLeave={handleMouseLeave}
           >
             <span className="font-semibold">{formatTime(slot.startTime)}</span>
-            <span className="text-xs">до</span>
+            <span className="text-xs">to</span>
             <span className="font-semibold">{formatTime(slot.endTime)}</span>
           </div>
         ))}
@@ -76,7 +76,7 @@ const ExactSlotTimeline: React.FC<ExactSlotTimelineProps> = ({ slots }) => {
             {hoveredSlot.clientAvatarUrl && (
               <img
                 src={hoveredSlot.clientAvatarUrl}
-                alt="Аватар"
+                alt="Avatar"
                 className="w-12 h-12 rounded-full mb-2 border border-gray-300 object-cover"
               />
             )}

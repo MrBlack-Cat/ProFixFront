@@ -13,7 +13,7 @@ const emailClaim = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emaila
 const roleClaim = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
 
 /**
- * Декодирует токен и возвращает userId, email и role
+ * Decode token - userId, email  role
  */
 export const getDecodedToken = (): DecodedToken | null => {
   const token = localStorage.getItem('accessToken');
@@ -30,7 +30,7 @@ export const getDecodedToken = (): DecodedToken | null => {
     const userId = parseInt(userIdRaw);
 
     if (isNaN(userId) || !emailRaw || !role) {
-      console.error("❌ Невалидные данные в токене:", { userIdRaw, emailRaw, roleRaw });
+      console.error("Invalid data in token:", { userIdRaw, emailRaw, roleRaw });
       return null;
     }
 
@@ -40,28 +40,26 @@ export const getDecodedToken = (): DecodedToken | null => {
       role,
     };
   } catch (err) {
-    console.error("❌ Ошибка при декодировании токена:", err);
+    console.error("Error decoding token:", err);
     return null;
   }
 };
 
 /**
- * Проверяет, авторизован ли пользователь
- */
+chech autorization */
 export const isAuthenticated = (): boolean => {
   return !!localStorage.getItem('accessToken');
 };
 
 /**
- * Проверяет, имеет ли пользователь указанную роль
- */
+Rol check */
 export const hasRole = (role: string): boolean => {
   const decoded = getDecodedToken();
   return decoded?.role === role;
 };
 
 /**
- * Полный выход из системы
+ * Logout
  */
 export const logout = () => {
   localStorage.removeItem('accessToken');

@@ -51,13 +51,12 @@ const ServicesSection = () => {
 
   return (
     <section id="services" className="relative py-16 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] flex flex-col items-center overflow-hidden">
-      {/* Альбомный слой */}
       <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
-      {/* Контент */}
+      {/* kontent */}
       <div className="relative z-10 max-w-7xl mx-auto px-2 w-full">
 
-        {/* Заголовок */}
+        {/* title */}
         <motion.div
           initial={{ opacity: 0, y: -50, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -72,7 +71,7 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        {/* Сетка карточек */}
+        {/* grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.slice(0, 16).map((cat, index) => (
             <motion.div
@@ -92,7 +91,7 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        {/* Кнопка View All */}
+        {/* View All */}
         <div className="flex justify-center mt-4">
           <motion.button
             whileHover={{ scale: 1.05 }}

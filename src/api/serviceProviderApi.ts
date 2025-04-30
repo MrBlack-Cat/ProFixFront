@@ -25,14 +25,14 @@ export const getProfile = async (): Promise<ServiceProviderProfile & { id: numbe
 
   if (!res.ok) {
     const text = await res.text();
-    console.error('❌ Ошибка получения профиля:', text);
+    console.error('Error getting profile:', text);
     throw new Error('Failed to load profile');
   }
 
   const json: ApiResponse<any> = await res.json();
 
   if (!json.isSuccess) {
-    console.error('❌ Ошибка от API:', json.errors);
+    console.error('API Error:', json.errors);
     throw new Error('Server error: ' + (json.errors?.join(', ') || 'Unknown error'));
   }
 
@@ -55,14 +55,14 @@ export const updateProfile = async (formData: FormData): Promise<any> => {
       ? JSON.stringify(await res.json())
       : await res.text();
 
-    console.error('❌ Ошибка обновления:', errorText);
+    console.error('Update error:', errorText);
     throw new Error(errorText || 'Failed to update profile');
   }
 
   const json: ApiResponse<any> = await res.json();
 
   if (!json.isSuccess) {
-    console.error('❌ Ошибка от API:', json.errors);
+    console.error('API Error:', json.errors);
     throw new Error('Update failed: ' + (json.errors?.join(', ') || 'Unknown error'));
   }
 

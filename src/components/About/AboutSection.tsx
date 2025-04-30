@@ -1,19 +1,17 @@
 import { motion } from 'framer-motion';
-// import aboutImg from '../../assets/about-image.png'; // можно поставить свою картинку
 
 const AboutSection = () => {
   return (
     <section id="about" className="relative py-32 bg-gradient-to-bl from-[#bea6c2] to-[#6cbcc7] flex items-center justify-center overflow-hidden">
-      {/* Альбомный слой */}
+      {/* Albom */}
       <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
-      {/* Контент */}
+      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center gap-16 min-h-[500px]">
         
-        {/* Левая часть (Картинка) */}
+        {/*Left */}
         <div className="relative flex justify-center items-center h-[400px] w-full overflow-hidden">
           <motion.img
-            // src={aboutImg}
             alt="About ProFix"
             initial={{ opacity: 0, x: -80, scale: 0.95 }}
             whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -22,7 +20,7 @@ const AboutSection = () => {
           />
         </div>
 
-        {/* Правая часть (Текст) */}
+        {/* Right Side */}
         <motion.div
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}

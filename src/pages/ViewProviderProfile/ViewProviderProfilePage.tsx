@@ -48,18 +48,12 @@ const ViewProviderProfilePage = () => {
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url('/assets/regback4.jpg')`, // путь к твоему фоновому изображению
+        backgroundImage: `url('/assets/regback4.jpg')`,
       }}
     >
       <div className="max-w-6xl mx-auto px-6 py-10">
 
-        <div className="mb-6 mt-8">
-          <Link to="/category" className="text-blue-600 hover:underline text-sm">
-            ← Back to Categories
-          </Link>
-        </div>
-
-        <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl shadow-xl p-6">
+        <div className="bg-white/20 mt-8 backdrop-blur-md border border-white/30 rounded-3xl shadow-xl p-6">
 
           {/* Tabs */}
           <div className="flex space-x-4 mb-8 border-b border-gray-200 pb-2">

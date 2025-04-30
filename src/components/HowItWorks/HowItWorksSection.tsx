@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
-import HowItWorksCard from './HowItWorksCard'; // Импортируем карточку
+import HowItWorksCard from './HowItWorksCard';
 
-// Массив шагов
 const steps = [
   {
     title: "1. Sign Up",
@@ -23,10 +22,9 @@ const steps = [
 const HowItWorksSection = () => {
   return (
     <section id="how-it-works" className="relative py-24 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] overflow-hidden flex flex-col items-center">
-      {/* Альбомный слой */}
       <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
-      {/* Контент */}
+      {/* kontent */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
         <motion.h2
           initial={{ opacity: 0, y: -30 }}

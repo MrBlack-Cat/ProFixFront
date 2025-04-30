@@ -1,17 +1,31 @@
-import ProviderCard from './ProviderCard';
+import React from 'react';
 import { ServiceProvider } from '../../types/category';
+import ProviderCard from './ProviderCard';
+import { motion } from 'framer-motion';
 
-interface Props {
-  providers: ServiceProvider[];
-}
+const ProvidersGrid: React.FC<{ providers: ServiceProvider[] }> = ({ providers }) => {
+  if (!providers.length) {
+    return <p className="text-center text-gray-500">No providers found.</p>;
+  }
 
-const ProvidersGrid = ({ providers }: Props) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <motion.div
+      className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.1,
+          },
+        },
+      }}
+    >
       {providers.map((provider) => (
         <ProviderCard key={provider.id} provider={provider} />
       ))}
-    </div>
+    </motion.div>
   );
 };
 

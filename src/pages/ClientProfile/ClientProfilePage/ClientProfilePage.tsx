@@ -36,11 +36,10 @@ const ClientProfilePage = () => {
 
   return (
     <section className="relative py-16 px-4 bg-gradient-to-tr from-[#283e51] to-[#4b79a1] min-h-screen overflow-hidden">
-      {/* Альбомный слой (если хочешь атмосферу) */}
       {/* <div className="absolute inset-6 bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div> */}
 
       <div className="relative z-10 max-w-6xl mx-auto p-6">
-        {/* Навигация вкладок */}
+        {/* Nav */}
         <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-4 shadow-2xl mb-8">
           <div className="flex justify-center gap-4 border-b border-white/30 pb-3">
             {TABS.map((tab) => (

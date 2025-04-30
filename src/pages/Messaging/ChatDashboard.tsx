@@ -23,7 +23,7 @@ const ChatDashboard = () => {
   const [nameMap, setNameMap] = useState<Record<number, string>>({});
 
   const fetchDisplayName = async (userId: number) => {
-    if (nameMap[userId]) return; // уже есть
+    if (nameMap[userId]) return; 
     try {
       const clientRes = await fetchWithAuth(`https://localhost:7164/api/ClientProfile/by-user/${userId}`);
       const clientJson = await clientRes.json();
@@ -47,7 +47,7 @@ const ChatDashboard = () => {
 
       setNameMap((prev) => ({ ...prev, [userId]: 'Unknown User' }));
     } catch (err) {
-      console.error('❌ Ошибка при загрузке имени:', err);
+      console.error('Error loading name:', err);
       setNameMap((prev) => ({ ...prev, [userId]: 'Unknown User' }));
     }
   };
@@ -67,7 +67,6 @@ const ChatDashboard = () => {
         const chats: ChatSummary[] = json.data || [];
         setChatList(chats);
 
-        // загружаем имена для всех
         chats.forEach((chat) => fetchDisplayName(chat.otherUserId));
 
         const userIdNumber = Number(userIdFromQuery);
@@ -106,7 +105,7 @@ const ChatDashboard = () => {
           setSelectedUserName(nameMap[first.otherUserId] || first.otherUserName);
         }
       } catch (err) {
-        console.error('Ошибка загрузки чатов:', err);
+        console.error('Error loading chats:', err);
       }
     };
 
@@ -155,7 +154,7 @@ const ChatDashboard = () => {
           />
         ) : (
           <div className="h-full flex items-center justify-center text-white/50">
-            Выберите чат слева, чтобы начать переписку
+              Select a chat on the left to start a conversation
           </div>
         )}
       </div>

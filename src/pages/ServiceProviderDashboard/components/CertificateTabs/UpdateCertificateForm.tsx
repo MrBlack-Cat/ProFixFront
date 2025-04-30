@@ -10,7 +10,7 @@ interface Props {
 const UpdateCertificateForm: React.FC<Props> = ({ certificate, onSuccess }) => {
   const [title, setTitle] = useState(certificate.title);
   const [description, setDescription] = useState(certificate.description);
-  const [issuedAt, setIssuedAt] = useState(certificate.issuedAt.split('T')[0]); // только дата без времени
+  const [issuedAt, setIssuedAt] = useState(certificate.issuedAt.split('T')[0]); 
   const [file, setFile] = useState<File | null>(null);
 
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ const UpdateCertificateForm: React.FC<Props> = ({ certificate, onSuccess }) => {
       const json = await res.json();
       return json?.data?.url || null;
     } catch {
-      setError('❌ File upload failed');
+      setError('File upload failed');
       return null;
     }
   };

@@ -17,7 +17,7 @@ const TopRatedPostsSection = () => {
         const json = await res.json();
         setPosts(json);
       } catch (err) {
-        console.error('Ошибка загрузки топ постов:', err);
+        console.error('Error loading top posts:', err);
       } finally {
         setLoading(false);
       }
@@ -31,10 +31,9 @@ const TopRatedPostsSection = () => {
 
   return (
     <section id="top-posts" className="relative py-14 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] flex flex-col items-center overflow-hidden">
-      {/* Альбомный слой */}
       <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
-      {/* Контент */}
+      {/* Kontent */}
       <div className="relative z-10 max-w-7xl mx-auto px-1 w-full">
         <motion.div
           initial={{ opacity: 0, y: -50, scale: 0.95 }}
@@ -64,7 +63,20 @@ const TopRatedPostsSection = () => {
         </motion.div>
       </div>
 
-      {/* Модалка для поста */}
+      {/* "View All Posts" */}
+      <div className="mt-8 flex justify-center">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => window.location.href = '/posts'}
+          className="bg-white/20 backdrop-blur-lg border border-white/30 text-white px-6 py-2 rounded-2xl shadow-xl hover:bg-white/30 hover:text-emerald-900 transition-all"
+        >
+          View All Posts
+        </motion.button>
+      </div>
+
+
+      {/* Modal */}
       {selectedPost && (
         <TopRatedPostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
       )}

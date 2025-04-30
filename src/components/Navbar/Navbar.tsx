@@ -7,10 +7,13 @@ import AccountMenu from './AccountMenu';
 import MobileMenu from './MobileMenu';
 import NotificationBell from '../Notification/NotificationBell';
 import { useNavigate } from 'react-router-dom';
+import LanguageSwitcher from '../Common/LanguageSwitcher';
+
 
 interface NavbarProps {
   isScrolled: boolean;
 }
+
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,7 +31,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Вычисляем финальное состояние для показа полного Navbar
   const showFullNavbar = !isScrolled || isHovered;
 
   return (
@@ -36,7 +38,7 @@ const Navbar = () => {
       className={`fixed top-[1%] z-50 rounded-3xl overflow-visible shadow-lg backdrop-blur-md border border-cyan-400/20 bg-black/20`}
       initial={{ opacity: 0, y: -80 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ backgroundColor: 'rgba(0,0,0,0.3)' }} // <<< ДОБАВЛЕНО!
+      whileHover={{ backgroundColor: 'rgba(0,0,0,0.3)' }} 
       transition={{ duration: 0.5 }}
       style={{
         left: '5%',
@@ -50,13 +52,13 @@ const Navbar = () => {
 
       <div className="relative w-full h-full flex items-center justify-between px-8 rounded-3xl">
 
-        {/* Левая часть */}
+        {/* Left */}
         <div className="flex items-center space-x-6 z-10">
           <button onClick={() => navigate('/')} className="focus:outline-none">
             <Logo />
           </button>
 
-          {/* Плавное исчезновение DesktopMenu */}
+          {/* DesktopMenu itmesi */}
           <AnimatePresence>
             {showFullNavbar && (
               <motion.div
@@ -71,8 +73,11 @@ const Navbar = () => {
           </AnimatePresence>
         </div>
 
-        {/* Правая часть */}
-        <div className="flex items-center space-x-6 z-10">
+
+
+        {/* Right */}
+        <div className="flex items-center space-x-2 z-10">
+          <LanguageSwitcher />
           <NotificationBell />
           <AccountMenu
             accountMenuOpen={accountMenuOpen}

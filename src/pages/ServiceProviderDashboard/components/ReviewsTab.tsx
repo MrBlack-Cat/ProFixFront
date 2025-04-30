@@ -46,7 +46,7 @@ const ReviewsTab: React.FC<ReviewsTabProps> = ({ providerId }) => {
             key={review.id}
             className="relative bg-white/50 backdrop-blur-md rounded-2xl border border-gray-300 p-5 shadow-md hover:shadow-lg transition-all flex flex-col justify-between"
           >
-            {/* Клиент */}
+            {/* client */}
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={review.clientAvatarUrl || '/default-avatar.png'}
@@ -61,13 +61,13 @@ const ReviewsTab: React.FC<ReviewsTabProps> = ({ providerId }) => {
               </div>
             </div>
 
-            {/* Рейтинг */}
+            {/* reyting */}
             <div className="flex items-center mb-3 text-yellow-500">
               {'⭐'.repeat(review.rating)}
               <span className="text-xs text-gray-600 ml-2">({review.rating}/5)</span>
             </div>
 
-            {/* Комментарий */}
+            {/* komment */}
             <p className="text-sm text-gray-700 line-clamp-3">
               {review.comment || 'No comment.'}
             </p>

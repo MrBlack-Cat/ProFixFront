@@ -73,10 +73,9 @@ const ServiceProviderProfilePage: React.FC = () => {
 
   return (
     <section className="relative py-16 px-4 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] min-h-screen overflow-hidden">
-      {/* Альбомный слой */}
       {/* <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div> */}
 
-      {/* Контент */}
+      {/* kontent */}
       <div className="relative z-10 max-w-7xl mx-auto p-6">
 
 

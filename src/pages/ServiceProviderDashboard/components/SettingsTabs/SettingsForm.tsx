@@ -44,6 +44,7 @@ const SettingsForm = () => {
         setFormData({
           ...data,
           description: data.description ?? '',
+          isActive: typeof data.isActive === 'boolean' ? data.isActive : true,
           avatarFile: null,
         });
       } catch (error) {
@@ -93,8 +94,8 @@ const SettingsForm = () => {
       payload.append('age', String(formData.age));
       payload.append('genderId', String(formData.genderId));
       payload.append('experienceYears', String(formData.experienceYears));
-      payload.append('isActive', String(formData.isActive));
-      payload.append('parentCategoryId', String(formData.parentCategoryId ?? ''));
+      payload.append('isActive', String(formData.isActive ?? true));
+      payload.append('parentCategoryId', formData.parentCategoryId !== null ? String(formData.parentCategoryId) : '');
       payload.append('description', formData.description ?? '');
       formData.serviceTypeIds.forEach(id => payload.append('serviceTypeIds', id.toString()));
       if (formData.avatarFile) payload.append('avatarFile', formData.avatarFile);
@@ -114,8 +115,6 @@ const SettingsForm = () => {
       onSubmit={handleSubmit}
       className="max-w-4xl mx-auto bg-white/30 backdrop-blur-md border border-white/20 rounded-3xl p-4 shadow-xl space-y-10"
     >
-
-      {/* Личные данные */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <SettingsInputField label="Name" name="name" value={formData.name} onChange={handleInputChange} />
         <SettingsInputField label="Surname" name="surname" value={formData.surname} onChange={handleInputChange} />
@@ -125,9 +124,6 @@ const SettingsForm = () => {
         <SettingsInputField label="Description" name="description" value={formData.description || ''} onChange={handleInputChange} />
       </div>
 
-
-
-      {/* Категория и услуги */}
       <div className="grid grid-cols-1 md:grid-cols-2 mt-2 gap-6">
         <CategorySelector
           selectedId={formData.parentCategoryId}
@@ -141,7 +137,6 @@ const SettingsForm = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Пол (Gender) */}
         <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold text-gray-700">Gender</label>
           <select
@@ -156,7 +151,7 @@ const SettingsForm = () => {
           </select>
         </div>
 
-        {/* Загрузка аватара */}
+        {/* Avatar Load */}
         <div className="flex flex-col gap-2">
           <label className="text-sm font-semibold text-gray-700">Upload Avatar</label>
           <input
@@ -172,8 +167,7 @@ const SettingsForm = () => {
         </div>
       </div>
 
-
-      {/* Статус активности */}
+      {/* Status */}
       <div className="flex items-center gap-2">
         <input
           type="checkbox"
@@ -185,16 +179,14 @@ const SettingsForm = () => {
         <span className="text-sm text-gray-700">Active</span>
       </div>
 
-      {/* Кнопка */}
+      {/* Button */}
       <div className="flex justify-center">
         <SaveButton loading={loading} />
       </div>
 
-      {/* Лоадинг текст */}
       {loading && (
         <p className="text-center text-blue-500 animate-pulse mt-4">Saving changes...</p>
       )}
-
     </form>
   );
 };

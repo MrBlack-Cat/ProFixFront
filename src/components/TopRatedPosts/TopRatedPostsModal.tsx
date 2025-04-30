@@ -30,7 +30,7 @@ const TopRatedPostsModal = ({ post, onClose }: TopRatedPostModalProps) => {
           });
         }
       } catch (error) {
-        console.error('Ошибка загрузки профиля провайдера:', error);
+        console.error('Error loading provider profile:', error);
       }
     };
 
@@ -63,7 +63,6 @@ const TopRatedPostsModal = ({ post, onClose }: TopRatedPostModalProps) => {
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          {/* Кнопка закрытия */}
           <button
             onClick={onClose}
             className="absolute top-4 right-6 text-3xl text-gray-800 hover:text-red-500 transition-transform hover:scale-125"
@@ -71,7 +70,7 @@ const TopRatedPostsModal = ({ post, onClose }: TopRatedPostModalProps) => {
             &times;
           </button>
 
-          {/* Левая часть */}
+          {/* left */}
           <div className="md:w-1/2 flex flex-col items-center justify-start p-4 gap-4">
             {post.imageUrl && post.imageUrl !== 'string' && (
               <div className="w-full">
@@ -104,10 +103,10 @@ const TopRatedPostsModal = ({ post, onClose }: TopRatedPostModalProps) => {
             </div>
           </div>
 
-        {/* Правая часть */}
+        {/* Right */}
         <div className="md:w-1/2 flex flex-col p-6 gap-6">
 
-          {/* Провайдер */}
+          {/* Provider */}
           {providerInfo && (
             <div className="flex flex-col gap-2">
               <div 
@@ -126,18 +125,17 @@ const TopRatedPostsModal = ({ post, onClose }: TopRatedPostModalProps) => {
                 </div>
               </div>
 
-              {/* Полоса */}
               <div className="border-b border-gray-300 my-2"></div>
             </div>
           )}
 
 
-          {/* Описание */}
+          {/* Description */}
           <p className="text-left text-gray-900 text-md md:text-lg leading-relaxed">
             {post.content}
           </p>
 
-          {/* Дата создания */}
+          {/* Date */}
           <div className="border-t mb-2 pt-4 text-xs text-gray-500 text-center">
             Created on: {new Date(post.createdAt).toLocaleString()}
           </div>

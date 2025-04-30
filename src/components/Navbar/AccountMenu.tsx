@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { jwtDecode } from 'jwt-decode';
-import { User } from 'lucide-react'; // Для аватарки
+import { User } from 'lucide-react'; 
 
 interface AccountMenuProps {
   accountMenuOpen: boolean;
@@ -28,7 +28,7 @@ const AccountMenu = ({ accountMenuOpen, setAccountMenuOpen }: AccountMenuProps) 
       role = Array.isArray(rawRole) ? rawRole[0] : rawRole;
       isLoggedIn = true;
     } catch (error) {
-      console.warn('❌ Ошибка при декодировании токена:', error);
+      console.warn('Error decoding token:', error);
     }
   }
 
@@ -67,7 +67,6 @@ const AccountMenu = ({ accountMenuOpen, setAccountMenuOpen }: AccountMenuProps) 
 
   return (
     <div className="relative" ref={menuRef}>
-      {/* Иконка пользователя */}
       <motion.button
         onClick={() => setAccountMenuOpen(!accountMenuOpen)}
         whileHover={{ scale: 1.1 }}
@@ -77,7 +76,7 @@ const AccountMenu = ({ accountMenuOpen, setAccountMenuOpen }: AccountMenuProps) 
         <User size={20} />
       </motion.button>
 
-      {/* Меню */}
+      {/* Menu */}
       <AnimatePresence>
         {accountMenuOpen && (
           <motion.div
@@ -100,6 +99,13 @@ const AccountMenu = ({ accountMenuOpen, setAccountMenuOpen }: AccountMenuProps) 
                   className="text-left text-sm text-blue-700 hover:text-blue-900 transition"
                 >
                   Messages
+                </button>
+                {/* Chat */}
+                <button
+                  onClick={() => (window.location.href = '/chat')}
+                  className="text-left text-sm text-blue-700 hover:text-blue-900 transition"
+                >
+                  My Assistant
                 </button>
                 <button
                   onClick={() => {

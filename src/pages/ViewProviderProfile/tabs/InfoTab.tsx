@@ -6,7 +6,6 @@ import { MessageCircle, AlertOctagon, Star, CalendarCheck } from 'lucide-react';
 import AverageRating from '../../../components/Common/AverageRating';
 import ReviewModal from '../components/ReviewModal';
 import BookingModal from '../components/BookingModal';
-// import ActionButton from '../components/ActionButton';
 
 
 interface InfoTabProps {
@@ -49,7 +48,6 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
   return (
     <div className="flex flex-col md:flex-row gap-8">
 
-      {/* Левая часть — Аватар */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -63,7 +61,6 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
         />
       </motion.div>
 
-      {/* Правая часть */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -105,7 +102,6 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
           </div>
         </div>
 
-        {/* Кнопки действий */}
         <div className="mt-6 flex flex-wrap gap-4">
 
           <ActionButton
@@ -154,7 +150,6 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
 
         </div>
 
-        {/* Модалки */}
         <ReviewModal
           isOpen={isReviewModalOpen}
           onRequestClose={() => {
@@ -183,7 +178,6 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
   );
 };
 
-// Кнопка действия
 const ActionButton = ({
   onClick,
   disabled,

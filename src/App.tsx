@@ -1,9 +1,10 @@
+import './i18n';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import LoginPage from './pages/Login/LoginPage';
 import HomePage from './pages/HomePage/HomePage';  
 import RegisterPage from './pages/Register/RegisterPage';
-import CreateClientProfilePage from './pages/ClientProfile/СreateClient/CreateClientProfilePage';
+import CreateClientProfilePage from './pages/ClientProfile/CreateClient/CreateClientProfilePage';
 import CreateServiceProviderProfilePage from './pages/ServiceProviderProfile/CreateServiceProviderProfilePage';
 import CategoryPage from './pages/Category/CategoryPage';
 import ServiceProviderProfilePage from './pages/ServiceProviderDashboard/ServiceProviderProfilePage';
@@ -11,8 +12,14 @@ import ViewProviderProfilePage from './pages/ViewProviderProfile/ViewProviderPro
 import ClientProfilePage from './pages/ClientProfile/ClientProfilePage/ClientProfilePage';
 import ViewClientProfilePage from './pages/ViewClientProfilePage/ViewClientProfilePage';
 import ChatPage from './pages/ChatPage';
-import ChatDashboard from './pages/Messaging/ChatDashboard';
 import MessagesPage from './pages/Messaging/MessagesPage';
+import AllProvidersPage from './pages/AllProviders/AllProvidersPage';
+import ChatPageChatBox from './pages/ChatPage/ChatPageChatBox'
+import AllPostsPage from './pages/AllPostsPage/AllPostsPage';
+
+
+
+
 
 
 
@@ -37,6 +44,12 @@ function App() {
             <Route path="/clients/:id" element={<ViewClientProfilePage />} />
             <Route path="/chat/:otherUserId" element={<ChatPage />} />
             <Route path="/messages" element={<MessagesPage />} />
+            <Route path="/service-providers" element={<AllProvidersPage />} />
+            <Route path="/chat" element={<ChatPageChatBox />} />
+            <Route path="/posts" element={<AllPostsPage />} />
+
+
+
 
 
 

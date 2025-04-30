@@ -116,7 +116,7 @@ const CreateServiceProfileForm = () => {
         visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
       }}
     >
-      {/* Грид на два столбца */}
+      {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
         <ServiceInputField label="Name" name="name" value={form.name} onChange={handleChange} error={errors.name} />
         <ServiceInputField label="Surname" name="surname" value={form.surname} onChange={handleChange} error={errors.surname} />
@@ -139,7 +139,7 @@ const CreateServiceProfileForm = () => {
         </div>
       </div>
 
-      {/* Один ряд для загрузки аватара */}
+      {/* Load avatar */}
       <div>
         <label className="text-white font-semibold">Upload Avatar (optional)</label>
         <input
@@ -151,7 +151,6 @@ const CreateServiceProfileForm = () => {
         />
       </div>
 
-      {/* Два в ряд: Категория и Типы услуг */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <CategorySelector value={parentCategoryId} onChange={(id, name) => { setParentCategoryId(id); setParentCategoryName(name); }} />
         
@@ -165,7 +164,6 @@ const CreateServiceProfileForm = () => {
         )}
       </div>
 
-      {/* Кнопка отправки */}
       <ServiceSubmitButton loading={loading} />
     </motion.form>
   );

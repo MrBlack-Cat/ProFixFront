@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { fetchWithAuth, uploadToCloud } from '../../../../utils/api';
 
 interface Client {
@@ -16,6 +16,8 @@ const AddGuaranteeForm: React.FC<Props> = ({ onCreated }) => {
   const [query, setQuery] = useState('');
   const [filteredClients, setFilteredClients] = useState<Client[]>([]);
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -27,7 +29,7 @@ const AddGuaranteeForm: React.FC<Props> = ({ onCreated }) => {
 
   useEffect(() => {
     const loadClients = async () => {
-      const res = await fetchWithAuth('/api/ClientProfile/all');
+      const res = await fetchWithAuth('https://localhost:7164/api/ClientProfile/all');
       const json = await res.json();
       setClients(json.data || []);
     };
@@ -35,12 +37,49 @@ const AddGuaranteeForm: React.FC<Props> = ({ onCreated }) => {
   }, []);
 
   useEffect(() => {
-    setFilteredClients(
-      clients.filter((c) =>
-        `${c.name} ${c.surname}`.toLowerCase().includes(query.toLowerCase())
-      )
+    if (!query.trim()) {
+      setFilteredClients([]);
+      return;
+    }
+
+    const lowerQuery = query.toLowerCase();
+    const results = clients.filter((c) =>
+      `${c.name} ${c.surname}`.toLowerCase().includes(lowerQuery)
     );
+    setFilteredClients(results);
+    setActiveIndex(0);
   }, [query, clients]);
+
+  useEffect(() => {
+    if (listRef.current && activeIndex >= 0) {
+      const activeItem = listRef.current.children[activeIndex] as HTMLLIElement;
+      activeItem?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [activeIndex]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!filteredClients.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev + 1) % filteredClients.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev - 1 + filteredClients.length) % filteredClients.length);
+    } else if (e.key === 'Enter' || e.key === 'Tab') {
+      if (activeIndex >= 0 && filteredClients[activeIndex]) {
+        e.preventDefault();
+        const selected = filteredClients[activeIndex];
+        setQuery(`${selected.name} ${selected.surname}`);
+        setSelectedClientId(selected.id);
+        setFilteredClients([]);
+        setActiveIndex(-1);
+      }
+    } else if (e.key === 'Escape') {
+      setFilteredClients([]);
+      setActiveIndex(-1);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,36 +122,47 @@ const AddGuaranteeForm: React.FC<Props> = ({ onCreated }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-xl font-bold text-indigo-700 text-center">📜 New Guarantee</h2>
-
       {error && <p className="text-red-600 text-sm text-center">{error}</p>}
 
-      {/* Client selector */}
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setSelectedClientId(null);
-        }}
-        placeholder="Search client by name"
-        className="w-full p-3 border border-gray-300 rounded-lg bg-white/70 backdrop-blur"
-      />
-      {query && filteredClients.length > 0 && (
-        <ul className="bg-white rounded-md shadow max-h-40 overflow-y-auto">
-          {filteredClients.map((c) => (
-            <li
-              key={c.id}
-              onClick={() => {
-                setQuery(`${c.name} ${c.surname}`);
-                setSelectedClientId(c.id);
-              }}
-              className="px-4 py-2 hover:bg-indigo-100 cursor-pointer"
-            >
-              {c.name} {c.surname}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* 🔎 Client Selector */}
+      <div className="relative">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setSelectedClientId(null);
+            setActiveIndex(0);
+          }}
+          onKeyDown={handleKeyDown}
+          placeholder="Search client by name"
+          className="w-full p-3 border border-gray-300 rounded-lg bg-white/70 backdrop-blur"
+        />
+        {filteredClients.length > 0 && selectedClientId === null && (
+          <ul
+            ref={listRef}
+            className="absolute z-20 bg-white border border-gray-200 rounded shadow max-h-48 overflow-y-auto w-full mt-1"
+          >
+            {filteredClients.map((c, index) => (
+              <li
+                key={c.id}
+                onClick={() => {
+                  setQuery(`${c.name} ${c.surname}`);
+                  setSelectedClientId(c.id);
+                  setFilteredClients([]);
+                  setActiveIndex(-1);
+                }}
+                className={`px-4 py-2 cursor-pointer flex items-center justify-between ${
+                  index === activeIndex ? 'bg-indigo-200' : 'hover:bg-indigo-100'
+                }`}
+              >
+                {c.name} {c.surname}
+                {selectedClientId === c.id && <span className="text-green-600 ml-2">✓</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <input
         type="text"

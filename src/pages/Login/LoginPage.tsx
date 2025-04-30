@@ -10,6 +10,9 @@ import SignUpLink from './SignUpLink';
 interface JwtPayload {
   nameid: string;
   email: string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
   "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": string | string[];
 }
 
@@ -50,9 +53,12 @@ const LoginPage = () => {
       localStorage.setItem('refreshToken', refreshToken);
 
       const decoded: JwtPayload = jwtDecode(accessToken);
+      const userId = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+localStorage.setItem('userId', userId);
       const role = Array.isArray(decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
         ? decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"][0]
         : decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
 
       if (role === 'Client') {
         const res = await fetch('https://localhost:7164/api/ClientProfile/user', {

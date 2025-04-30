@@ -92,10 +92,9 @@ const CreateClientProfilePage = () => {
         backgroundImage: "url('/assets/regback5.jpg')",
       }}
     >
-      {/* Прозрачная тень на фоне */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-purple-900 to-pink-900 opacity-20" />
 
-      {/* Форма */}
+      {/* Forma */}
       <motion.div
         initial={{ opacity: 0, scale: 0.6 }}
         animate={{ opacity: 1, scale: 1 }}

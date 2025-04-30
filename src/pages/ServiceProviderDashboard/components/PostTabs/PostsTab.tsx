@@ -70,17 +70,15 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
 
   return (
     <>
-      {/* Кнопка добавления */}
       <div className="flex justify-end px-4 mt-2">
         <button
           onClick={() => setShowCreateModal(true)}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
         >
-          ➕ Add Post
+           Add Post
         </button>
       </div>
 
-      {/* Список постов */}
       {posts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
           {posts.map((post) => (
@@ -96,14 +94,14 @@ const PostsTab: React.FC<PostsTabProps> = ({ providerId }) => {
         <div className="text-center text-gray-500 mt-6">🛌 No posts yet</div>
       )}
 
-      {/* Модалка создания */}
+      {/* Modal */}
       <CreatePostModal
         isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
         onSuccess={fetchPosts}
       />
 
-      {/* Модалка редактирования */}
+      {/*Edit MOdal */}
       {selectedPost && (
         <UpdatePostModal
           isOpen={showEditModal}

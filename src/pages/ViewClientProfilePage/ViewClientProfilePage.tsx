@@ -16,7 +16,7 @@ const ViewClientProfilePage: React.FC = () => {
         const json = await res.json();
         setClient(json.data);
       } catch (err) {
-        console.error('Ошибка при загрузке клиента:', err);
+        console.error('Error loading client:', err);
       } finally {
         setLoading(false);
       }
