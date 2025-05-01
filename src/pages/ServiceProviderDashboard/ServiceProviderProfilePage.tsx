@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import TabsNavigation from './components/TabsNavigation';
 import OverviewTab from './components/OverviewTab';
 import PostsTab from './components/PostTabs/PostsTab';
@@ -7,27 +7,27 @@ import ReviewsTab from './components/ReviewsTab';
 import SettingsTab from './components/SettingsTabs/SettingsTab';
 import ServiceBookingTab from './components/ServiceBookingTab';
 import DayScheduleTab from './components/DayScheduleTab';
-import { fetchWithAuth } from '../../utils/api';
 import CertificatePage from './components/CertificateTabs/CertificatePage';
 import GuaranteePage from './components/GuarenteeTabs/GuaranteePage';
-
+import { fetchWithAuth } from '../../utils/api';
 
 const TABS = [
-  'Overview', 
-  'Posts', 
-  'Certificates', 
-  'Reviews', 
-  'Guarantees', 
-  'Booking', 
-  'Day Schedule', 
+  'Overview',
+  'Posts',
+  'Certificates',
+  'Reviews',
+  'Guarantees',
+  'Booking',
+  'Day Schedule',
   'Settings'
 ] as const;
 export type Tab = typeof TABS[number];
 
 const ServiceProviderProfilePage: React.FC = () => {
-  const [searchParams] = useSearchParams();
-  const queryTab = searchParams.get('tab') as Tab | null;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
+  const queryTab = searchParams.get('tab') as Tab | null;
   const [activeTab, setActiveTab] = useState<Tab>('Overview');
   const [providerProfile, setProviderProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ const ServiceProviderProfilePage: React.FC = () => {
         const json = await res.json();
         setProviderProfile(json.data);
       } catch (err) {
-        console.error('Failed to load provider profile', err);
+        console.error('❌ Failed to load provider profile:', err);
       } finally {
         setLoading(false);
       }
@@ -53,6 +53,11 @@ const ServiceProviderProfilePage: React.FC = () => {
 
     loadProfile();
   }, []);
+
+  const handleTabChange = (tab: Tab) => {
+    setActiveTab(tab);
+    setSearchParams({ tab }); // URL ?tab=...
+  };
 
   const renderTab = () => {
     if (!providerProfile && !loading) return <p className="text-center text-red-500">Profile not found</p>;
@@ -73,14 +78,9 @@ const ServiceProviderProfilePage: React.FC = () => {
 
   return (
     <section className="relative py-16 px-4 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] min-h-screen overflow-hidden">
-      {/* <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div> */}
-
-      {/* kontent */}
       <div className="relative z-10 max-w-7xl mx-auto p-6">
-
-
         <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-4 shadow-2xl">
-          <TabsNavigation tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <TabsNavigation tabs={TABS} activeTab={activeTab} setActiveTab={handleTabChange} />
           <div className="mt-4 mb-4">{renderTab()}</div>
         </div>
       </div>

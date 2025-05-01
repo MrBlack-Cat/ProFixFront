@@ -129,7 +129,7 @@ const InfoTab: React.FC<InfoTabProps> = ({ profile, currentClient }) => {
           <ActionButton
             onClick={() => {
               if (!isAuthenticated) return navigate('/login');
-              navigate(`/chat/${profile.userId}`);
+              navigate(`/messages?userId=${profile.userId}`);
             }}
             disabled={!isAuthenticated}
             text="Send Message"

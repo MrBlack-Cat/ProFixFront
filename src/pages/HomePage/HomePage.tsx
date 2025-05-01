@@ -8,6 +8,7 @@ import TopRatedPostsSection from '../../components/TopRatedPosts/TopRatedPostsSe
 import TestimonialsSection from '../../components/Testimonials/TestimonialsSection.tsx';
 import HowItWorksSection from '../../components/HowItWorks/HowItWorksSection.tsx';
 import Footer from '../../components/Footer/Footer.tsx';
+import FaqSection from "../../components/FAQ/FaqSection.tsx";
 // import AboutSection from '../../components/About/AboutSection.tsx';
 // import CallToActionSection from '../components/CallToActionSection';
 
@@ -37,6 +38,7 @@ const HomePage = () => {
       <TopRatedPostsSection />
       <TestimonialsSection />
       <HowItWorksSection />
+      <FaqSection />
       <Footer />
       {/* <CallToActionSection /> */}
     </main>

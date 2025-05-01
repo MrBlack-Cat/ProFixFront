@@ -74,7 +74,7 @@ const HeroSection = () => {
         </div>
 
         {/* KRight Photo */}
-        <div className="relative flex justify-center items-center h-[400px] w-full overflow-hidden">
+        <div className="relative flex justify-center items-center h-[480px] w-full overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.img
               key={current + '-image'}

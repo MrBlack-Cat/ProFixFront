@@ -23,34 +23,48 @@ const ChatDashboard = () => {
   const [nameMap, setNameMap] = useState<Record<number, string>>({});
 
   const fetchDisplayName = async (userId: number) => {
-    if (nameMap[userId]) return; 
+    if (nameMap[userId]) return;
+  
     try {
+      // Client
       const clientRes = await fetchWithAuth(`https://localhost:7164/api/ClientProfile/by-user/${userId}`);
-      const clientJson = await clientRes.json();
-      if (clientJson?.data?.name) {
-        setNameMap((prev) => ({
-          ...prev,
-          [userId]: `${clientJson.data.name} ${clientJson.data.surname}`,
-        }));
-        return;
+      if (clientRes.ok) {
+        const clientJson = await clientRes.json();
+        if (clientJson?.data?.name) {
+          const fullName = `${clientJson.data.name} ${clientJson.data.surname}`;
+          setNameMap((prev) => ({ ...prev, [userId]: fullName }));
+          return;
+        }
       }
-
+  
+      // Service Provider
       const spRes = await fetchWithAuth(`https://localhost:7164/api/ServiceProviderProfile/by-user/${userId}`);
-      const spJson = await spRes.json();
-      if (spJson?.data?.name) {
-        setNameMap((prev) => ({
-          ...prev,
-          [userId]: `${spJson.data.name} ${spJson.data.surname}`,
-        }));
-        return;
+      if (spRes.ok) {
+        const spJson = await spRes.json();
+        if (spJson?.data?.name) {
+          const fullName = `${spJson.data.name} ${spJson.data.surname}`;
+          setNameMap((prev) => ({ ...prev, [userId]: fullName }));
+          return;
+        }
       }
-
+  
+      // User (admin)
+      const userRes = await fetchWithAuth(`https://localhost:7164/api/Users/${userId}`);
+      if (userRes.ok) {
+        const userJson = await userRes.json();
+        if (userJson?.data?.userName) {
+          setNameMap((prev) => ({ ...prev, [userId]: userJson.data.userName }));
+          return;
+        }
+      }
+  
       setNameMap((prev) => ({ ...prev, [userId]: 'Unknown User' }));
     } catch (err) {
-      console.error('Error loading name:', err);
+      console.error('❌ Error loading display name:', err);
       setNameMap((prev) => ({ ...prev, [userId]: 'Unknown User' }));
     }
   };
+  
 
   useEffect(() => {
     const decoded = getDecodedToken();
@@ -96,7 +110,10 @@ const ChatDashboard = () => {
           if (target && selectedUserId !== target.otherUserId) {
             setSelectedUserId(target.otherUserId);
             fetchDisplayName(target.otherUserId);
-            setSelectedUserName(nameMap[target.otherUserId] || target.otherUserName);
+            const fallbackName = target.otherUserName || '...';
+            fetchDisplayName(target.otherUserId).then(() => {
+              setSelectedUserName(nameMap[target.otherUserId] || fallbackName);
+            });
           }
         } else if (chats.length > 0 && selectedUserId === null) {
           const first = chats[0];
