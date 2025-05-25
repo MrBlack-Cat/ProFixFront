@@ -62,7 +62,7 @@ const CreateServiceProfileForm = () => {
         const formData = new FormData();
         formData.append('file', form.avatar);
 
-        const avatarRes = await fetch('https://localhost:7164/api/FileUpload/upload-service-provider-avatar', {
+        const avatarRes = await fetch('https://localhost:7164/api/FileUpload/upload-service-avatar', {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
@@ -141,7 +141,7 @@ const CreateServiceProfileForm = () => {
 
       {/* Load avatar */}
       <div>
-        <label className="text-white font-semibold">Upload Avatar (optional)</label>
+        <label className="text-white font-semibold">Upload Avatar </label>
         <input
           type="file"
           name="avatar"

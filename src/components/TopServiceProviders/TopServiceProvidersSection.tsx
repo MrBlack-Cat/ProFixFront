@@ -27,8 +27,8 @@ const TopServiceProvidersSection = () => {
   if (loading) return <p className="text-center text-gray-400">Loading top providers...</p>;
 
   return (
-    <section id="top-providers" className="relative py-16 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] flex flex-col items-center overflow-hidden">
-      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
+    <section id="top-providers" className="relative py-16 bg-gradient-to-tr from-[#bbf5fb] to-[#bbf5fb] flex flex-col items-center overflow-hidden">
+      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/30 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
       {/* kontent */}
       <div className="relative z-10 max-w-7xl mx-auto px-1 w-full">

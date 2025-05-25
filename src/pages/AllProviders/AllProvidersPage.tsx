@@ -47,11 +47,11 @@ const AllProvidersPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#5d918a] via-[#475487] to-[#737f96] px-4 md:px-10 py-8">
+    <div className="min-h-screen bg-gradient-to-tr from-[#b6fcf3] via-[#adbbf5] to-[#ccdaf7] px-4 md:px-10 py-8">
       <div className="max-w-8xl mx-auto bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-6">
         {/* Title */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-2">
-          <h2 className="text-3xl mt-5 md:text-4xl font-bold text-emerald-200">All Service Providers</h2>
+          <h2 className="text-3xl mt-5 md:text-4xl font-bold text-emerald-800">All Service Providers</h2>
           <button
             onClick={() => setIsFilterOpen(true)}
             className="bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white px-6 py-2 rounded-xl shadow-lg transition-all duration-300"

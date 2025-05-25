@@ -32,7 +32,7 @@ const AllPostsPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#396a70] via-[#cbd5e1] to-[#bea6c2] px-4 md:px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-tr from-[#94f0fc] via-[#deebfb] to-[#ebd3f0] px-4 md:px-4 py-8">
       <div className="max-w-8xl mx-auto bg-white/20 backdrop-blur-lg rounded-3xl shadow-2xl p-6 md:p-8">
         <motion.div
           initial={{ opacity: 0, y: -30 }}

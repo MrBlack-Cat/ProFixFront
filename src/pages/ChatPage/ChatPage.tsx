@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import ChatThread from '../pages/Messaging/ChatThread';
-import { getDecodedToken, logout, isAuthenticated } from '../utils/auth';
+import ChatThread from '../Messaging/ChatThread';
+import { getDecodedToken, logout, isAuthenticated } from '../../utils/auth';
 import { useEffect, useState } from 'react';
-import { fetchWithAuth } from '../utils/api';
+import { fetchWithAuth } from '../../utils/api';
 
 const ChatPage = () => {
   const { otherUserId } = useParams();

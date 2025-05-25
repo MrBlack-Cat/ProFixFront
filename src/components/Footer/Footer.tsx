@@ -1,14 +1,14 @@
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../Navbar/Logo';
 import LanguageSwitcher from '../Common/LanguageSwitcher';
 import ChatWithAdminButton from '../Common/ChatWithAdminButton';
 import { useState } from 'react';
 import SuggestionModal from '../Common/SuggestionModal';
 import { FiMessageSquare } from 'react-icons/fi';
+// import LogoFooter from './logoFooter';
 
 const Footer = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [suggestionOpen, setSuggestionOpen] = useState(false);
 
   return (
@@ -18,9 +18,9 @@ const Footer = () => {
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
         {/* Logo and Actions */}
         <div className="flex flex-col items-center md:items-start gap-4">
-          <button onClick={() => navigate('/')} className="focus:outline-none">
-            <Logo />
-          </button>
+          {/* <button onClick={() => navigate('/')} className="focus:outline-none">
+            <LogoFooter />
+          </button> */}
           <p className="text-sm text-gray-200 opacity-80">
             Your trusted freelance platform.
           </p>

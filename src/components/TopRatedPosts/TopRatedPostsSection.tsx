@@ -30,8 +30,8 @@ const TopRatedPostsSection = () => {
   if (!posts.length) return <p className="text-center text-gray-400">No top posts yet.</p>;
 
   return (
-    <section id="top-posts" className="relative py-14 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] flex flex-col items-center overflow-hidden">
-      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
+    <section id="top-posts" className="relative py-14 bg-gradient-to-tr from-[#bbf5fb] to-[#bbf5fb] flex flex-col items-center overflow-hidden">
+      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/40 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
       {/* Kontent */}
       <div className="relative z-10 max-w-7xl mx-auto px-1 w-full">
@@ -69,7 +69,7 @@ const TopRatedPostsSection = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => window.location.href = '/posts'}
-          className="bg-white/20 backdrop-blur-lg border border-white/30 text-white px-6 py-2 rounded-2xl shadow-xl hover:bg-white/30 hover:text-emerald-900 transition-all"
+          className="bg-white/90 backdrop-blur-lg border border-white/30 text-black px-6 py-2 rounded-2xl shadow-xl hover:bg-white/30 hover:text-emerald-900 transition-all"
         >
           View All Posts
         </motion.button>

@@ -77,7 +77,7 @@ const ServiceProviderProfilePage: React.FC = () => {
   };
 
   return (
-    <section className="relative py-16 px-4 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] min-h-screen overflow-hidden">
+    <section className="relative py-16 px-4 bg-gradient-to-tr from-[#8cd9e3] to-[#bcf5f2] min-h-screen overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto p-6">
         <div className="bg-white/20 backdrop-blur-lg rounded-3xl p-4 shadow-2xl">
           <TabsNavigation tabs={TABS} activeTab={activeTab} setActiveTab={handleTabChange} />

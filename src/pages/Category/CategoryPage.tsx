@@ -40,7 +40,7 @@ const CategoryPage = () => {
   }, [id]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#1f4f4a] via-[#93a7b2] to-[#7396b5] px-4 md:px-10 py-4">
+    <div className="min-h-screen bg-gradient-to-tr from-[#aeece6] via-[#93a7b2] px-4 md:px-10 py-4">
       <div className="max-w-8xl mx-auto bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-6 md:p-8">
         {/* title */}
         {category && <CategoryHeader category={category} />}

@@ -81,7 +81,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSuccess }) => {
 
   return (
     <div className="bg-white/60 backdrop-blur-xl p-6 rounded-2xl shadow-xl animate-fade-in-up">
-      <h2 className="text-2xl font-bold text-center mb-4 text-cyan-700">📝 Create a New Post</h2>
+      <h2 className="text-2xl font-bold text-center mb-4 text-cyan-700"> Create a New Post</h2>
 
       {success && <p className="text-green-600 text-center mb-2">{success}</p>}
       {error && <p className="text-red-600 text-center mb-2">{error}</p>}
@@ -128,7 +128,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onSuccess }) => {
           disabled={loading || uploading}
           className="w-full bg-cyan-700 text-white py-3 rounded-lg hover:bg-cyan-800 transition-all disabled:opacity-50"
         >
-          {loading ? 'Posting...' : uploading ? 'Uploading Image...' : '🚀 Create Post'}
+          {loading ? 'Posting...' : uploading ? 'Uploading Image...' : 'Create Post'}
         </button>
       </form>
     </div>

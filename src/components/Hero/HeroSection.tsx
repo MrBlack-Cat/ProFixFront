@@ -39,8 +39,8 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-[#5e959c] to-[#bea6c2] flex items-center justify-center overflow-hidden">
-      <div className="absolute top-[10%] left-[5%] w-[90%] h-[88%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
+    <section className="relative min-h-screen bg-gradient-to-br from-[#bbf5fb] to-[#bbf5fb] flex items-center justify-center overflow-hidden">
+      <div className="absolute top-[10%] left-[5%] w-[90%] h-[88%] bg-white/30 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center gap-16 min-h-[600px]">
 

@@ -72,9 +72,15 @@ localStorage.setItem('userId', userId);
         });
         const data = await res.json();
         navigate(data.isSuccess && data.data ? '/service-profile' : '/serviceprofile/create');
-      } else if (role === 'Admin') {
-        navigate('/admin-profile');
-      } else {
+      }else if (role === 'Admin') {
+        const res = await fetch('https://localhost:7164/api/clientprofile/all', {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        const data = await res.json();
+        navigate(data.isSuccess && data.data ? '/admin/admin-dashboard' : '/client-profile/create'); //burda 2 ci sehifeni duzelt
+          // navigate('/admin/admin-dashboard');
+        }
+         else {
         navigate('/');
       }
     } catch (err: unknown) {

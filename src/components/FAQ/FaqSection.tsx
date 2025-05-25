@@ -21,9 +21,9 @@ const FaqSection = () => {
   };
 
   return (
-        <section className="relative py-10 bg-gradient-to-br from-[#396a70] to-[#bea6c2] px-4 overflow-hidden flex flex-col items-center">
+        <section className="relative py-10 bg-gradient-to-br from-[#bbf5fb] to-[#bbf5fb] px-4 overflow-hidden flex flex-col items-center">
       
-      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
+      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
         <motion.h2

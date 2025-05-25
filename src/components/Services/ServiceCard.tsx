@@ -20,7 +20,9 @@ const ServiceCard = ({ id, icon, category, serviceTypes, index }: Props) => {
     >
       {/* Left */}
       <div className="w-2/5 flex flex-col justify-center items-center bg-white/30 p-4">
-        <div className="text-3xl mb-2">{icon}</div>
+      <div className="w-10 h-10 mb-2">
+        <img src={icon} alt={category} className="w-full h-full object-contain" />
+      </div>
         <div className="text-md font-bold text-[#122E34] text-center">{category}</div>
       </div>
 

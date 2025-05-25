@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import ServiceCard from './ServiceCard';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 interface ServiceType {
   id: number;
@@ -17,7 +17,7 @@ interface Category {
 
 const ServicesSection = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -37,7 +37,7 @@ const ServicesSection = () => {
             return {
               id: parent.id,
               name: parent.name,
-              icon: '🛠️',
+              icon: `/icons/${parent.id}.png`,
               serviceTypes: types?.data || [],
             };
           })
@@ -50,8 +50,8 @@ const ServicesSection = () => {
   }, []);
 
   return (
-    <section id="services" className="relative py-16 bg-gradient-to-tr from-[#396a70] to-[#bea6c2] flex flex-col items-center overflow-hidden">
-      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/20 backdrop-blur-md rounded-3xl shadow-2xl"></div>
+    <section id="services" className="relative py-16 bg-gradient-to-tr from-[#bbf5fb] to-[#bbf5fb] flex flex-col items-center overflow-hidden">
+      <div className="absolute top-[5%] left-[5%] w-[90%] h-[90%] bg-white/30 backdrop-blur-md rounded-3xl shadow-2xl"></div>
 
       {/* kontent */}
       <div className="relative z-10 max-w-7xl mx-auto px-2 w-full">
@@ -91,7 +91,7 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        {/* View All */}
+        {/* View All
         <div className="flex justify-center mt-4">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -101,7 +101,7 @@ const ServicesSection = () => {
           >
             View All Categories
           </motion.button>
-        </div>
+        </div> */}
 
       </div>
     </section>
