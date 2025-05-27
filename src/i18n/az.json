@@ -1,0 +1,259 @@
+{
+    "title": "Bütün Paylaşımlar",
+    "subtitle": "İcmanın paylaşdığı ən yaxşı məzmunları kəşf et.",
+    "loading": "Paylaşımlar yüklənir...",
+    "noPosts": "Paylaşım tapılmadı.",
+    "created": "Yaradılma tarixi",
+
+
+
+    "post.noImage": "şəkil yoxdur",
+
+    "postModal.created": "Yaradılma tarixi",
+
+    "postModal.providerAvatar": "Ustanın şəkli",
+
+    "allpostpage.title": "Başlıq",
+    "allpostpage.subtitle": "Alt başlıq",
+    "allpostpage.loading": "Yüklənir...",
+    "allpostpage.noPosts": "Heç bir paylaşım tapılmadı.",
+    
+    "fildermodal.Filter Providers": "Ustaları Filtr et",
+    "fildermodal.city": "Şəhər",
+    "fildermodal.Gender":"Cins",
+    "fildermodal.Min Age":"Yaş (minimum)",
+    "fildermodal.Max Age":"Yaş (maksimum)",
+    "fildermodal.Min Experience (years)":"Təcrübə (minimum)",
+    "fildermodal.Min Rating":"Reytinq (minimum)",
+    "fildermodal.ParentCategory":"Ana Kateqoriya",
+    "fildermodal.AllCategories":"Bütün Kateqoriyalar",
+    "fildermodal.Service Types":"Xidmət Növləri",
+    "fildermodal.Cancel": "İmtina et",
+    "fildermodal.Apply Filters": "Filtrləri Tətbiq et",
+
+    "providerCart.ProviderName" : "Usta adı",
+    "providerCart.GenderName" : "Cins adı",
+    "providerCart.City" : "Şəhər",
+    "providerCart.Age" : "Yaş",
+    "providerCart.Experience" : "Təcrübə",
+    "providerCart.years experience" : "il təcrübə",
+    "providerCart.Category" : "Kateqoriya",
+    "providerCart.Rating" : "Reytinq",
+    "providerCart.Service" : "Xidmət",
+
+    "providerCart.No providers found" : "Usta tapılmadı",
+
+    "bookingActionButton.Approve": "Təsdiq et",
+    "bookingActionButton.Reject": "Rədd et",
+    "bookingActionButton.Cancel": "Tamamla",
+
+    "bookingItem.statustimeline" : "Status Zaman Çizgisi",
+    "bookingItem.Approved" : "Təsdiq edildi",
+    "bookingItem.Rejected" : "Rədd edildi",
+    "bookingItem.Cancelled" : "Ləğv edildi",
+    "bookingItem.Completed": "Tamamlandı",
+    "bookingItem.cancle": "Ləğv et",
+
+    "createbookingmodal.createbooking": "Rezervasiya et",
+
+    "guaranteeitem.issued": "Verilmiş",
+    "guaranteeitem.expired": "Bitmiş",
+    "guaranteeitem.createdItem": "Yaradılmış əşya",
+    "guaranteeitem.viewPdf": "PDF-i göstər",
+    
+    "guaranteelist.loadingguarantees": "Zəmanətlər yüklənir...",
+    "guaranteelist.noGuarantees": "Zəmanət tapılmadı.",
+
+    "bookingtab.mybooking": "Mənim Rezervasiyalarım",
+    "bookingtab.loading": "Yüklənir...",
+    "bookingtab.nobookingfounds": "Heç bir rezervasiya tapılmadı.",
+
+    "guaranteetab.guaranteesfor" : "Zəmanətlər",
+
+    "infotab.loading": "Yüklənir...",
+    
+    "infotab.nodatafound": "Heç bir məlumat tapılmadı.",
+    "infotab.profilenotfound": "Profil tapılmadı.",
+    "infotab.noavatar": "Şəkil yoxdur",
+    "infotab.about": "Haqqında",
+    "infotab.contactlinks": "Əlaqə bağlantıları",
+    "infotab.registeredon": "Qeydiyyat tarixi",
+
+    "settingtab.loadingprofile": "Profil yüklənir...",
+    "settingtab.profilenotfound": "Profil tapılmadı.",
+    "settingtab.noavatar": "Şəkil yoxdur",
+
+    "createclientprofileform.avatarphoto": "Şəkil",
+
+    "createclientprofilepage.createclientprofile": "Müştəri Profilini Yarat",
+
+    "forgotpassword.forgotpassword": "Şifrəni unutmusunuz",
+
+    "loginpage.welcomeback": "Xoş gəlmisiniz",
+    "loginpage.loading": "Yüklənir...",
+
+    "settingtab.chatlist" : "Söhbət siyahısı",
+    "settingtab.Selectachatonthelefttostartaconversation" : "Söhbət başlamaq üçün soldan bir söhbət seçin",
+
+    "settingtab.loadingmessage": "Mesaj yüklənir...",
+
+    "certificatecard.issued": "Verilmiş",
+    "certificatecard.viewpdf": "PDF-i göstər",
+    "certificatecard.edit": "Redaktə et",
+
+
+    "certificatetabs.addsertificate": "Sertifikat əlavə et",
+    "certificatetabs.nosertificateyet": "Hələ sertifikat yoxdur",
+
+    "certificatecard.updatesertifcate": "Sertifikatı yenilə",
+
+    "exactslottimeline.openclientprofile": "Müştəri profilini aç",
+
+    "guaranteitem.issued": "Verilmiş",
+    "guaranteitem.expires": "Bitmiş",
+    "guaranteitem.created": "Yaradılmış",
+    "guaranteitem.viewfile": "Faylı göstər",
+    "guaranteitem.edit": "Redaktə et",
+    "guaranteitem.delete": "Sil",
+
+
+    "guarantelist.loadingguarantees": "Zəmanətlər yüklənir...",
+    "guarantelist.noguaranteesfound": "Zəmanət tapılmadı.",
+
+    "guarantelist.addguarentees": "Zəmanət əlavə et",
+
+    "updateguaranteeform.editguarantees": "Zəmanətləri redaktə et",
+
+     "createpostform.creaetenewpost": "Yeni paylaşım yarat",
+     "createpostform.title": "Başlıq",
+     "createpostform.content" : "Məzmun",
+     "createpostform.uploadimage": "Şəkil yüklə",
+
+     "updatepostform.editpost": "Paylaşımı redaktə et",
+     "updatepostform.title": "Başlıq",
+     "updatepostform.content" : "Məzmun",
+     "updatepostform.uploadimage": "Şəkil yüklə",
+
+     "servicebookinitem.statushistory": "Status tarixi",
+     "servicebookinitem.approve": "Təsdiq et",
+     "servicebookinitem.reject": "Rədd et",
+     "servicebookinitem.markascompleted"  : "Tamamlandı kimi işarələyin",
+
+
+     "avataruploader.avatarupload": "Şəkil yüklənir",
+     "avataruploader.avataruploadisnotimplementedyet": "Şəkil yüklənməsi hələ tətbiq edilməyib",
+
+     "categoryselector.category": "Kateqoriya",
+     "categoryselector.selectcategory": "Kateqoriya seçin",
+
+     "servicetypemultiselect.servicetypes": "Xidmət növləri",
+     "servicetypemultiselect.noservicetypesavailable": "Xidmət növləri mövcud deyil",
+
+     "settingsform.gender" : "Cins",
+     "settingsform.male" : "Kişi",
+     "settingsform.famela" : "Qadın",
+     "settingsform.uploadavatar": "Şəkil yüklə",
+     "settingsform.active" :" Aktiv",
+     "settingsform.savingchanges" : "Dəyişiklikləri yadda saxlayır...",
+
+
+    "dayscheduletab.selectDate": "Tarix seçin",
+    "dayscheduletab.statusfilter": "Status Filtri",
+    "dayscheduletab.all": "Bütün",
+    "dayscheduletab.approved": "Təsdiq edildi",
+    "dayscheduletab.pending": "Gözləyir",
+    "dayscheduletab.rejected": "Rədd edildi",
+    "dayscheduletab.cancelled": "Ləğv edildi",
+    "dayscheduletab.inprogress": "İrəliləyir",
+    "dayscheduletab.completed": "Tamamlandı",
+    "dayscheduletab.BookingsforSelectedDate" : "Seçilmiş tarix üçün rezervasiyalar",
+    "dayscheduletab.loadingBookings": "Yüklənir...",
+    "dayscheduletab.interactivbookinggrid": "İnteraktiv rezervasiya qrafiki",
+
+
+    "overviewtab.city": "Şəhər",
+    "overviewtab.age": "Yaş",
+    "overviewtab.gender" : "Cins",
+    "overviewtab.experience" : "Təcrübə", 
+    "overviewtab.category" : "Kateqoriya",
+    
+     "reviewstab.loadingreviews": "Rəylər yüklənir...",
+    "reviewstab.noreviewsyet": "Hələ rəy yoxdur",
+
+    "servicebookingtab.servicebooking": "Xidmət rezervasiyası",
+    "servicebookingtab.loadingbooks": "Yüklənir...",
+    "servicebookingtab.nobookingfound": "Heç bir rezervasiya tapılmadı.",
+
+    "servicproviderprofilepage.profilenotfound": "Profil tapılmadı",
+    "servicproviderprofilepage.loading": "Yüklənir",
+
+
+    "createservicproviderprofileform.male": "Kişi",
+    "createservicproviderprofileform.female" : "Qadın",
+    "createservicproviderprofileform.gender": "Cins",
+    "createservicproviderprofileform.uploadavatar": "Şəkil yüklə",
+
+
+    "publicclientinfocard.hiddencontacts": "Gizli əlaqələr",
+    "publicclientinfocard.sendmessage": "Mesaj göndər",
+    "publicclientinfocard.complaint": "Şikayət",
+
+    "viewclientprofilpage.loadingclientprofile" : "Müştəri profilini yükləyir",
+    "viewclientprofilpage.clientnotfound" : "Müştəri tapılmadı"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+  }
+  

@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Animation --- */
+.perspective {
+  perspective: 1200px;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.transform-style {
+  transform-style: preserve-3d;
+}
+
+/* --- GLOW EFFECT --- */
+.glow-border {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #3b82f6, #60a5fa, #2563eb);
+  z-index: -1;
+  transform: scale(1.1);
+  opacity: 0;
+  transition: opacity 0.5s;
+  border-radius: 1rem;
+  filter: blur(12px);
+}
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* --- Gradient --- */
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 4s ease infinite;
+}
+
+/* --- Active --- */
+a.active {
+  border-bottom: 2px solid #60a5fa;
+  color: #60a5fa;
+}
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #70bac4, #bea6c2);
+  border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #70bac4, #bea6c2);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+@keyframes meteor {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-500px) translateY(500px);
+    opacity: 0;
+  }
+}
+
+.meteor {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 80px;
+  background: linear-gradient(45deg, white, cyan, transparent);
+  opacity: 0.6;
+  border-radius: 50px;
+}
+
+.animate-meteor1 {
+  animation: meteor 6s linear infinite;
+  animation-delay: 0s;
+}
+
+.animate-meteor2 {
+  animation: meteor 8s linear infinite;
+  animation-delay: 2s;
+}
+
+.animate-meteor3 {
+  animation: meteor 10s linear infinite;
+  animation-delay: 4s;
+}

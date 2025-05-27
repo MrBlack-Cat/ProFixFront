@@ -1,0 +1,105 @@
+{
+    "title": "All Posts",
+    "subtitle": "Discover all the best content shared by the community.",
+    "loading": "Loading posts...",
+    "noPosts": "No posts found.",
+    "created": "Created at",
+
+    "post.noImage": "noImage",
+
+    "postModal.created": "Created at",
+
+    "postModal.providerAvatar": "Provider avatar",
+
+    "allpostpage.title": "title" ,
+    "allpostpage.subtitle": "subtitle",
+    "allpostpage.loading": "loading",
+    "allpostpage.noPosts": "noPosts",
+
+
+    "fildermodal.Filter Providers": "Filter Providers",
+    "fildermodal.city": "City",
+    "fildermodal.Gender":"Gender",
+    "fildermodal.Min Age":"Min Age",
+    "fildermodal.Max Age":"Max Age",
+    "fildermodal.Min Experience (years)":"Min Experience (years)",
+    "fildermodal.Min Rating":"Min Rating",
+    "fildermodal.ParentCategory":"Parent Category",
+    "fildermodal.AllCategories":"All Categories",
+    "fildermodal.Service Types":"Service Types",
+    "fildermodal.Cancel": "Cancel",
+    "fildermodal.Apply Filters": "Apply Filters",
+    
+    "providerCart.ProviderName" : "Provider Name",
+    "providerCart.GenderName" : "Gender Name",
+    "providerCart.City" : "City",
+    "providerCart.Age" : "Age",
+    "providerCart.Experience" : "Experience",
+    "providerCart.years experience" : "years experience",
+    "providerCart.Category" : "Category",
+    "providerCart.Rating" : "Rating",
+    "providerCart.Service" : "Service",
+
+    "providerCart.No providers found" : "No providers found",
+
+    "bookingActionButton.Approve": "Approve",
+    "bookingActionButton.Reject": "Reject",
+    "bookingActionButton.Cancel": "Complete",
+
+    "bookingItem.statustimeline" : "Status Timeline",
+    "bookingItem.Approved" : "Approved",
+    "bookingItem.Rejected" : "Rejected",
+    "bookingItem.Cancelled" : "Cancelled",
+    "bookingItem.Completed": "Completed",
+    "bookingItem.cancle": "Cancel",
+
+    "createbookingmodal.createbooking": "Create Booking",
+
+    "guaranteeitem.issued": "Issued",
+    "guaranteeitem.expired": "Expired",
+    "guaranteeitem.createdItem": "Created Item",
+    "guaranteeitem.viewPdf": "View PDF",
+
+    "guaranteelist.loadingguarantees": "Loading guarantees...",
+    "guaranteelist.noguaranteesfound": "No guarantees found.",
+
+    "bookingtab.mybooking": "My Bookings",
+    "bookingtab.loading": "Loading bookings...",
+    "bookingtab.nobookingfounds": "No bookings found.",
+
+    "guaranteetab.guaranteesfor" : "Guarantees for",
+
+    "infotab.loading": "Loading...",
+    "infotab.profilenotfound": "Profile not found.",
+    "infotab.noavatar": "No avatar",
+    "infotab.about": "About",
+    "infotab.contactlinks": "Contact Links",
+    "infotab.registeredon": "Registered on",
+
+    "settingtab.loadingprofile": "Loading profile...",
+    "settingtab.profilenotfound": "Profile not found.",
+    "settingtab.noavatar": "No avatar",
+
+    "createclientprofileform.avatarphoto": "Avatar Photo",
+
+    "createclientprofilepage.createclientprofile": "Create Client Profile",
+
+    "forgotpassword.forgotpassword": "Forgot Password",
+
+
+    "loginpage.welcomeback": "Welcome back",
+    "loginpage.loading": "Loading...",
+
+
+    "settingtab.donthaveanaccount": "Don't have an account?",
+    "settingtab.signuphere": "Sign up here"
+
+    
+
+
+
+
+
+
+  }
+  
